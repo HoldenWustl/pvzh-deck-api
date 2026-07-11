@@ -11,6 +11,7 @@ const path = require("path");
 const os = require("os");
 const crypto = require("crypto");
 const { spawn } = require("child_process");
+const { performance } = require("perf_hooks");
 
 const app = express();
 
@@ -37,9 +38,9 @@ const CARD_DATA_PATH = path.join(
     "card_data.json"
 );
 
-const REFERENCE_CARDS_PATH = path.join(
+const REFERENCE_INDEX_PATH = path.join(
     PROJECT_ROOT,
-    "reference_cards"
+    "reference_index"
 );
 
 const TEMP_ROOT = path.join(
@@ -50,15 +51,16 @@ const TEMP_ROOT = path.join(
 const PYTHON_BIN =
     process.env.PYTHON_BIN || "python";
 
-/*
- * Hugging Face places the app behind a proxy.
- * This also lets express-rate-limit identify visitors properly.
- */
+sharp.concurrency(1);
+
+sharp.cache({
+    memory: 32,
+    files: 0,
+    items: 50,
+});
+
 app.set("trust proxy", 1);
 
-/*
- * Allow your real site, GitHub Pages, and localhost testing.
- */
 function isAllowedOrigin(origin) {
     if (!origin) {
         return true;
@@ -111,10 +113,6 @@ app.use(
     })
 );
 
-/*
- * Limit repeated public use of the expensive recognizer.
- * You can raise this later.
- */
 const recognitionLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
     limit: 20,
@@ -156,10 +154,7 @@ const upload = multer({
 });
 
 /*
- * Run only one recognition job at a time.
- *
- * This prevents several simultaneous uploads from consuming
- * excessive memory or slowing one another down.
+ * One job at a time is deliberate for a 512 MB instance.
  */
 let queueTail = Promise.resolve();
 
@@ -179,11 +174,13 @@ function runProcess(
     args,
     {
         jobId,
-        timeoutMs = 5 * 60 * 1000,
+        timeoutMs = 10 * 60 * 1000,
     } = {}
 ) {
     return new Promise(
         (resolve, reject) => {
+            const started = performance.now();
+
             console.log(
                 `[${jobId}] Running:`,
                 command,
@@ -225,8 +222,7 @@ function runProcess(
             child.stdout.on(
                 "data",
                 chunk => {
-                    const text =
-                        chunk.toString();
+                    const text = chunk.toString();
 
                     stdout += text;
                     process.stdout.write(
@@ -238,8 +234,7 @@ function runProcess(
             child.stderr.on(
                 "data",
                 chunk => {
-                    const text =
-                        chunk.toString();
+                    const text = chunk.toString();
 
                     stderr += text;
                     process.stderr.write(
@@ -276,6 +271,9 @@ function runProcess(
                     settled = true;
                     clearTimeout(timer);
 
+                    const elapsedSeconds =
+                        (performance.now() - started) / 1000;
+
                     if (code !== 0) {
                         reject(
                             new Error(
@@ -295,6 +293,7 @@ function runProcess(
                     resolve({
                         stdout,
                         stderr,
+                        elapsedSeconds,
                     });
                 }
             );
@@ -309,6 +308,9 @@ async function recognizeDeck(
     const jobId =
         crypto.randomUUID();
 
+    const jobStarted =
+        performance.now();
+
     const jobDirectory = path.join(
         TEMP_ROOT,
         jobId
@@ -319,12 +321,6 @@ async function recognizeDeck(
         "cards"
     );
 
-    /*
-     * Normalize every upload to an auto-rotated PNG.
-     *
-     * Your existing scripts can therefore always receive
-     * a predictable deck.png input.
-     */
     const imagePath = path.join(
         jobDirectory,
         "deck.png"
@@ -368,6 +364,13 @@ async function recognizeDeck(
             );
         }
 
+        const normalizeStarted =
+            performance.now();
+
+        /*
+         * PNG compression level changes size, not image quality.
+         * Level 1 is much faster for this temporary local file.
+         */
         await sharp(
             imageBuffer,
             {
@@ -377,63 +380,85 @@ async function recognizeDeck(
         )
             .rotate()
             .png({
-                compressionLevel: 6,
+                compressionLevel: 1,
             })
             .toFile(imagePath);
+
+        const normalizeSeconds =
+            (performance.now() - normalizeStarted) / 1000;
+
+        console.log(
+            `[${jobId}] Normalized image in ${normalizeSeconds.toFixed(2)}s`
+        );
 
         console.log(
             `[${jobId}] 1/3 Splitting cards`
         );
 
-        await runProcess(
-            process.execPath,
-            [
-                SPLIT_SCRIPT,
-                imagePath,
-                cardsDirectory,
-            ],
-            {
-                jobId,
-                timeoutMs:
-                    2 * 60 * 1000,
-            }
+        const splitResult =
+            await runProcess(
+                process.execPath,
+                [
+                    SPLIT_SCRIPT,
+                    imagePath,
+                    cardsDirectory,
+                ],
+                {
+                    jobId,
+                    timeoutMs:
+                        2 * 60 * 1000,
+                }
+            );
+
+        console.log(
+            `[${jobId}] Split stage: ${splitResult.elapsedSeconds.toFixed(2)}s`
         );
 
         console.log(
             `[${jobId}] 2/3 Reading name, copies and costs`
         );
 
-        await runProcess(
-            process.execPath,
-            [
-                READ_SCRIPT,
-                imagePath,
-                cardsDirectory,
-            ],
-            {
-                jobId,
-                timeoutMs:
-                    4 * 60 * 1000,
-            }
+        const readResult =
+            await runProcess(
+                process.execPath,
+                [
+                    READ_SCRIPT,
+                    imagePath,
+                    cardsDirectory,
+                ],
+                {
+                    jobId,
+                    timeoutMs:
+                        5 * 60 * 1000,
+                }
+            );
+
+        console.log(
+            `[${jobId}] OCR stage: ${readResult.elapsedSeconds.toFixed(2)}s`
         );
 
         console.log(
             `[${jobId}] 3/3 Identifying cards`
         );
 
-        await runProcess(
-            PYTHON_BIN,
-            [
-                IDENTIFY_SCRIPT,
-                cardsDirectory,
-                CARD_DATA_PATH,
-                REFERENCE_CARDS_PATH,
-            ],
-            {
-                jobId,
-                timeoutMs:
-                    5 * 60 * 1000,
-            }
+        const identifyResult =
+            await runProcess(
+                PYTHON_BIN,
+                [
+                    IDENTIFY_SCRIPT,
+                    cardsDirectory,
+                    CARD_DATA_PATH,
+                    REFERENCE_INDEX_PATH,
+                ],
+                {
+                    jobId,
+                    timeoutMs:
+                        10 * 60 * 1000,
+                }
+            );
+
+        console.log(
+            `[${jobId}] Identification stage: ${identifyResult.elapsedSeconds.toFixed(2)}s`
         );
 
         const resultPath = path.join(
@@ -450,16 +475,28 @@ async function recognizeDeck(
         const result =
             JSON.parse(resultText);
 
+        const totalSeconds =
+            (performance.now() - jobStarted) / 1000;
+
+        result.serverTiming = {
+            normalizeSeconds:
+                Number(normalizeSeconds.toFixed(3)),
+            splitSeconds:
+                Number(splitResult.elapsedSeconds.toFixed(3)),
+            ocrSeconds:
+                Number(readResult.elapsedSeconds.toFixed(3)),
+            identifySeconds:
+                Number(identifyResult.elapsedSeconds.toFixed(3)),
+            totalSeconds:
+                Number(totalSeconds.toFixed(3)),
+        };
+
         console.log(
-            `[${jobId}] Recognition complete:`,
-            result.deckName
+            `[${jobId}] Recognition complete: ${result.deckName} in ${totalSeconds.toFixed(2)}s`
         );
 
         return result;
     } finally {
-        /*
-         * Uploaded images and generated card crops are temporary.
-         */
         await fs.rm(
             jobDirectory,
             {
@@ -586,6 +623,10 @@ app.listen(
     () => {
         console.log(
             `PvZH recognition API listening on port ${PORT}`
+        );
+
+        console.log(
+            `Reference index: ${REFERENCE_INDEX_PATH}`
         );
     }
 );

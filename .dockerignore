@@ -1,6 +1,7 @@
 node_modules
 cards
 deck.png
+reference_index
 *.log
 .git
 .gitignore

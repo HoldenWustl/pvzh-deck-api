@@ -2,14 +2,14 @@ from __future__ import annotations
 
 import itertools
 import json
-import re
+import os
 import sys
+import time
 from dataclasses import dataclass
 from pathlib import Path
 
 import cv2
 import numpy as np
-from scipy.optimize import linear_sum_assignment
 
 
 # ---------------------------------------------------------
@@ -20,20 +20,14 @@ CARDS_DIR = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("cards")
 CARD_DATA_PATH = (
     Path(sys.argv[2]) if len(sys.argv) > 2 else Path("card_data.json")
 )
-REFERENCE_DIR = (
-    Path(sys.argv[3]) if len(sys.argv) > 3 else Path("reference_cards")
+REFERENCE_INDEX_DIR = (
+    Path(sys.argv[3]) if len(sys.argv) > 3 else Path("reference_index")
 )
 
 DECK_READ_PATH = CARDS_DIR / "deck-read.json"
 OUTPUT_PATH = CARDS_DIR / "deck-identified.json"
-
-SUPPORTED_EXTENSIONS = {
-    ".jpg",
-    ".jpeg",
-    ".png",
-    ".webp",
-    ".bmp",
-}
+INDEX_JSON_PATH = REFERENCE_INDEX_DIR / "index.json"
+FINGERPRINTS_PATH = REFERENCE_INDEX_DIR / "fingerprints.npy"
 
 
 # ---------------------------------------------------------
@@ -61,21 +55,36 @@ ZOMBIE_CLASSES = {
 # Recognition tuning
 # ---------------------------------------------------------
 
-# Lowe ratio used for SIFT feature matching.
 SIFT_RATIO = 0.74
 
-# A result below this should usually be reviewed manually.
 LOW_SCORE_THRESHOLD = 0.28
-
-# A small difference between the best and second-best results
-# means the match is ambiguous.
 LOW_MARGIN_THRESHOLD = 0.035
+
+# Fast first attempt.
+INITIAL_CLASS_GROUPS = 3
+INITIAL_PER_CARD = 18
+INITIAL_PER_CLASS = 4
+
+# Wider second attempt before the exact full fallback.
+EXPANDED_CLASS_GROUPS = 8
+EXPANDED_PER_CARD = 40
+EXPANDED_PER_CLASS = 8
+
+# Clean direct screenshots usually score around 0.85-1.00.
+# Below these values, the script widens the candidate search.
+FAST_ACCEPT_SCORE = 0.82
+FAST_ACCEPT_MARGIN = 0.015
+FAST_ACCEPT_FINGERPRINT = 0.62
+
+ENABLE_FULL_FALLBACK = (
+    os.environ.get("PVZH_FULL_FALLBACK", "1") != "0"
+)
 
 
 @dataclass
 class FeatureSet:
-    keypoints: list
-    descriptors: np.ndarray | None
+    keypoints_xy: np.ndarray
+    descriptors: np.ndarray
     histogram: np.ndarray
 
 
@@ -85,11 +94,10 @@ class ReferenceCard:
     display_name: str
     card_class: str
     cost: int
-    image_path: Path
-    features: list[FeatureSet]
+    reference_filename: str
+    feature_path: Path
 
 
-# SIFT is much better than plain pixel comparison for this task.
 SIFT = cv2.SIFT_create(
     nfeatures=1000,
     contrastThreshold=0.02,
@@ -103,31 +111,8 @@ MATCHER = cv2.BFMatcher(cv2.NORM_L2)
 # Basic utilities
 # ---------------------------------------------------------
 
-def normalize_name(value: str) -> str:
-    """
-    Converts names such as:
-
-        Alien_Ooze
-        alien ooze
-        Alien-Ooze.jpg
-
-    into the same normalized key.
-    """
-
-    return re.sub(r"[^a-z0-9]", "", str(value).lower())
-
-
-def display_name(value: str) -> str:
-    return str(value).replace("_", " ").strip()
-
-
 def load_image(path: Path) -> np.ndarray:
-    """
-    cv2.imread can have trouble with some Unicode Windows paths.
-    imdecode handles those paths more reliably.
-    """
-
-    raw = np.fromfile(path, dtype=np.uint8)
+    raw = np.frombuffer(path.read_bytes(), dtype=np.uint8)
     image = cv2.imdecode(raw, cv2.IMREAD_COLOR)
 
     if image is None:
@@ -147,7 +132,6 @@ def safe_crop(
 
     x1 = max(0, min(width - 1, round(width * left_fraction)))
     y1 = max(0, min(height - 1, round(height * top_fraction)))
-
     x2 = max(x1 + 1, min(width, round(width * right_fraction)))
     y2 = max(y1 + 1, min(height, round(height * bottom_fraction)))
 
@@ -176,81 +160,83 @@ def resize_for_features(
     )
 
 
+def create_query_views(image: np.ndarray) -> list[np.ndarray]:
+    return [
+        image,
+        safe_crop(
+            image,
+            left_fraction=0.03,
+            top_fraction=0.05,
+            right_fraction=0.82,
+            bottom_fraction=0.80,
+        ),
+        safe_crop(
+            image,
+            left_fraction=0.10,
+            top_fraction=0.12,
+            right_fraction=0.75,
+            bottom_fraction=0.72,
+        ),
+    ]
+
+
+def make_fingerprint(image: np.ndarray) -> np.ndarray:
+    small = cv2.resize(
+        image,
+        (32, 32),
+        interpolation=cv2.INTER_AREA,
+    )
+
+    lab = cv2.cvtColor(small, cv2.COLOR_BGR2LAB).astype(np.float32)
+
+    channels = []
+    for channel_index in range(3):
+        channel = lab[:, :, channel_index]
+        channel = channel - float(channel.mean())
+        std = float(channel.std())
+
+        if std > 1e-6:
+            channel = channel / std
+
+        channels.append(channel.reshape(-1))
+
+    gray = cv2.cvtColor(small, cv2.COLOR_BGR2GRAY).astype(np.float32)
+
+    sobel_x = cv2.Sobel(gray, cv2.CV_32F, 1, 0, ksize=3)
+    sobel_y = cv2.Sobel(gray, cv2.CV_32F, 0, 1, ksize=3)
+    edges = cv2.magnitude(sobel_x, sobel_y)
+
+    edge_mean = float(edges.mean())
+    edge_std = float(edges.std())
+    edges = edges - edge_mean
+
+    if edge_std > 1e-6:
+        edges = edges / edge_std
+
+    vector = np.concatenate(
+        [
+            *channels,
+            edges.reshape(-1),
+        ]
+    ).astype(np.float32)
+
+    norm = float(np.linalg.norm(vector))
+
+    if norm > 1e-8:
+        vector /= norm
+
+    return vector
+
+
 # ---------------------------------------------------------
 # Feature extraction
 # ---------------------------------------------------------
-
-def create_views(
-    image: np.ndarray,
-    is_extracted_card: bool,
-) -> list[np.ndarray]:
-    """
-    We compare multiple parts of each image.
-
-    The full image is useful when reference_cards contains
-    deck-style thumbnails.
-
-    The smaller crops are useful when the reference image is
-    a fuller card image and the deck screenshot contains UI
-    overlays around the edges.
-    """
-
-    views = [image]
-
-    if is_extracted_card:
-        # Removes most of the cost bubble and bottom stat icons.
-        views.append(
-            safe_crop(
-                image,
-                left_fraction=0.03,
-                top_fraction=0.05,
-                right_fraction=0.82,
-                bottom_fraction=0.80,
-            )
-        )
-
-        # Mostly pure central artwork.
-        views.append(
-            safe_crop(
-                image,
-                left_fraction=0.10,
-                top_fraction=0.12,
-                right_fraction=0.75,
-                bottom_fraction=0.72,
-            )
-        )
-
-    else:
-        # Reference images may contain borders or additional UI.
-        views.append(
-            safe_crop(
-                image,
-                left_fraction=0.03,
-                top_fraction=0.04,
-                right_fraction=0.90,
-                bottom_fraction=0.84,
-            )
-        )
-
-        views.append(
-            safe_crop(
-                image,
-                left_fraction=0.09,
-                top_fraction=0.10,
-                right_fraction=0.82,
-                bottom_fraction=0.78,
-            )
-        )
-
-    return views
-
 
 def extract_features(image: np.ndarray) -> FeatureSet:
     image = resize_for_features(image)
 
     grayscale = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-    # Improves feature detection in dark or compressed screenshots.
     clahe = cv2.createCLAHE(
         clipLimit=2.0,
         tileGridSize=(8, 8),
@@ -262,6 +248,19 @@ def extract_features(image: np.ndarray) -> FeatureSet:
         grayscale,
         None,
     )
+
+    if keypoints:
+        keypoints_xy = np.asarray(
+            [keypoint.pt for keypoint in keypoints],
+            dtype=np.float32,
+        )
+    else:
+        keypoints_xy = np.empty((0, 2), dtype=np.float32)
+
+    if descriptors is None:
+        descriptors = np.empty((0, 128), dtype=np.float32)
+    else:
+        descriptors = np.asarray(descriptors, dtype=np.float32)
 
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
@@ -282,27 +281,37 @@ def extract_features(image: np.ndarray) -> FeatureSet:
     )
 
     return FeatureSet(
-        keypoints=keypoints,
+        keypoints_xy=keypoints_xy,
         descriptors=descriptors,
-        histogram=histogram,
+        histogram=histogram.astype(np.float32),
     )
 
 
-def extract_all_features(
+def extract_all_query_data(
     image: np.ndarray,
-    is_extracted_card: bool,
-) -> list[FeatureSet]:
-    return [
+) -> tuple[list[FeatureSet], np.ndarray]:
+    views = create_query_views(image)
+
+    features = [
         extract_features(view)
-        for view in create_views(
-            image,
-            is_extracted_card=is_extracted_card,
-        )
+        for view in views
     ]
+
+    fingerprints = np.stack(
+        [
+            make_fingerprint(
+                resize_for_features(view)
+            )
+            for view in views
+        ],
+        axis=0,
+    ).astype(np.float32)
+
+    return features, fingerprints
 
 
 # ---------------------------------------------------------
-# Image similarity
+# Exact image similarity
 # ---------------------------------------------------------
 
 def sift_similarity(
@@ -313,9 +322,7 @@ def sift_similarity(
     reference_descriptors = reference.descriptors
 
     if (
-        query_descriptors is None
-        or reference_descriptors is None
-        or len(query_descriptors) < 2
+        len(query_descriptors) < 2
         or len(reference_descriptors) < 2
     ):
         return 0.0
@@ -350,14 +357,14 @@ def sift_similarity(
 
     source_points = np.float32(
         [
-            query.keypoints[match.queryIdx].pt
+            query.keypoints_xy[match.queryIdx]
             for match in good_matches
         ]
     ).reshape(-1, 1, 2)
 
     destination_points = np.float32(
         [
-            reference.keypoints[match.trainIdx].pt
+            reference.keypoints_xy[match.trainIdx]
             for match in good_matches
         ]
     ).reshape(-1, 1, 2)
@@ -377,7 +384,6 @@ def sift_similarity(
 
     inlier_count = int(inlier_mask.ravel().sum())
     inlier_ratio = inlier_count / len(good_matches)
-
     inlier_score = min(inlier_count / 18.0, 1.0)
 
     return (
@@ -397,8 +403,10 @@ def histogram_similarity(
         cv2.HISTCMP_CORREL,
     )
 
-    # Converts the usual -1 through 1 correlation range to 0 through 1.
-    return max(0.0, min(1.0, (correlation + 1.0) / 2.0))
+    return max(
+        0.0,
+        min(1.0, (correlation + 1.0) / 2.0),
+    )
 
 
 def visual_similarity(
@@ -406,11 +414,8 @@ def visual_similarity(
     reference_features: list[FeatureSet],
 ) -> float:
     """
-    Compares every query crop to every reference crop and keeps
-    the best result.
-
-    SIFT provides most of the score. Color similarity is a small
-    tie-breaker for cards with limited feature detail.
+    This is the same 3x3 exact comparison used by the original script.
+    The optimization is that it runs only after a cheap shortlist.
     """
 
     best_score = 0.0
@@ -441,128 +446,134 @@ def visual_similarity(
 
 
 # ---------------------------------------------------------
-# Loading card metadata and references
+# Index loading
 # ---------------------------------------------------------
 
-def load_card_data() -> tuple[dict, dict[str, str]]:
-    with CARD_DATA_PATH.open(
-        "r",
-        encoding="utf-8",
-    ) as file:
-        data = json.load(file)
-
-    if not isinstance(data, dict):
-        raise ValueError(
-            "card_data.json must contain an object keyed by card name."
+def load_reference_index() -> tuple[list[ReferenceCard], np.ndarray]:
+    if not INDEX_JSON_PATH.exists():
+        raise FileNotFoundError(
+            f"Missing {INDEX_JSON_PATH}. "
+            "Run build-reference-index.py during the Docker build."
         )
 
-    name_lookup: dict[str, str] = {}
+    if not FINGERPRINTS_PATH.exists():
+        raise FileNotFoundError(
+            f"Missing {FINGERPRINTS_PATH}."
+        )
 
-    for card_id, metadata in data.items():
-        possible_names = {
-            str(card_id),
-            str(metadata.get("Name", "")),
-        }
+    with INDEX_JSON_PATH.open("r", encoding="utf-8") as file:
+        index = json.load(file)
 
-        for name in possible_names:
-            normalized = normalize_name(name)
+    references = [
+        ReferenceCard(
+            card_id=str(entry["cardId"]),
+            display_name=str(entry["name"]),
+            card_class=str(entry["class"]),
+            cost=int(entry["cost"]),
+            reference_filename=str(entry["referenceFilename"]),
+            feature_path=(
+                REFERENCE_INDEX_DIR
+                / str(entry["featureFile"])
+            ),
+        )
+        for entry in index["entries"]
+    ]
 
-            if normalized:
-                name_lookup[normalized] = card_id
-
-    return data, name_lookup
-
-
-def load_reference_cards(
-    card_data: dict,
-    name_lookup: dict[str, str],
-    wanted_costs: set[int],
-) -> list[ReferenceCard]:
-    references: list[ReferenceCard] = []
-    ignored_files: list[str] = []
-
-    image_paths = sorted(
-        path
-        for path in REFERENCE_DIR.rglob("*")
-        if path.is_file()
-        and path.suffix.lower() in SUPPORTED_EXTENSIONS
+    fingerprints = np.load(
+        FINGERPRINTS_PATH,
+        allow_pickle=False,
+        mmap_mode="r",
     )
 
-    if not image_paths:
+    if fingerprints.shape[0] != len(references):
         raise ValueError(
-            f"No reference images found in {REFERENCE_DIR.resolve()}"
+            "Reference metadata and fingerprint counts do not match."
         )
 
-    for image_path in image_paths:
-        normalized_stem = normalize_name(image_path.stem)
-        card_id = name_lookup.get(normalized_stem)
+    return references, fingerprints
 
-        if card_id is None:
-            ignored_files.append(image_path.name)
-            continue
 
-        metadata = card_data[card_id]
-
-        try:
-            cost = int(float(metadata["Cost"]))
-        except (KeyError, TypeError, ValueError):
-            ignored_files.append(image_path.name)
-            continue
-
-        # There is no reason to calculate image features for costs
-        # that do not appear anywhere in this deck.
-        if cost not in wanted_costs:
-            continue
-
-        card_class = str(metadata.get("Class", "")).strip()
-
-        if not card_class:
-            ignored_files.append(image_path.name)
-            continue
-
-        image = load_image(image_path)
-
-        references.append(
-            ReferenceCard(
-                card_id=card_id,
-                display_name=display_name(
-                    metadata.get("Name", card_id)
+def load_reference_feature_file(
+    reference: ReferenceCard,
+) -> list[FeatureSet]:
+    with np.load(
+        reference.feature_path,
+        allow_pickle=False,
+    ) as archive:
+        return [
+            FeatureSet(
+                keypoints_xy=np.asarray(
+                    archive[f"kp_{view_index}"],
+                    dtype=np.float32,
                 ),
-                card_class=card_class,
-                cost=cost,
-                image_path=image_path,
-                features=extract_all_features(
-                    image,
-                    is_extracted_card=False,
+                descriptors=np.asarray(
+                    archive[f"desc_{view_index}"],
+                    dtype=np.float32,
+                ),
+                histogram=np.asarray(
+                    archive[f"hist_{view_index}"],
+                    dtype=np.float32,
                 ),
             )
-        )
-
-    if ignored_files:
-        print(
-            f"Warning: ignored {len(ignored_files)} reference file(s) "
-            "that could not be matched to card_data.json."
-        )
-
-        for filename in ignored_files[:10]:
-            print(f"  - {filename}")
-
-        if len(ignored_files) > 10:
-            print(
-                f"  ...and {len(ignored_files) - 10} more"
-            )
-
-    if not references:
-        raise ValueError(
-            "No usable reference cards matched card_data.json."
-        )
-
-    return references
+            for view_index in range(3)
+        ]
 
 
 # ---------------------------------------------------------
-# Class-pair selection
+# Fast shortlist
 # ---------------------------------------------------------
+
+def calculate_quick_scores(
+    query_fingerprints: list[np.ndarray],
+    reference_fingerprints: np.ndarray,
+) -> np.ndarray:
+    """
+    Returns one score per uploaded card and reference card.
+
+    Both sides are L2-normalized. Matrix multiplication therefore
+    gives cosine similarity. We retain the best of the 3x3 view pairs.
+    """
+
+    card_count = len(query_fingerprints)
+    reference_count = reference_fingerprints.shape[0]
+
+    scores = np.full(
+        (card_count, reference_count),
+        -1.0,
+        dtype=np.float32,
+    )
+
+    flattened_references = np.asarray(
+        reference_fingerprints,
+        dtype=np.float32,
+    ).reshape(
+        reference_count * 3,
+        -1,
+    )
+
+    for card_index, query_views in enumerate(query_fingerprints):
+        similarities = (
+            np.asarray(query_views, dtype=np.float32)
+            @ flattened_references.T
+        )
+
+        similarities = similarities.reshape(
+            3,
+            reference_count,
+            3,
+        )
+
+        best = similarities.max(axis=(0, 2))
+
+        # Convert cosine similarity from roughly [-1, 1] to [0, 1].
+        scores[card_index] = np.clip(
+            (best + 1.0) / 2.0,
+            0.0,
+            1.0,
+        )
+
+    return scores
+
 
 def possible_class_groups(
     references: list[ReferenceCard],
@@ -582,7 +593,10 @@ def possible_class_groups(
             side_classes.intersection(available)
         )
 
-        groups.extend((card_class,) for card_class in present)
+        groups.extend(
+            (card_class,)
+            for card_class in present
+        )
 
         groups.extend(
             itertools.combinations(
@@ -594,17 +608,227 @@ def possible_class_groups(
     return groups
 
 
+def rank_class_groups(
+    quick_scores: np.ndarray,
+    references: list[ReferenceCard],
+    recognized_costs: list[int],
+) -> list[tuple[tuple[str, ...], float]]:
+    groups = possible_class_groups(references)
+    ranked: list[tuple[tuple[str, ...], float]] = []
+
+    for group in groups:
+        group_set = set(group)
+        total = 0.0
+        valid = True
+
+        for card_index, recognized_cost in enumerate(recognized_costs):
+            candidates = [
+                quick_scores[
+                    card_index,
+                    reference_index,
+                ]
+                for reference_index, reference
+                in enumerate(references)
+                if (
+                    reference.cost == recognized_cost
+                    and reference.card_class in group_set
+                )
+            ]
+
+            if not candidates:
+                valid = False
+                break
+
+            total += float(max(candidates))
+
+        if not valid:
+            continue
+
+        if len(group) == 2:
+            total -= 0.002
+
+        ranked.append((group, total))
+
+    ranked.sort(
+        key=lambda item: item[1],
+        reverse=True,
+    )
+
+    return ranked
+
+
+def build_candidate_sets(
+    quick_scores: np.ndarray,
+    references: list[ReferenceCard],
+    recognized_costs: list[int],
+    ranked_groups: list[tuple[tuple[str, ...], float]],
+    group_count: int,
+    per_card: int,
+    per_class: int,
+) -> list[set[int]]:
+    selected_groups = [
+        group
+        for group, _ in ranked_groups[:group_count]
+    ]
+
+    selected_classes = set(
+        itertools.chain.from_iterable(
+            selected_groups
+        )
+    )
+
+    result: list[set[int]] = []
+
+    for card_index, recognized_cost in enumerate(recognized_costs):
+        compatible = [
+            reference_index
+            for reference_index, reference
+            in enumerate(references)
+            if (
+                reference.cost == recognized_cost
+                and reference.card_class in selected_classes
+            )
+        ]
+
+        compatible.sort(
+            key=lambda reference_index:
+                float(
+                    quick_scores[
+                        card_index,
+                        reference_index,
+                    ]
+                ),
+            reverse=True,
+        )
+
+        chosen = set(
+            compatible[:per_card]
+        )
+
+        for card_class in selected_classes:
+            same_class = [
+                reference_index
+                for reference_index in compatible
+                if (
+                    references[
+                        reference_index
+                    ].card_class
+                    == card_class
+                )
+            ]
+
+            chosen.update(
+                same_class[:per_class]
+            )
+
+        result.append(chosen)
+
+    return result
+
+
+# ---------------------------------------------------------
+# Assignment
+# ---------------------------------------------------------
+
+def hungarian_minimize(costs: np.ndarray) -> dict[int, int]:
+    """
+    Rectangular Hungarian algorithm for rows <= columns.
+    This replaces SciPy's linear_sum_assignment, removing a large
+    import and memory cost without changing the optimization problem.
+    """
+
+    n, m = costs.shape
+
+    if n > m:
+        raise ValueError(
+            "Hungarian assignment requires at least as many columns as rows."
+        )
+
+    u = np.zeros(n + 1, dtype=np.float64)
+    v = np.zeros(m + 1, dtype=np.float64)
+    p = np.zeros(m + 1, dtype=np.int32)
+    way = np.zeros(m + 1, dtype=np.int32)
+
+    for i in range(1, n + 1):
+        p[0] = i
+        j0 = 0
+
+        minv = np.full(
+            m + 1,
+            np.inf,
+            dtype=np.float64,
+        )
+
+        used = np.zeros(
+            m + 1,
+            dtype=bool,
+        )
+
+        while True:
+            used[j0] = True
+            i0 = int(p[j0])
+
+            delta = np.inf
+            j1 = 0
+
+            for j in range(1, m + 1):
+                if used[j]:
+                    continue
+
+                current = (
+                    costs[i0 - 1, j - 1]
+                    - u[i0]
+                    - v[j]
+                )
+
+                if current < minv[j]:
+                    minv[j] = current
+                    way[j] = j0
+
+                if minv[j] < delta:
+                    delta = minv[j]
+                    j1 = j
+
+            for j in range(m + 1):
+                if used[j]:
+                    u[p[j]] += delta
+                    v[j] -= delta
+                else:
+                    minv[j] -= delta
+
+            j0 = j1
+
+            if p[j0] == 0:
+                break
+
+        while True:
+            j1 = int(way[j0])
+            p[j0] = p[j1]
+            j0 = j1
+
+            if j0 == 0:
+                break
+
+    assignment: dict[int, int] = {}
+
+    for j in range(1, m + 1):
+        if p[j] != 0:
+            assignment[int(p[j]) - 1] = j - 1
+
+    return assignment
+
+
 def choose_class_group(
     score_matrix: np.ndarray,
     references: list[ReferenceCard],
     recognized_costs: list[int],
+    allowed_groups: list[tuple[str, ...]] | None = None,
 ) -> tuple[str, ...]:
-    groups = possible_class_groups(references)
-
-    if not groups:
-        raise ValueError(
-            "No recognized PvZ Heroes classes were found in card_data.json."
-        )
+    groups = (
+        allowed_groups
+        if allowed_groups is not None
+        else possible_class_groups(references)
+    )
 
     best_group: tuple[str, ...] | None = None
     best_total = -float("inf")
@@ -616,11 +840,19 @@ def choose_class_group(
 
         for card_index, recognized_cost in enumerate(recognized_costs):
             candidates = [
-                score_matrix[card_index, reference_index]
-                for reference_index, reference in enumerate(references)
+                score_matrix[
+                    card_index,
+                    reference_index,
+                ]
+                for reference_index, reference
+                in enumerate(references)
                 if (
                     reference.cost == recognized_cost
                     and reference.card_class in group_set
+                    and score_matrix[
+                        card_index,
+                        reference_index,
+                    ] >= 0
                 )
             ]
 
@@ -633,8 +865,6 @@ def choose_class_group(
         if not valid:
             continue
 
-        # A tiny preference for a single class when it fits equally well.
-        # This does not materially override image evidence.
         if len(group) == 2:
             total -= 0.015
 
@@ -650,35 +880,22 @@ def choose_class_group(
     return best_group
 
 
-# ---------------------------------------------------------
-# Unique card assignment
-# ---------------------------------------------------------
-
 def assign_unique_cards(
     score_matrix: np.ndarray,
     references: list[ReferenceCard],
     recognized_costs: list[int],
     class_group: tuple[str, ...],
 ) -> dict[int, int]:
-    """
-    Each distinct card should appear only once in the deck-list grid.
-
-    The Hungarian assignment algorithm finds the best combined
-    identification while preventing duplicate card names.
-    """
-
     allowed_classes = set(class_group)
 
     usable_reference_indices = [
         index
-        for index, reference in enumerate(references)
+        for index, reference
+        in enumerate(references)
         if reference.card_class in allowed_classes
     ]
 
-    card_count = len(recognized_costs)
-    reference_count = len(usable_reference_indices)
-
-    if reference_count < card_count:
+    if len(usable_reference_indices) < len(recognized_costs):
         raise ValueError(
             "There are fewer usable reference cards than extracted cards."
         )
@@ -686,7 +903,10 @@ def assign_unique_cards(
     impossible = 10_000.0
 
     assignment_costs = np.full(
-        (card_count, reference_count),
+        (
+            len(recognized_costs),
+            len(usable_reference_indices),
+        ),
         impossible,
         dtype=np.float64,
     )
@@ -696,40 +916,414 @@ def assign_unique_cards(
             usable_reference_indices
         ):
             reference = references[reference_index]
-
-            if reference.cost != recognized_cost:
-                continue
-
-            # linear_sum_assignment minimizes, so negate similarity.
-            assignment_costs[
-                card_index,
-                local_reference_index,
-            ] = -score_matrix[
+            score = score_matrix[
                 card_index,
                 reference_index,
             ]
 
-    row_indices, column_indices = linear_sum_assignment(
+            if (
+                reference.cost != recognized_cost
+                or score < 0
+            ):
+                continue
+
+            assignment_costs[
+                card_index,
+                local_reference_index,
+            ] = -float(score)
+
+    local_assignment = hungarian_minimize(
         assignment_costs
     )
 
     result: dict[int, int] = {}
 
-    for row_index, column_index in zip(
-        row_indices,
-        column_indices,
-    ):
-        if assignment_costs[row_index, column_index] >= impossible:
+    for row_index, local_reference_index in local_assignment.items():
+        if (
+            assignment_costs[
+                row_index,
+                local_reference_index,
+            ]
+            >= impossible
+        ):
             raise ValueError(
                 f"Could not assign a cost-{recognized_costs[row_index]} "
                 f"card at position {row_index + 1}."
             )
 
-        result[row_index] = usable_reference_indices[
-            column_index
-        ]
+        result[row_index] = (
+            usable_reference_indices[
+                local_reference_index
+            ]
+        )
 
     return result
+
+
+# ---------------------------------------------------------
+# Exact scoring stages
+# ---------------------------------------------------------
+
+def exact_score_candidates(
+    query_features: list[list[FeatureSet]],
+    candidate_sets: list[set[int]],
+    references: list[ReferenceCard],
+    score_matrix: np.ndarray,
+    feature_cache: dict[int, list[FeatureSet]],
+) -> int:
+    comparisons = 0
+
+    union = sorted(
+        set().union(*candidate_sets)
+    )
+
+    for reference_index in union:
+        if reference_index not in feature_cache:
+            feature_cache[reference_index] = (
+                load_reference_feature_file(
+                    references[reference_index]
+                )
+            )
+
+    for card_index, candidates in enumerate(candidate_sets):
+        for reference_index in candidates:
+            if score_matrix[
+                card_index,
+                reference_index,
+            ] >= 0:
+                continue
+
+            score_matrix[
+                card_index,
+                reference_index,
+            ] = visual_similarity(
+                query_features[card_index],
+                feature_cache[reference_index],
+            )
+
+            comparisons += 1
+
+    return comparisons
+
+
+def build_full_candidate_sets(
+    references: list[ReferenceCard],
+    recognized_costs: list[int],
+) -> list[set[int]]:
+    return [
+        {
+            reference_index
+            for reference_index, reference
+            in enumerate(references)
+            if reference.cost == recognized_cost
+        }
+        for recognized_cost in recognized_costs
+    ]
+
+
+def evaluate_assignments(
+    score_matrix: np.ndarray,
+    quick_scores: np.ndarray,
+    references: list[ReferenceCard],
+    recognized_costs: list[int],
+    allowed_groups: list[tuple[str, ...]] | None,
+) -> tuple[
+    tuple[str, ...],
+    dict[int, int],
+    list[dict],
+    bool,
+]:
+    selected_classes = choose_class_group(
+        score_matrix=score_matrix,
+        references=references,
+        recognized_costs=recognized_costs,
+        allowed_groups=allowed_groups,
+    )
+
+    assignments = assign_unique_cards(
+        score_matrix=score_matrix,
+        references=references,
+        recognized_costs=recognized_costs,
+        class_group=selected_classes,
+    )
+
+    diagnostics: list[dict] = []
+    confident = True
+
+    selected_class_set = set(
+        selected_classes
+    )
+
+    for card_index, assigned_reference_index in assignments.items():
+        assigned_score = float(
+            score_matrix[
+                card_index,
+                assigned_reference_index,
+            ]
+        )
+
+        competing_scores = sorted(
+            [
+                float(
+                    score_matrix[
+                        card_index,
+                        reference_index,
+                    ]
+                )
+                for reference_index, reference
+                in enumerate(references)
+                if (
+                    reference.cost
+                    == recognized_costs[card_index]
+                    and reference.card_class
+                    in selected_class_set
+                    and reference_index
+                    != assigned_reference_index
+                    and score_matrix[
+                        card_index,
+                        reference_index,
+                    ] >= 0
+                )
+            ],
+            reverse=True,
+        )
+
+        second_best_score = (
+            competing_scores[0]
+            if competing_scores
+            else 0.0
+        )
+
+        margin = (
+            assigned_score
+            - second_best_score
+        )
+
+        fingerprint_score = float(
+            quick_scores[
+                card_index,
+                assigned_reference_index,
+            ]
+        )
+
+        same_cost_quick_scores = sorted(
+            [
+                float(
+                    quick_scores[
+                        card_index,
+                        reference_index,
+                    ]
+                )
+                for reference_index, reference
+                in enumerate(references)
+                if (
+                    reference.cost
+                    == recognized_costs[card_index]
+                )
+            ],
+            reverse=True,
+        )
+
+        fingerprint_rank = (
+            same_cost_quick_scores.index(
+                fingerprint_score
+            )
+            + 1
+        )
+
+        card_confident = (
+            assigned_score
+            >= FAST_ACCEPT_SCORE
+            and (
+                margin
+                >= FAST_ACCEPT_MARGIN
+                or assigned_score >= 0.90
+            )
+            and fingerprint_score
+            >= FAST_ACCEPT_FINGERPRINT
+            and (
+                fingerprint_rank <= 5
+                or fingerprint_score >= 0.92
+            )
+        )
+
+        diagnostics.append(
+            {
+                "cardIndex": card_index,
+                "referenceIndex":
+                    assigned_reference_index,
+                "score": assigned_score,
+                "margin": margin,
+                "fingerprintScore":
+                    fingerprint_score,
+                "fingerprintRank":
+                    fingerprint_rank,
+                "confident": card_confident,
+            }
+        )
+
+        if not card_confident:
+            confident = False
+
+    return (
+        selected_classes,
+        assignments,
+        diagnostics,
+        confident,
+    )
+
+
+# ---------------------------------------------------------
+# Output
+# ---------------------------------------------------------
+
+def make_output(
+    deck: dict,
+    score_matrix: np.ndarray,
+    references: list[ReferenceCard],
+    recognized_costs: list[int],
+    selected_classes: tuple[str, ...],
+    assignments: dict[int, int],
+    search_stage: str,
+    exact_comparisons: int,
+    elapsed_seconds: float,
+) -> dict:
+    output_cards = []
+    actually_used_classes = set()
+    selected_class_set = set(selected_classes)
+
+    for card_index, deck_card in enumerate(deck["cards"]):
+        assigned_reference_index = assignments[card_index]
+        assigned_reference = references[
+            assigned_reference_index
+        ]
+
+        actually_used_classes.add(
+            assigned_reference.card_class
+        )
+
+        allowed_alternatives = [
+            (
+                reference,
+                float(
+                    score_matrix[
+                        card_index,
+                        reference_index,
+                    ]
+                ),
+            )
+            for reference_index, reference
+            in enumerate(references)
+            if (
+                reference.cost
+                == recognized_costs[card_index]
+                and reference.card_class
+                in selected_class_set
+                and score_matrix[
+                    card_index,
+                    reference_index,
+                ] >= 0
+            )
+        ]
+
+        allowed_alternatives.sort(
+            key=lambda item: item[1],
+            reverse=True,
+        )
+
+        assigned_score = float(
+            score_matrix[
+                card_index,
+                assigned_reference_index,
+            ]
+        )
+
+        competing_scores = [
+            score
+            for reference, score
+            in allowed_alternatives
+            if (
+                reference.card_id
+                != assigned_reference.card_id
+            )
+        ]
+
+        second_best_score = (
+            competing_scores[0]
+            if competing_scores
+            else 0.0
+        )
+
+        margin = (
+            assigned_score
+            - second_best_score
+        )
+
+        needs_review = (
+            assigned_score < LOW_SCORE_THRESHOLD
+            or margin < LOW_MARGIN_THRESHOLD
+        )
+
+        alternatives = [
+            {
+                "cardId": reference.card_id,
+                "name": reference.display_name,
+                "class": reference.card_class,
+                "cost": reference.cost,
+                "score": round(score, 4),
+            }
+            for reference, score
+            in allowed_alternatives[:3]
+        ]
+
+        output_cards.append(
+            {
+                **deck_card,
+                "cardId":
+                    assigned_reference.card_id,
+                "name":
+                    assigned_reference.display_name,
+                "class":
+                    assigned_reference.card_class,
+                "matchedReference":
+                    assigned_reference.reference_filename,
+                "matchScore":
+                    round(assigned_score, 4),
+                "matchMargin":
+                    round(margin, 4),
+                "costVerified":
+                    assigned_reference.cost
+                    == recognized_costs[card_index],
+                "needsReview":
+                    needs_review,
+                "alternatives":
+                    alternatives,
+            }
+        )
+
+    return {
+        **deck,
+        "identifiedClasses":
+            sorted(actually_used_classes),
+        "selectedClassSearchGroup":
+            list(selected_classes),
+        "allCardsIdentified":
+            all(
+                not card["needsReview"]
+                for card in output_cards
+            ),
+        "recognitionDiagnostics": {
+            "searchStage": search_stage,
+            "exactComparisons":
+                exact_comparisons,
+            "elapsedSeconds":
+                round(elapsed_seconds, 3),
+            "fullFallbackEnabled":
+                ENABLE_FULL_FALLBACK,
+        },
+        "cards":
+            output_cards,
+    }
 
 
 # ---------------------------------------------------------
@@ -737,6 +1331,11 @@ def assign_unique_cards(
 # ---------------------------------------------------------
 
 def main() -> None:
+    started = time.perf_counter()
+
+    cv2.setNumThreads(1)
+    cv2.ocl.setUseOpenCL(False)
+
     if not DECK_READ_PATH.exists():
         raise FileNotFoundError(
             f"Missing {DECK_READ_PATH}. Run read-deck.js first."
@@ -747,15 +1346,7 @@ def main() -> None:
             f"Missing {CARD_DATA_PATH}."
         )
 
-    if not REFERENCE_DIR.exists():
-        raise FileNotFoundError(
-            f"Missing reference folder {REFERENCE_DIR}."
-        )
-
-    with DECK_READ_PATH.open(
-        "r",
-        encoding="utf-8",
-    ) as file:
+    with DECK_READ_PATH.open("r", encoding="utf-8") as file:
         deck = json.load(file)
 
     deck_cards = deck.get("cards", [])
@@ -777,21 +1368,18 @@ def main() -> None:
 
         recognized_costs.append(cost)
 
-    card_data, name_lookup = load_card_data()
+    print("Loading precomputed reference index...")
 
-    print("Loading reference card images...")
-
-    references = load_reference_cards(
-        card_data=card_data,
-        name_lookup=name_lookup,
-        wanted_costs=set(recognized_costs),
+    references, reference_fingerprints = (
+        load_reference_index()
     )
 
     print(
-        f"Loaded {len(references)} cost-compatible reference cards."
+        f"Loaded metadata for {len(references)} reference cards."
     )
 
     query_features: list[list[FeatureSet]] = []
+    query_fingerprints: list[np.ndarray] = []
 
     for index, card in enumerate(deck_cards):
         filename = card.get("filename")
@@ -804,11 +1392,29 @@ def main() -> None:
         image_path = CARDS_DIR / filename
         image = load_image(image_path)
 
-        query_features.append(
-            extract_all_features(
-                image,
-                is_extracted_card=True,
-            )
+        features, fingerprints = (
+            extract_all_query_data(image)
+        )
+
+        query_features.append(features)
+        query_fingerprints.append(fingerprints)
+
+    print("Running fast reference shortlist...")
+
+    quick_scores = calculate_quick_scores(
+        query_fingerprints,
+        reference_fingerprints,
+    )
+
+    ranked_groups = rank_class_groups(
+        quick_scores,
+        references,
+        recognized_costs,
+    )
+
+    if not ranked_groups:
+        raise ValueError(
+            "No valid class groups were found."
         )
 
     score_matrix = np.full(
@@ -820,145 +1426,166 @@ def main() -> None:
         dtype=np.float64,
     )
 
-    print("Comparing extracted cards with references...")
+    feature_cache: dict[
+        int,
+        list[FeatureSet],
+    ] = {}
 
-    for card_index, recognized_cost in enumerate(recognized_costs):
-        compatible_indices = [
-            reference_index
-            for reference_index, reference in enumerate(references)
-            if reference.cost == recognized_cost
-        ]
+    exact_comparisons = 0
+    search_stage = "initial-shortlist"
 
+    initial_candidates = build_candidate_sets(
+        quick_scores=quick_scores,
+        references=references,
+        recognized_costs=recognized_costs,
+        ranked_groups=ranked_groups,
+        group_count=INITIAL_CLASS_GROUPS,
+        per_card=INITIAL_PER_CARD,
+        per_class=INITIAL_PER_CLASS,
+    )
+
+    exact_comparisons += exact_score_candidates(
+        query_features=query_features,
+        candidate_sets=initial_candidates,
+        references=references,
+        score_matrix=score_matrix,
+        feature_cache=feature_cache,
+    )
+
+    allowed_groups = [
+        group
+        for group, _
+        in ranked_groups[:INITIAL_CLASS_GROUPS]
+    ]
+
+    try:
+        (
+            selected_classes,
+            assignments,
+            diagnostics,
+            confident,
+        ) = evaluate_assignments(
+            score_matrix=score_matrix,
+            quick_scores=quick_scores,
+            references=references,
+            recognized_costs=recognized_costs,
+            allowed_groups=allowed_groups,
+        )
+    except ValueError:
+        confident = False
+        selected_classes = tuple()
+        assignments = {}
+        diagnostics = []
+
+    if not confident:
         print(
-            f"  Card {card_index + 1}/{len(deck_cards)}: "
-            f"cost {recognized_cost}, "
-            f"{len(compatible_indices)} possible references"
+            "Initial shortlist was uncertain; expanding exact search..."
         )
 
-        for reference_index in compatible_indices:
-            score_matrix[
-                card_index,
-                reference_index,
-            ] = visual_similarity(
-                query_features[card_index],
-                references[reference_index].features,
-            )
+        search_stage = "expanded-shortlist"
 
-    selected_classes = choose_class_group(
-        score_matrix=score_matrix,
-        references=references,
-        recognized_costs=recognized_costs,
-    )
-
-    assignments = assign_unique_cards(
-        score_matrix=score_matrix,
-        references=references,
-        recognized_costs=recognized_costs,
-        class_group=selected_classes,
-    )
-
-    output_cards = []
-    actually_used_classes = set()
-
-    for card_index, deck_card in enumerate(deck_cards):
-        assigned_reference_index = assignments[card_index]
-        assigned_reference = references[assigned_reference_index]
-
-        actually_used_classes.add(
-            assigned_reference.card_class
+        expanded_candidates = build_candidate_sets(
+            quick_scores=quick_scores,
+            references=references,
+            recognized_costs=recognized_costs,
+            ranked_groups=ranked_groups,
+            group_count=EXPANDED_CLASS_GROUPS,
+            per_card=EXPANDED_PER_CARD,
+            per_class=EXPANDED_PER_CLASS,
         )
 
-        allowed_alternatives = [
+        exact_comparisons += exact_score_candidates(
+            query_features=query_features,
+            candidate_sets=expanded_candidates,
+            references=references,
+            score_matrix=score_matrix,
+            feature_cache=feature_cache,
+        )
+
+        allowed_groups = [
+            group
+            for group, _
+            in ranked_groups[:EXPANDED_CLASS_GROUPS]
+        ]
+
+        try:
             (
-                reference,
-                float(score_matrix[card_index, reference_index]),
+                selected_classes,
+                assignments,
+                diagnostics,
+                confident,
+            ) = evaluate_assignments(
+                score_matrix=score_matrix,
+                quick_scores=quick_scores,
+                references=references,
+                recognized_costs=recognized_costs,
+                allowed_groups=allowed_groups,
             )
-            for reference_index, reference in enumerate(references)
-            if (
-                reference.cost == recognized_costs[card_index]
-                and reference.card_class in set(selected_classes)
-            )
-        ]
+        except ValueError:
+            confident = False
+            selected_classes = tuple()
+            assignments = {}
+            diagnostics = []
 
-        allowed_alternatives.sort(
-            key=lambda item: item[1],
-            reverse=True,
+    if (
+        not confident
+        and ENABLE_FULL_FALLBACK
+    ):
+        print(
+            "Expanded search was uncertain; running exact full fallback..."
         )
 
-        assigned_score = float(
-            score_matrix[
-                card_index,
-                assigned_reference_index,
-            ]
+        search_stage = "full-exact-fallback"
+
+        full_candidates = build_full_candidate_sets(
+            references,
+            recognized_costs,
         )
 
-        competing_scores = [
-            score
-            for reference, score in allowed_alternatives
-            if reference.card_id != assigned_reference.card_id
-        ]
-
-        second_best_score = (
-            competing_scores[0]
-            if competing_scores
-            else 0.0
+        exact_comparisons += exact_score_candidates(
+            query_features=query_features,
+            candidate_sets=full_candidates,
+            references=references,
+            score_matrix=score_matrix,
+            feature_cache=feature_cache,
         )
 
-        margin = assigned_score - second_best_score
-
-        needs_review = (
-            assigned_score < LOW_SCORE_THRESHOLD
-            or margin < LOW_MARGIN_THRESHOLD
+        (
+            selected_classes,
+            assignments,
+            diagnostics,
+            confident,
+        ) = evaluate_assignments(
+            score_matrix=score_matrix,
+            quick_scores=quick_scores,
+            references=references,
+            recognized_costs=recognized_costs,
+            allowed_groups=None,
         )
 
-        alternatives = [
-            {
-                "cardId": reference.card_id,
-                "name": reference.display_name,
-                "class": reference.card_class,
-                "cost": reference.cost,
-                "score": round(score, 4),
-            }
-            for reference, score in allowed_alternatives[:3]
-        ]
-
-        output_cards.append(
-            {
-                **deck_card,
-                "cardId": assigned_reference.card_id,
-                "name": assigned_reference.display_name,
-                "class": assigned_reference.card_class,
-                "matchedReference": assigned_reference.image_path.name,
-                "matchScore": round(assigned_score, 4),
-                "matchMargin": round(margin, 4),
-                "costVerified": (
-                    assigned_reference.cost
-                    == recognized_costs[card_index]
-                ),
-                "needsReview": needs_review,
-                "alternatives": alternatives,
-            }
+    if not assignments:
+        raise ValueError(
+            "No complete card assignment could be produced."
         )
 
-    output = {
-        **deck,
-        "identifiedClasses": sorted(
-            actually_used_classes
-        ),
-        "selectedClassSearchGroup": list(
-            selected_classes
-        ),
-        "allCardsIdentified": all(
-            not card["needsReview"]
-            for card in output_cards
-        ),
-        "cards": output_cards,
-    }
+    elapsed = (
+        time.perf_counter()
+        - started
+    )
 
-    with OUTPUT_PATH.open(
-        "w",
-        encoding="utf-8",
-    ) as file:
+    output = make_output(
+        deck=deck,
+        score_matrix=score_matrix,
+        references=references,
+        recognized_costs=recognized_costs,
+        selected_classes=selected_classes,
+        assignments=assignments,
+        search_stage=search_stage,
+        exact_comparisons=exact_comparisons,
+        elapsed_seconds=elapsed,
+    )
+
+    with OUTPUT_PATH.open("w", encoding="utf-8") as file:
         json.dump(
             output,
             file,
@@ -967,21 +1594,39 @@ def main() -> None:
         )
 
     print()
-    print(f"Deck: {deck.get('deckName') or '(unnamed)'}")
+    print(
+        f"Deck: {deck.get('deckName') or '(unnamed)'}"
+    )
+
     print(
         "Classes: "
         + " + ".join(
-            sorted(actually_used_classes)
+            output["identifiedClasses"]
         )
     )
+
     print(
         f"Copies: {deck.get('totalCopies')} "
         f"{'✓' if deck.get('copyTotalIs40') else '✗'}"
     )
+
+    print(
+        f"Search: {search_stage}; "
+        f"{exact_comparisons} exact comparisons; "
+        f"{elapsed:.2f}s"
+    )
+
     print()
 
-    for index, card in enumerate(output_cards, start=1):
-        review_marker = "  REVIEW" if card["needsReview"] else ""
+    for index, card in enumerate(
+        output["cards"],
+        start=1,
+    ):
+        review_marker = (
+            "  REVIEW"
+            if card["needsReview"]
+            else ""
+        )
 
         print(
             f"{index:02d}. "
@@ -1002,5 +1647,7 @@ if __name__ == "__main__":
         main()
     except Exception as error:
         print()
-        print(f"Card identification failed: {error}")
+        print(
+            f"Card identification failed: {error}"
+        )
         sys.exit(1)

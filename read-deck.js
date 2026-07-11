@@ -10,6 +10,7 @@ const CARDS_DIR = process.argv[3] || "cards";
 const META_FILE = path.join(CARDS_DIR, "cards.json");
 const OUTPUT_FILE = path.join(CARDS_DIR, "deck-read.json");
 const DEBUG_DIR = path.join(CARDS_DIR, "ocr-debug");
+const DEBUG_OUTPUT = process.env.PVZH_DEBUG === "1";
 
 const clamp = (number, minimum, maximum) =>
   Math.max(minimum, Math.min(maximum, number));
@@ -87,32 +88,36 @@ function parseCost(text) {
   return value;
 }
 
+function sharpFromRawSource(source) {
+  return sharp(source.data, {
+    raw: source.raw,
+  });
+}
+
 async function preprocessName(
-  input,
+  source,
   rect,
   threshold
 ) {
-  return sharp(input)
+  return sharpFromRawSource(source)
     .extract(rect)
-    .removeAlpha()
     .grayscale()
     .threshold(threshold)
     .resize({
       width: rect.width * 2,
       kernel: sharp.kernel.cubic,
     })
-    .png()
+    .png({ compressionLevel: 1 })
     .toBuffer();
 }
 
 async function preprocessCopies(
-  input,
+  source,
   rect,
   threshold
 ) {
-  return sharp(input)
+  return sharpFromRawSource(source)
     .extract(rect)
-    .removeAlpha()
     .grayscale()
     .threshold(threshold)
     .negate()
@@ -132,7 +137,7 @@ async function preprocessCopies(
         alpha: 1,
       },
     })
-    .png()
+    .png({ compressionLevel: 1 })
     .toBuffer();
 }
 
@@ -247,16 +252,15 @@ function findComponents(
  * antialiasing and screenshot compression vary.
  */
 async function isolateCostDigits(
-  input,
+  source,
   rect,
   threshold
 ) {
   const {
     data,
     info,
-  } = await sharp(input)
+  } = await sharpFromRawSource(source)
     .extract(rect)
-    .removeAlpha()
     .raw()
     .toBuffer({
       resolveWithObject: true,
@@ -497,7 +501,7 @@ async function isolateCostDigits(
       fit: "contain",
       kernel: sharp.kernel.nearest,
     })
-    .png()
+    .png({ compressionLevel: 1 })
     .toBuffer();
 }
 
@@ -528,14 +532,23 @@ async function main() {
     )
   );
 
-  const imageMetadata =
-    await sharp(INPUT).metadata();
+  /*
+   * Decode the uploaded image exactly once. Every OCR crop is then
+   * taken from this in-memory raw image instead of decoding deck.png
+   * again for every Tesseract attempt.
+   */
+  const {
+    data: sourceData,
+    info: sourceInfo,
+  } = await sharp(INPUT)
+    .removeAlpha()
+    .raw()
+    .toBuffer({
+      resolveWithObject: true,
+    });
 
-  const imageWidth =
-    imageMetadata.width;
-
-  const imageHeight =
-    imageMetadata.height;
+  const imageWidth = sourceInfo.width;
+  const imageHeight = sourceInfo.height;
 
   if (!imageWidth || !imageHeight) {
     throw new Error(
@@ -543,9 +556,20 @@ async function main() {
     );
   }
 
-  await fs.mkdir(DEBUG_DIR, {
-    recursive: true,
-  });
+  const source = {
+    data: sourceData,
+    raw: {
+      width: sourceInfo.width,
+      height: sourceInfo.height,
+      channels: sourceInfo.channels,
+    },
+  };
+
+  if (DEBUG_OUTPUT) {
+    await fs.mkdir(DEBUG_DIR, {
+      recursive: true,
+    });
+  }
 
   /*
    * Use locally installed English training data.
@@ -610,7 +634,7 @@ async function main() {
     ) {
       const buffer =
         await preprocessName(
-          INPUT,
+          source,
           nameRect,
           threshold
         );
@@ -632,7 +656,7 @@ async function main() {
       }
     }
 
-    if (nameDebugImage) {
+    if (DEBUG_OUTPUT && nameDebugImage) {
       await fs.writeFile(
         path.join(
           DEBUG_DIR,
@@ -721,7 +745,7 @@ async function main() {
 
         const buffer =
           await preprocessCopies(
-            INPUT,
+            source,
             rect,
             variant.threshold
           );
@@ -747,7 +771,7 @@ async function main() {
 
       copies.push(value);
 
-      if (debugBuffer) {
+      if (DEBUG_OUTPUT && debugBuffer) {
         await fs.writeFile(
           path.join(
             DEBUG_DIR,
@@ -830,7 +854,7 @@ async function main() {
       ) {
         const buffer =
           await isolateCostDigits(
-            INPUT,
+            source,
             rect,
             threshold
           );
@@ -883,7 +907,7 @@ async function main() {
       const debugImage =
         debugImages.get(value);
 
-      if (debugImage) {
+      if (DEBUG_OUTPUT && debugImage) {
         await fs.writeFile(
           path.join(
             DEBUG_DIR,

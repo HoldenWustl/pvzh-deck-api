@@ -4,6 +4,7 @@ const path = require("path");
 
 const INPUT = process.argv[2] || "deck.png";
 const OUTPUT_DIR = process.argv[3] || "cards";
+const DEBUG_OUTPUT = process.env.PVZH_DEBUG === "1";
 
 const clamp = (value, min, max) =>
   Math.max(min, Math.min(max, value));
@@ -621,7 +622,7 @@ async function main() {
         width: card.width,
         height: card.height,
       })
-      .png()
+      .png({ compressionLevel: 1 })
       .toFile(
         path.join(OUTPUT_DIR, filename)
       );
@@ -658,87 +659,89 @@ async function main() {
     JSON.stringify(metadata, null, 2)
   );
 
-  /*
-   * Create a debug image with green boxes around each card.
-   */
+  if (DEBUG_OUTPUT) {
+    /*
+     * Create a debug image with green boxes around each card.
+     */
 
-  const rectangles = grid.cards
-    .map((card, index) => {
-      const y = deckTop + card.y;
+    const rectangles = grid.cards
+      .map((card, index) => {
+        const y = deckTop + card.y;
 
-      return `
-        <rect
-          x="${card.x}"
-          y="${y}"
-          width="${card.width}"
-          height="${card.height}"
-          fill="none"
-          stroke="#00ff66"
-          stroke-width="4"
-        />
+        return `
+          <rect
+            x="${card.x}"
+            y="${y}"
+            width="${card.width}"
+            height="${card.height}"
+            fill="none"
+            stroke="#00ff66"
+            stroke-width="4"
+          />
 
-        <rect
-          x="${card.x + 4}"
-          y="${y + 4}"
-          width="38"
-          height="28"
-          fill="#000000"
-          fill-opacity="0.75"
-        />
+          <rect
+            x="${card.x + 4}"
+            y="${y + 4}"
+            width="38"
+            height="28"
+            fill="#000000"
+            fill-opacity="0.75"
+          />
+
+          <text
+            x="${card.x + 23}"
+            y="${y + 25}"
+            text-anchor="middle"
+            font-family="Arial"
+            font-size="20"
+            font-weight="bold"
+            fill="#ffffff"
+          >
+            ${index + 1}
+          </text>
+        `;
+      })
+      .join("");
+
+    const svg = Buffer.from(`
+      <svg
+        width="${width}"
+        height="${height}"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        ${rectangles}
 
         <text
-          x="${card.x + 23}"
-          y="${y + 25}"
-          text-anchor="middle"
+          x="12"
+          y="30"
           font-family="Arial"
-          font-size="20"
+          font-size="22"
           font-weight="bold"
           fill="#ffffff"
+          stroke="#000000"
+          stroke-width="3"
+          paint-order="stroke"
         >
-          ${index + 1}
+          ${escapeXml(
+            `Detected ${grid.cards.length} cards`
+          )}
         </text>
-      `;
-    })
-    .join("");
+      </svg>
+    `);
 
-  const svg = Buffer.from(`
-    <svg
-      width="${width}"
-      height="${height}"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      ${rectangles}
-
-      <text
-        x="12"
-        y="30"
-        font-family="Arial"
-        font-size="22"
-        font-weight="bold"
-        fill="#ffffff"
-        stroke="#000000"
-        stroke-width="3"
-        paint-order="stroke"
-      >
-        ${escapeXml(
-          `Detected ${grid.cards.length} cards`
-        )}
-      </text>
-    </svg>
-  `);
-
-  await sharp(INPUT)
-    .composite([
-      {
-        input: svg,
-        top: 0,
-        left: 0,
-      },
-    ])
-    .png()
-    .toFile(
-      path.join(OUTPUT_DIR, "debug-grid.png")
-    );
+    await sharp(INPUT)
+      .composite([
+        {
+          input: svg,
+          top: 0,
+          left: 0,
+        },
+      ])
+      .png({ compressionLevel: 1 })
+      .toFile(
+        path.join(OUTPUT_DIR, "debug-grid.png")
+      );
+  }
 
   console.log(
     `Detected ${grid.cards.length} cards.`
@@ -748,12 +751,14 @@ async function main() {
     `Saved crops to: ${path.resolve(OUTPUT_DIR)}`
   );
 
-  console.log(
-    `Check ${path.join(
-      OUTPUT_DIR,
-      "debug-grid.png"
-    )} to verify the boxes.`
-  );
+  if (DEBUG_OUTPUT) {
+    console.log(
+      `Check ${path.join(
+        OUTPUT_DIR,
+        "debug-grid.png"
+      )} to verify the boxes.`
+    );
+  }
 }
 
 main().catch(error => {
