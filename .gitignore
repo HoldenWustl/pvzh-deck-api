@@ -4,3 +4,5 @@ deck.png
 *.log
 __pycache__/
 .DS_Store
+eng.traineddata
+*.traineddata
