@@ -1,7 +1,11 @@
 const sharp = require("sharp");
 const fs = require("fs/promises");
 const path = require("path");
-const { createWorker, PSM } = require("tesseract.js");
+const {
+  createWorker,
+  PSM
+} = require("tesseract.js");
+
 const englishData = require("@tesseract.js-data/eng");
 
 const INPUT = process.argv[2] || "deck.png";
@@ -10,6 +14,7 @@ const CARDS_DIR = process.argv[3] || "cards";
 const META_FILE = path.join(CARDS_DIR, "cards.json");
 const OUTPUT_FILE = path.join(CARDS_DIR, "deck-read.json");
 const DEBUG_DIR = path.join(CARDS_DIR, "ocr-debug");
+
 const DEBUG_OUTPUT = process.env.PVZH_DEBUG === "1";
 
 const clamp = (number, minimum, maximum) =>
@@ -44,7 +49,7 @@ function safeRect(rect, imageWidth, imageHeight) {
     left,
     top,
     width: right - left,
-    height: bottom - top,
+    height: bottom - top
   };
 }
 
@@ -55,6 +60,7 @@ function cleanName(text) {
     .replace(/^[^A-Za-z0-9]+/, "")
     .replace(/[^A-Za-z0-9'&:+!?().\- ]+$/, "")
     .replace(/\s+40(?:\s*\/\s*40)?$/, "")
+    .replace(/\s+[()]+$/, "")
     .trim();
 }
 
@@ -90,7 +96,7 @@ function parseCost(text) {
 
 function sharpFromRawSource(source) {
   return sharp(source.data, {
-    raw: source.raw,
+    raw: source.raw
   });
 }
 
@@ -105,9 +111,11 @@ async function preprocessName(
     .threshold(threshold)
     .resize({
       width: rect.width * 2,
-      kernel: sharp.kernel.cubic,
+      kernel: sharp.kernel.cubic
     })
-    .png({ compressionLevel: 1 })
+    .png({
+      compressionLevel: 1
+    })
     .toBuffer();
 }
 
@@ -123,7 +131,7 @@ async function preprocessCopies(
     .negate()
     .resize({
       width: rect.width * 4,
-      kernel: sharp.kernel.cubic,
+      kernel: sharp.kernel.cubic
     })
     .extend({
       top: 20,
@@ -134,27 +142,166 @@ async function preprocessCopies(
         r: 255,
         g: 255,
         b: 255,
-        alpha: 1,
-      },
+        alpha: 1
+      }
     })
-    .png({ compressionLevel: 1 })
+    .png({
+      compressionLevel: 1
+    })
     .toBuffer();
 }
 
-/*
- * Finds connected groups of dark pixels.
- *
- * This is used to isolate the black number inside
- * the sun or brain cost icon while ignoring the
- * surrounding card artwork.
- */
+async function preprocessTightDigit(
+  source,
+  rect,
+  threshold,
+  invert
+) {
+  let pipeline = sharpFromRawSource(source)
+    .extract(rect)
+    .grayscale()
+    .threshold(threshold);
+
+  if (invert) {
+    pipeline = pipeline.negate();
+  }
+
+  return pipeline
+    .resize({
+      width: Math.max(
+        80,
+        rect.width * 8
+      ),
+      kernel: sharp.kernel.cubic
+    })
+    .extend({
+      top: 24,
+      bottom: 24,
+      left: 24,
+      right: 24,
+      background: {
+        r: 255,
+        g: 255,
+        b: 255,
+        alpha: 1
+      }
+    })
+    .png({
+      compressionLevel: 1
+    })
+    .toBuffer();
+}
+
+function ocrConfidence(result) {
+  const confidence = Number(
+    result?.data?.confidence
+  );
+
+  return Number.isFinite(confidence)
+    ? confidence
+    : 0;
+}
+
+function chooseCopiesTotalingForty(
+  candidateLists
+) {
+  let states = new Map();
+
+  states.set(0, {
+    score: 0,
+    values: [],
+    buffers: []
+  });
+
+  for (const candidates of candidateLists) {
+    const byValue = new Map();
+
+    for (const candidate of candidates) {
+      if (
+        !Number.isInteger(candidate.value) ||
+        candidate.value < 1 ||
+        candidate.value > 4
+      ) {
+        continue;
+      }
+
+      const previous =
+        byValue.get(candidate.value);
+
+      if (
+        !previous ||
+        candidate.score > previous.score
+      ) {
+        byValue.set(
+          candidate.value,
+          candidate
+        );
+      }
+    }
+
+    if (byValue.size === 0) {
+      return null;
+    }
+
+    const nextStates = new Map();
+
+    for (const [total, state] of states) {
+      for (const candidate of byValue.values()) {
+        const nextTotal =
+          total + candidate.value;
+
+        if (nextTotal > 40) {
+          continue;
+        }
+
+        const nextScore =
+          state.score +
+          candidate.score;
+
+        const existing =
+          nextStates.get(nextTotal);
+
+        if (
+          !existing ||
+          nextScore > existing.score
+        ) {
+          nextStates.set(
+            nextTotal,
+            {
+              score: nextScore,
+
+              values: [
+                ...state.values,
+                candidate.value
+              ],
+
+              buffers: [
+                ...state.buffers,
+                candidate.buffer
+              ]
+            }
+          );
+        }
+      }
+    }
+
+    states = nextStates;
+  }
+
+  return states.get(40) || null;
+}
+
 function findComponents(
   binary,
   width,
   height
 ) {
-  const seen = new Uint8Array(binary.length);
-  const queue = new Int32Array(binary.length);
+  const seen =
+    new Uint8Array(binary.length);
+
+  const queue =
+    new Int32Array(binary.length);
+
   const result = [];
 
   for (
@@ -162,7 +309,10 @@ function findComponents(
     start < binary.length;
     start++
   ) {
-    if (!binary[start] || seen[start]) {
+    if (
+      !binary[start] ||
+      seen[start]
+    ) {
       continue;
     }
 
@@ -182,9 +332,14 @@ function findComponents(
     const pixels = [];
 
     while (head < tail) {
-      const index = queue[head++];
-      const x = index % width;
-      const y = Math.floor(index / width);
+      const index =
+        queue[head++];
+
+      const x =
+        index % width;
+
+      const y =
+        Math.floor(index / width);
 
       pixels.push(index);
 
@@ -196,9 +351,20 @@ function findComponents(
       sumX += x;
       sumY += y;
 
-      for (let dy = -1; dy <= 1; dy++) {
-        for (let dx = -1; dx <= 1; dx++) {
-          if (dx === 0 && dy === 0) {
+      for (
+        let dy = -1;
+        dy <= 1;
+        dy++
+      ) {
+        for (
+          let dx = -1;
+          dx <= 1;
+          dx++
+        ) {
+          if (
+            dx === 0 &&
+            dy === 0
+          ) {
             continue;
           }
 
@@ -235,22 +401,20 @@ function findComponents(
       area,
       x: minX,
       y: minY,
-      width: maxX - minX + 1,
-      height: maxY - minY + 1,
-      cx: sumX / area,
-      cy: sumY / area,
+      width:
+        maxX - minX + 1,
+      height:
+        maxY - minY + 1,
+      cx:
+        sumX / area,
+      cy:
+        sumY / area
     });
   }
 
   return result;
 }
 
-/*
- * Isolates the cost number from its sun or brain icon.
- *
- * Several thresholds are attempted later because
- * antialiasing and screenshot compression vary.
- */
 async function isolateCostDigits(
   source,
   rect,
@@ -258,30 +422,30 @@ async function isolateCostDigits(
 ) {
   const {
     data,
-    info,
+    info
   } = await sharpFromRawSource(source)
     .extract(rect)
     .raw()
     .toBuffer({
-      resolveWithObject: true,
+      resolveWithObject: true
     });
 
   const {
     width,
     height,
-    channels,
+    channels
   } = info;
 
-  const binary = new Uint8Array(
-    width * height
-  );
+  const binary =
+    new Uint8Array(width * height);
 
   for (
     let index = 0;
     index < binary.length;
     index++
   ) {
-    const offset = index * channels;
+    const offset =
+      index * channels;
 
     const red = data[offset];
     const green = data[offset + 1];
@@ -293,7 +457,9 @@ async function isolateCostDigits(
       0.114 * blue;
 
     binary[index] =
-      grayscale < threshold ? 1 : 0;
+      grayscale < threshold
+        ? 1
+        : 0;
   }
 
   const minimumArea = Math.max(
@@ -343,7 +509,7 @@ async function isolateCostDigits(
           width *
             height *
             0.09 *
-            centrality,
+            centrality
       };
     })
     .sort(
@@ -358,38 +524,35 @@ async function isolateCostDigits(
   const primary = candidates[0];
   const selected = [primary];
 
-  /*
-   * A cost can theoretically have two digits,
-   * such as 10 or 11.
-   *
-   * Include a nearby component if it looks like
-   * a second digit of approximately the same size.
-   */
   const second = candidates
     .slice(1)
     .find(component => {
       const verticalDistance =
         Math.abs(
-          component.cy - primary.cy
+          component.cy -
+          primary.cy
         );
 
       const primaryRight =
-        primary.x + primary.width;
+        primary.x +
+        primary.width;
 
       const componentRight =
-        component.x + component.width;
+        component.x +
+        component.width;
 
-      const horizontalGap = Math.max(
-        0,
+      const horizontalGap =
         Math.max(
-          primary.x,
-          component.x
-        ) -
+          0,
+          Math.max(
+            primary.x,
+            component.x
+          ) -
           Math.min(
             primaryRight,
             componentRight
           )
-      );
+        );
 
       return (
         component.height >=
@@ -453,10 +616,6 @@ async function isolateCostDigits(
     1 +
     padding * 2;
 
-  /*
-   * Start with a white image and draw only
-   * the selected digit pixels in black.
-   */
   const canvas = Buffer.alloc(
     canvasWidth * canvasHeight,
     255
@@ -476,13 +635,18 @@ async function isolateCostDigits(
         );
 
       const outputX =
-        x - minimumX + padding;
+        x -
+        minimumX +
+        padding;
 
       const outputY =
-        y - minimumY + padding;
+        y -
+        minimumY +
+        padding;
 
       canvas[
-        outputY * canvasWidth +
+        outputY *
+        canvasWidth +
         outputX
       ] = 0;
     }
@@ -492,16 +656,18 @@ async function isolateCostDigits(
     raw: {
       width: canvasWidth,
       height: canvasHeight,
-      channels: 1,
-    },
+      channels: 1
+    }
   })
     .resize({
       width: 90,
       height: 130,
       fit: "contain",
-      kernel: sharp.kernel.nearest,
+      kernel: sharp.kernel.nearest
     })
-    .png({ compressionLevel: 1 })
+    .png({
+      compressionLevel: 1
+    })
     .toBuffer();
 }
 
@@ -532,25 +698,26 @@ async function main() {
     )
   );
 
-  /*
-   * Decode the uploaded image exactly once. Every OCR crop is then
-   * taken from this in-memory raw image instead of decoding deck.png
-   * again for every Tesseract attempt.
-   */
   const {
     data: sourceData,
-    info: sourceInfo,
+    info: sourceInfo
   } = await sharp(INPUT)
     .removeAlpha()
     .raw()
     .toBuffer({
-      resolveWithObject: true,
+      resolveWithObject: true
     });
 
-  const imageWidth = sourceInfo.width;
-  const imageHeight = sourceInfo.height;
+  const imageWidth =
+    sourceInfo.width;
 
-  if (!imageWidth || !imageHeight) {
+  const imageHeight =
+    sourceInfo.height;
+
+  if (
+    !imageWidth ||
+    !imageHeight
+  ) {
     throw new Error(
       "Could not read the image size."
     );
@@ -558,24 +725,28 @@ async function main() {
 
   const source = {
     data: sourceData,
+
     raw: {
-      width: sourceInfo.width,
-      height: sourceInfo.height,
-      channels: sourceInfo.channels,
-    },
+      width:
+        sourceInfo.width,
+
+      height:
+        sourceInfo.height,
+
+      channels:
+        sourceInfo.channels
+    }
   };
 
   if (DEBUG_OUTPUT) {
-    await fs.mkdir(DEBUG_DIR, {
-      recursive: true,
-    });
+    await fs.mkdir(
+      DEBUG_DIR,
+      {
+        recursive: true
+      }
+    );
   }
 
-  /*
-   * Use locally installed English training data.
-   * This avoids downloading the OCR model whenever
-   * the script is run on a new machine.
-   */
   const worker = await createWorker(
     "eng",
     1,
@@ -584,7 +755,7 @@ async function main() {
         englishData.langPath,
 
       gzip:
-        englishData.gzip,
+        englishData.gzip
     }
   );
 
@@ -608,7 +779,7 @@ async function main() {
           imageWidth * 0.76,
 
         height:
-          imageHeight * 0.105,
+          imageHeight * 0.105
       },
       imageWidth,
       imageHeight
@@ -622,7 +793,7 @@ async function main() {
         "",
 
       user_defined_dpi:
-        "300",
+        "300"
     });
 
     let deckName = null;
@@ -656,7 +827,10 @@ async function main() {
       }
     }
 
-    if (DEBUG_OUTPUT && nameDebugImage) {
+    if (
+      DEBUG_OUTPUT &&
+      nameDebugImage
+    ) {
       await fs.writeFile(
         path.join(
           DEBUG_DIR,
@@ -680,10 +854,12 @@ async function main() {
         "xX1234",
 
       user_defined_dpi:
-        "300",
+        "300"
     });
 
+    const copyCandidates = [];
     const copies = [];
+    const copyDebugBuffers = [];
 
     for (
       let cardIndex = 0;
@@ -694,27 +870,20 @@ async function main() {
       const card =
         metadata.cards[cardIndex];
 
-      let value = null;
-      let debugBuffer = null;
+      let chosenCandidate = null;
+      let firstDebugBuffer = null;
 
-      /*
-       * Two slightly different crops are attempted.
-       *
-       * One works better for most cards, while the
-       * narrower version avoids nearby artwork or
-       * stat bubbles on certain cards.
-       */
       const variants = [
         {
           width: 0.28,
           height: 0.34,
-          threshold: 200,
+          threshold: 200
         },
         {
           width: 0.24,
           height: 0.32,
-          threshold: 185,
-        },
+          threshold: 185
+        }
       ];
 
       for (
@@ -737,7 +906,7 @@ async function main() {
 
             height:
               card.height *
-              variant.height,
+              variant.height
           },
           imageWidth,
           imageHeight
@@ -750,28 +919,199 @@ async function main() {
             variant.threshold
           );
 
+        if (!firstDebugBuffer) {
+          firstDebugBuffer = buffer;
+        }
+
         const result =
           await worker.recognize(
             buffer
           );
 
-        value = parseCopies(
-          result.data.text
-        );
+        const value =
+          parseCopies(
+            result.data.text
+          );
 
-        if (!debugBuffer) {
-          debugBuffer = buffer;
+        if (value === null) {
+          continue;
         }
 
+        chosenCandidate = {
+          value,
+
+          score:
+            ocrConfidence(result),
+
+          buffer,
+
+          source:
+            "badge"
+        };
+
+        break;
+      }
+
+      copyCandidates.push(
+        chosenCandidate
+          ? [chosenCandidate]
+          : []
+      );
+
+      copies.push(
+        chosenCandidate?.value ??
+        null
+      );
+
+      copyDebugBuffers.push(
+        chosenCandidate?.buffer ??
+        firstDebugBuffer
+      );
+    }
+
+    const firstCopyTotal =
+      copies.every(
+        Number.isInteger
+      )
+        ? copies.reduce(
+            (total, value) =>
+              total + value,
+            0
+          )
+        : null;
+
+    /*
+     * Only run the more expensive tight-digit pass
+     * when the initial values do not total 40.
+     */
+    if (firstCopyTotal !== 40) {
+      await worker.setParameters({
+        tessedit_pageseg_mode:
+          PSM.SINGLE_CHAR,
+
+        tessedit_char_whitelist:
+          "1234",
+
+        user_defined_dpi:
+          "300"
+      });
+
+      for (
+        let cardIndex = 0;
+        cardIndex <
+        metadata.cards.length;
+        cardIndex++
+      ) {
+        const card =
+          metadata.cards[cardIndex];
+
+        const tightRect = safeRect(
+          {
+            left:
+              card.x +
+              card.width * 0.145,
+
+            top:
+              card.y +
+              card.height * 0.635,
+
+            width:
+              card.width * 0.13,
+
+            height:
+              card.height * 0.31
+          },
+          imageWidth,
+          imageHeight
+        );
+
+        const buffer =
+          await preprocessTightDigit(
+            source,
+            tightRect,
+            190,
+            true
+          );
+
+        const result =
+          await worker.recognize(
+            buffer
+          );
+
+        const value =
+          parseCopies(
+            result.data.text
+          );
+
         if (value !== null) {
-          debugBuffer = buffer;
-          break;
+          copyCandidates[
+            cardIndex
+          ].push({
+            value,
+
+            score:
+              ocrConfidence(result) +
+              8,
+
+            buffer,
+
+            source:
+              "tight-digit"
+          });
         }
       }
 
-      copies.push(value);
+      const repaired =
+        chooseCopiesTotalingForty(
+          copyCandidates
+        );
 
-      if (DEBUG_OUTPUT && debugBuffer) {
+      if (repaired) {
+        copies.splice(
+          0,
+          copies.length,
+          ...repaired.values
+        );
+
+        copyDebugBuffers.splice(
+          0,
+          copyDebugBuffers.length,
+          ...repaired.buffers
+        );
+
+        console.log(
+          "Copy OCR repaired using tight digits and the 40-card total."
+        );
+      }
+
+      await worker.setParameters({
+        tessedit_pageseg_mode:
+          PSM.SINGLE_CHAR,
+
+        tessedit_char_whitelist:
+          "0123456789",
+
+        user_defined_dpi:
+          "300"
+      });
+    }
+
+    if (DEBUG_OUTPUT) {
+      for (
+        let cardIndex = 0;
+        cardIndex <
+        copyDebugBuffers.length;
+        cardIndex++
+      ) {
+        const buffer =
+          copyDebugBuffers[
+            cardIndex
+          ];
+
+        if (!buffer) {
+          continue;
+        }
+
         await fs.writeFile(
           path.join(
             DEBUG_DIR,
@@ -782,7 +1122,7 @@ async function main() {
               "0"
             )}.png`
           ),
-          debugBuffer
+          buffer
         );
       }
     }
@@ -801,7 +1141,7 @@ async function main() {
         "0123456789",
 
       user_defined_dpi:
-        "300",
+        "300"
     });
 
     const costs = [];
@@ -815,10 +1155,6 @@ async function main() {
       const card =
         metadata.cards[cardIndex];
 
-      /*
-       * The sun or brain cost bubble sits in the
-       * upper-right portion of each detected card.
-       */
       const rect = safeRect(
         {
           left:
@@ -832,22 +1168,19 @@ async function main() {
             card.width * 0.30,
 
           height:
-            card.height * 0.40,
+            card.height * 0.40
         },
         imageWidth,
         imageHeight
       );
 
       const readings = [];
+
       const debugImages =
         new Map();
 
-      /*
-       * Read the isolated digit using several
-       * darkness thresholds.
-       *
-       * Stop when the same value has been seen twice.
-       */
+      let firstAttemptBuffer = null;
+
       for (
         const threshold
         of [70, 85, 100, 115, 130]
@@ -861,6 +1194,11 @@ async function main() {
 
         if (!buffer) {
           continue;
+        }
+
+        if (!firstAttemptBuffer) {
+          firstAttemptBuffer =
+            buffer;
         }
 
         const result =
@@ -899,33 +1237,131 @@ async function main() {
         }
       }
 
-      const value =
+      let value =
         mostCommon(readings);
+
+      /*
+       * Fallback for cases where the connected-component
+       * detector rejects a clear digit because it touches
+       * part of the cost icon.
+       */
+      if (value === null) {
+        const tightRect = safeRect(
+          {
+            left:
+              card.x +
+              card.width * 0.745,
+
+            top:
+              card.y +
+              card.height * 0.015,
+
+            width:
+              card.width * 0.23,
+
+            height:
+              card.height * 0.34
+          },
+          imageWidth,
+          imageHeight
+        );
+
+        let bestFallback = null;
+
+        for (
+          const threshold
+          of [110, 145, 180]
+        ) {
+          const buffer =
+            await preprocessTightDigit(
+              source,
+              tightRect,
+              threshold,
+              false
+            );
+
+          if (!firstAttemptBuffer) {
+            firstAttemptBuffer =
+              buffer;
+          }
+
+          const result =
+            await worker.recognize(
+              buffer
+            );
+
+          const candidate =
+            parseCost(
+              result.data.text
+            );
+
+          if (candidate === null) {
+            continue;
+          }
+
+          const confidence =
+            ocrConfidence(result);
+
+          if (
+            !bestFallback ||
+            confidence >
+              bestFallback.confidence
+          ) {
+            bestFallback = {
+              value: candidate,
+              confidence,
+              buffer
+            };
+          }
+        }
+
+        if (bestFallback) {
+          value =
+            bestFallback.value;
+
+          debugImages.set(
+            value,
+            bestFallback.buffer
+          );
+
+          console.log(
+            `Cost ${cardIndex + 1} recovered by tight-digit OCR: ${value}`
+          );
+        }
+      }
 
       costs.push(value);
 
-      const debugImage =
-        debugImages.get(value);
+      if (DEBUG_OUTPUT) {
+        const debugImage =
+          debugImages.get(value) ||
+          firstAttemptBuffer;
 
-      if (DEBUG_OUTPUT && debugImage) {
-        await fs.writeFile(
-          path.join(
-            DEBUG_DIR,
-            `cost_${String(
-              cardIndex + 1
-            ).padStart(
-              2,
-              "0"
-            )}.png`
-          ),
-          debugImage
-        );
+        if (debugImage) {
+          const suffix =
+            value === null
+              ? "_FAILED"
+              : "";
+
+          await fs.writeFile(
+            path.join(
+              DEBUG_DIR,
+              `cost_${String(
+                cardIndex + 1
+              ).padStart(
+                2,
+                "0"
+              )}${suffix}.png`
+            ),
+            debugImage
+          );
+        }
       }
     }
 
     /*
      * --------------------------------------------------
-     * 4. VALIDATION
+     * 4. VALIDATION AND OUTPUT
      * --------------------------------------------------
      */
 
@@ -942,10 +1378,7 @@ async function main() {
     const totalCopies =
       allCopiesRead
         ? copies.reduce(
-            (
-              total,
-              value
-            ) =>
+            (total, value) =>
               total + value,
             0
           )
@@ -954,10 +1387,7 @@ async function main() {
     const costsNonDecreasing =
       allCostsRead &&
       costs.every(
-        (
-          cost,
-          index
-        ) =>
+        (cost, index) =>
           index === 0 ||
           cost >=
             costs[index - 1]
@@ -965,10 +1395,7 @@ async function main() {
 
     const cards =
       metadata.cards.map(
-        (
-          card,
-          index
-        ) => ({
+        (card, index) => ({
           index:
             index + 1,
 
@@ -985,7 +1412,7 @@ async function main() {
             copies[index],
 
           cost:
-            costs[index],
+            costs[index]
         })
       );
 
@@ -1009,7 +1436,7 @@ async function main() {
 
       costsNonDecreasing,
 
-      cards,
+      cards
     };
 
     await fs.writeFile(
