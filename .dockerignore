@@ -1,0 +1,8 @@
+node_modules
+cards
+deck.png
+*.log
+.git
+.gitignore
+__pycache__
+.DS_Store

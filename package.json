@@ -1,0 +1,22 @@
+{
+  "name": "pvzh-deck-api",
+  "version": "1.0.0",
+  "main": "read-deck.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@tesseract.js-data/eng": "^1.0.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.5.2",
+    "multer": "^2.2.0",
+    "sharp": "^0.35.3",
+    "tesseract.js": "^7.0.0"
+  }
+}

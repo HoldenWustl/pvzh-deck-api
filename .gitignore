@@ -1,0 +1,6 @@
+node_modules/
+cards/
+deck.png
+*.log
+__pycache__/
+.DS_Store
