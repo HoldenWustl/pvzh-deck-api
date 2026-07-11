@@ -1,6 +1,6 @@
 FROM node:20-bookworm-slim
 
-# Install Python and the small system libraries needed by OpenCV/SciPy.
+# Install Python and system dependencies.
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         python3 \
@@ -10,36 +10,38 @@ RUN apt-get update \
         ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-# The official Node image already contains the non-root "node" user.
-WORKDIR /home/node/app
+WORKDIR /app
 
-# Install Node dependencies first so Docker can cache this layer.
-COPY --chown=node:node package.json package-lock.json ./
+# Install Node dependencies as root during the image build.
+COPY package.json package-lock.json ./
 
-USER node
+RUN npm ci --omit=dev \
+    && npm cache clean --force
 
-RUN npm ci --omit=dev
+# Install Python dependencies into a virtual environment.
+COPY requirements.txt ./
 
-# Create the Python virtual environment and install Python dependencies.
-COPY --chown=node:node requirements.txt ./
-
-RUN python3 -m venv /home/node/venv \
-    && /home/node/venv/bin/pip install \
+RUN python3 -m venv /opt/venv \
+    && /opt/venv/bin/pip install \
         --no-cache-dir \
         --upgrade pip \
-    && /home/node/venv/bin/pip install \
+    && /opt/venv/bin/pip install \
         --no-cache-dir \
         -r requirements.txt
 
-# Copy the recognition scripts, JSON data, and reference images.
-COPY --chown=node:node . .
+# Copy scripts, data, and reference card images.
+COPY . .
 
-ENV PATH="/home/node/venv/bin:${PATH}"
+# Let the runtime Node user access the application files.
+RUN chown -R node:node /app
+
+ENV PATH="/opt/venv/bin:${PATH}"
 ENV NODE_ENV="production"
 ENV PYTHONUNBUFFERED="1"
-
-# Render supplies PORT automatically. This fallback is for local use.
 ENV PORT="7860"
+
+# Run the actual server as a non-root user.
+USER node
 
 EXPOSE 7860
 
