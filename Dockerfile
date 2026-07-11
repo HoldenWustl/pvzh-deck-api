@@ -69,7 +69,7 @@ ENV PVZH_DEBUG="0"
 
 # If a shortlist is uncertain, preserve quality by scanning all
 # cost-compatible cards exactly.
-ENV PVZH_FULL_FALLBACK="1"
+ENV PVZH_FULL_FALLBACK="0"
 
 USER node
 

@@ -1132,20 +1132,12 @@ def evaluate_assignments(
         )
 
         card_confident = (
-            assigned_score
-            >= FAST_ACCEPT_SCORE
-            and (
-                margin
-                >= FAST_ACCEPT_MARGIN
-                or assigned_score >= 0.90
-            )
-            and fingerprint_score
-            >= FAST_ACCEPT_FINGERPRINT
-            and (
-                fingerprint_rank <= 5
-                or fingerprint_score >= 0.92
-            )
-        )
+    assigned_score >= 0.82
+    and (
+        margin >= 0.005
+        or assigned_score >= 0.90
+    )
+)
 
         diagnostics.append(
             {
@@ -1537,10 +1529,21 @@ def main() -> None:
 
         search_stage = "full-exact-fallback"
 
-        full_candidates = build_full_candidate_sets(
-            references,
-            recognized_costs,
-        )
+        selected_class_set = set(selected_classes)
+
+        full_candidates = [
+            {
+                reference_index
+                for reference_index, reference
+                in enumerate(references)
+                if (
+                    reference.cost == recognized_cost
+                    and reference.card_class
+                    in selected_class_set
+                )
+            }
+            for recognized_cost in recognized_costs
+        ]
 
         exact_comparisons += exact_score_candidates(
             query_features=query_features,
