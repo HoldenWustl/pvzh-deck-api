@@ -191,7 +191,212 @@ async function preprocessTightDigit(
     })
     .toBuffer();
 }
+async function isolateCopyDigit(
+  source,
+  rect,
+  threshold
+) {
+  const {
+    data,
+    info
+  } = await sharpFromRawSource(source)
+    .extract(rect)
+    .raw()
+    .toBuffer({
+      resolveWithObject: true
+    });
 
+  const {
+    width,
+    height,
+    channels
+  } = info;
+
+  /*
+   * The copy badge contains white text on a dark background.
+   * Mark bright pixels as foreground.
+   */
+  const binary =
+    new Uint8Array(width * height);
+
+  for (
+    let index = 0;
+    index < binary.length;
+    index++
+  ) {
+    const offset =
+      index * channels;
+
+    const red = data[offset];
+    const green = data[offset + 1];
+    const blue = data[offset + 2];
+
+    const grayscale =
+      0.299 * red +
+      0.587 * green +
+      0.114 * blue;
+
+    binary[index] =
+      grayscale > threshold
+        ? 1
+        : 0;
+  }
+
+  const minimumArea = Math.max(
+    5,
+    Math.round(
+      width * height * 0.002
+    )
+  );
+
+  /*
+   * The x is on the left of the badge.
+   * The number is the large white component on the right.
+   */
+  const digitComponents = findComponents(
+    binary,
+    width,
+    height
+  ).filter(component => {
+    const centerX =
+      component.cx / width;
+
+    const centerY =
+      component.cy / height;
+
+    return (
+      component.area >= minimumArea &&
+      component.height >= height * 0.25 &&
+      component.height <= height * 0.90 &&
+      component.width <= width * 0.55 &&
+      centerX >= 0.43 &&
+      centerX <= 0.94 &&
+      centerY >= 0.12 &&
+      centerY <= 0.90
+    );
+  });
+
+  if (digitComponents.length === 0) {
+    return null;
+  }
+
+  /*
+   * Usually this contains one component. Keeping all plausible
+   * right-side components also handles a digit broken into pieces
+   * by antialiasing or screenshot compression.
+   */
+  const minimumX = Math.min(
+    ...digitComponents.map(
+      component => component.x
+    )
+  );
+
+  const minimumY = Math.min(
+    ...digitComponents.map(
+      component => component.y
+    )
+  );
+
+  const maximumX = Math.max(
+    ...digitComponents.map(
+      component =>
+        component.x +
+        component.width -
+        1
+    )
+  );
+
+  const maximumY = Math.max(
+    ...digitComponents.map(
+      component =>
+        component.y +
+        component.height -
+        1
+    )
+  );
+
+  const digitWidth =
+    maximumX - minimumX + 1;
+
+  const digitHeight =
+    maximumY - minimumY + 1;
+
+  const aspectRatio =
+    digitWidth / digitHeight;
+
+  const padding = 12;
+
+  const canvasWidth =
+    digitWidth + padding * 2;
+
+  const canvasHeight =
+    digitHeight + padding * 2;
+
+  /*
+   * Tesseract works best with a black digit
+   * on a clean white background.
+   */
+  const canvas = Buffer.alloc(
+    canvasWidth * canvasHeight,
+    255
+  );
+
+  for (
+    const component
+    of digitComponents
+  ) {
+    for (
+      const pixelIndex
+      of component.pixels
+    ) {
+      const x =
+        pixelIndex % width;
+
+      const y =
+        Math.floor(
+          pixelIndex / width
+        );
+
+      const outputX =
+        x - minimumX + padding;
+
+      const outputY =
+        y - minimumY + padding;
+
+      canvas[
+        outputY *
+        canvasWidth +
+        outputX
+      ] = 0;
+    }
+  }
+
+  const buffer = await sharp(
+    canvas,
+    {
+      raw: {
+        width: canvasWidth,
+        height: canvasHeight,
+        channels: 1
+      }
+    }
+  )
+    .resize({
+      width: 90,
+      height: 130,
+      fit: "contain",
+      kernel: sharp.kernel.nearest
+    })
+    .png({
+      compressionLevel: 1
+    })
+    .toBuffer();
+
+  return {
+    buffer,
+    aspectRatio
+  };
+}
 function ocrConfidence(result) {
   const confidence = Number(
     result?.data?.confidence
@@ -202,6 +407,74 @@ function ocrConfidence(result) {
     : 0;
 }
 
+function collapseCandidates(
+  candidates,
+  minimumValue,
+  maximumValue
+) {
+  const groups = new Map();
+
+  for (const candidate of candidates) {
+    if (
+      !Number.isInteger(candidate.value) ||
+      candidate.value < minimumValue ||
+      candidate.value > maximumValue
+    ) {
+      continue;
+    }
+
+    let group = groups.get(candidate.value);
+
+    if (!group) {
+      group = {
+        votes: 0,
+        best: candidate
+      };
+
+      groups.set(candidate.value, group);
+    }
+
+    group.votes++;
+
+    if (candidate.score > group.best.score) {
+      group.best = candidate;
+    }
+  }
+
+  return [...groups.values()]
+    .map(group => ({
+      ...group.best,
+
+      /*
+       * Repeated agreement across different thresholds/crops
+       * is useful evidence, but confidence still matters most.
+       */
+      score:
+        group.best.score +
+        Math.min(group.votes - 1, 4) * 6,
+
+      votes: group.votes
+    }))
+    .sort(
+      (first, second) =>
+        second.score - first.score
+    );
+}
+
+function bestCandidate(
+  candidates,
+  minimumValue,
+  maximumValue
+) {
+  return (
+    collapseCandidates(
+      candidates,
+      minimumValue,
+      maximumValue
+    )[0] || null
+  );
+}
+
 function chooseCopiesTotalingForty(
   candidateLists
 ) {
@@ -210,43 +483,25 @@ function chooseCopiesTotalingForty(
   states.set(0, {
     score: 0,
     values: [],
-    buffers: []
+    buffers: [],
+    selected: []
   });
 
   for (const candidates of candidateLists) {
-    const byValue = new Map();
+    const choices = collapseCandidates(
+      candidates,
+      1,
+      4
+    );
 
-    for (const candidate of candidates) {
-      if (
-        !Number.isInteger(candidate.value) ||
-        candidate.value < 1 ||
-        candidate.value > 4
-      ) {
-        continue;
-      }
-
-      const previous =
-        byValue.get(candidate.value);
-
-      if (
-        !previous ||
-        candidate.score > previous.score
-      ) {
-        byValue.set(
-          candidate.value,
-          candidate
-        );
-      }
-    }
-
-    if (byValue.size === 0) {
+    if (choices.length === 0) {
       return null;
     }
 
     const nextStates = new Map();
 
     for (const [total, state] of states) {
-      for (const candidate of byValue.values()) {
+      for (const candidate of choices) {
         const nextTotal =
           total + candidate.value;
 
@@ -255,8 +510,7 @@ function chooseCopiesTotalingForty(
         }
 
         const nextScore =
-          state.score +
-          candidate.score;
+          state.score + candidate.score;
 
         const existing =
           nextStates.get(nextTotal);
@@ -278,6 +532,11 @@ function chooseCopiesTotalingForty(
               buffers: [
                 ...state.buffers,
                 candidate.buffer
+              ],
+
+              selected: [
+                ...state.selected,
+                candidate
               ]
             }
           );
@@ -289,6 +548,111 @@ function chooseCopiesTotalingForty(
   }
 
   return states.get(40) || null;
+}
+
+function valuesAreNonDecreasing(values) {
+  return (
+    values.every(Number.isInteger) &&
+    values.every(
+      (value, index) =>
+        index === 0 ||
+        value >= values[index - 1]
+    )
+  );
+}
+
+function chooseNonDecreasingCosts(
+  candidateLists
+) {
+  let states = new Map();
+
+  states.set(-1, {
+    score: 0,
+    values: [],
+    buffers: [],
+    selected: []
+  });
+
+  for (const candidates of candidateLists) {
+    const choices = collapseCandidates(
+      candidates,
+      0,
+      20
+    );
+
+    if (choices.length === 0) {
+      return null;
+    }
+
+    const nextStates = new Map();
+
+    for (const candidate of choices) {
+      let bestPrevious = null;
+
+      for (const [lastValue, state] of states) {
+        if (lastValue > candidate.value) {
+          continue;
+        }
+
+        const nextScore =
+          state.score + candidate.score;
+
+        if (
+          !bestPrevious ||
+          nextScore > bestPrevious.score
+        ) {
+          bestPrevious = {
+            score: nextScore,
+
+            values: [
+              ...state.values,
+              candidate.value
+            ],
+
+            buffers: [
+              ...state.buffers,
+              candidate.buffer
+            ],
+
+            selected: [
+              ...state.selected,
+              candidate
+            ]
+          };
+        }
+      }
+
+      if (!bestPrevious) {
+        continue;
+      }
+
+      const existing =
+        nextStates.get(candidate.value);
+
+      if (
+        !existing ||
+        bestPrevious.score > existing.score
+      ) {
+        nextStates.set(
+          candidate.value,
+          bestPrevious
+        );
+      }
+    }
+
+    states = nextStates;
+
+    if (states.size === 0) {
+      return null;
+    }
+  }
+
+  return (
+    [...states.values()].sort(
+      (first, second) =>
+        second.score - first.score
+    )[0] || null
+  );
 }
 
 function findComponents(
@@ -671,25 +1035,6 @@ async function isolateCostDigits(
     .toBuffer();
 }
 
-function mostCommon(values) {
-  const counts = new Map();
-
-  for (const value of values) {
-    counts.set(
-      value,
-      (counts.get(value) || 0) + 1
-    );
-  }
-
-  return (
-    [...counts.entries()]
-      .sort(
-        (first, second) =>
-          second[1] - first[1]
-      )[0]?.[0] ?? null
-  );
-}
-
 async function main() {
   const metadata = JSON.parse(
     await fs.readFile(
@@ -870,9 +1215,13 @@ async function main() {
       const card =
         metadata.cards[cardIndex];
 
-      let chosenCandidate = null;
+      const candidates = [];
       let firstDebugBuffer = null;
 
+      /*
+       * Do not stop at the first valid OCR result.
+       * A valid-looking result can still be wrong, as with x3 -> 1.
+       */
       const variants = [
         {
           width: 0.28,
@@ -886,10 +1235,7 @@ async function main() {
         }
       ];
 
-      for (
-        const variant
-        of variants
-      ) {
+      for (const variant of variants) {
         const rect = safeRect(
           {
             left:
@@ -933,167 +1279,226 @@ async function main() {
             result.data.text
           );
 
-        if (value === null) {
-          continue;
-        }
-
-        chosenCandidate = {
-          value,
-
-          score:
-            ocrConfidence(result),
-
-          buffer,
-
-          source:
-            "badge"
-        };
-
-        break;
-      }
-
-      copyCandidates.push(
-        chosenCandidate
-          ? [chosenCandidate]
-          : []
-      );
-
-      copies.push(
-        chosenCandidate?.value ??
-        null
-      );
-
-      copyDebugBuffers.push(
-        chosenCandidate?.buffer ??
-        firstDebugBuffer
-      );
-    }
-
-    const firstCopyTotal =
-      copies.every(
-        Number.isInteger
-      )
-        ? copies.reduce(
-            (total, value) =>
-              total + value,
-            0
-          )
-        : null;
-
-    /*
-     * Only run the more expensive tight-digit pass
-     * when the initial values do not total 40.
-     */
-    if (firstCopyTotal !== 40) {
-      await worker.setParameters({
-        tessedit_pageseg_mode:
-          PSM.SINGLE_CHAR,
-
-        tessedit_char_whitelist:
-          "1234",
-
-        user_defined_dpi:
-          "300"
-      });
-
-      for (
-        let cardIndex = 0;
-        cardIndex <
-        metadata.cards.length;
-        cardIndex++
-      ) {
-        const card =
-          metadata.cards[cardIndex];
-
-        const tightRect = safeRect(
-          {
-            left:
-              card.x +
-              card.width * 0.145,
-
-            top:
-              card.y +
-              card.height * 0.635,
-
-            width:
-              card.width * 0.13,
-
-            height:
-              card.height * 0.31
-          },
-          imageWidth,
-          imageHeight
-        );
-
-        const buffer =
-          await preprocessTightDigit(
-            source,
-            tightRect,
-            190,
-            true
-          );
-
-        const result =
-          await worker.recognize(
-            buffer
-          );
-
-        const value =
-          parseCopies(
-            result.data.text
-          );
-
         if (value !== null) {
-          copyCandidates[
-            cardIndex
-          ].push({
+          candidates.push({
             value,
-
-            score:
-              ocrConfidence(result) +
-              8,
-
+            score: ocrConfidence(result),
             buffer,
-
-            source:
-              "tight-digit"
+            source: "badge"
           });
         }
       }
 
-      const repaired =
-        chooseCopiesTotalingForty(
-          copyCandidates
+      const initial = bestCandidate(
+        candidates,
+        1,
+        4
+      );
+
+      copyCandidates.push(candidates);
+      copies.push(initial?.value ?? null);
+      copyDebugBuffers.push(
+        initial?.buffer ?? firstDebugBuffer
+      );
+    }
+
+    const initialCopyTotal =
+  copies.every(Number.isInteger)
+    ? copies.reduce(
+        (total, value) =>
+          total + value,
+        0
+      )
+    : null;
+
+let repairedCopies = null;
+
+/*
+ * Whenever the initial OCR does not total 40,
+ * always gather tight digit readings before attempting
+ * to repair the deck.
+ *
+ * Do not accept an arbitrary 40-card combination from
+ * the weaker broad OCR candidates.
+ */
+if (initialCopyTotal !== 40) {
+  await worker.setParameters({
+    tessedit_pageseg_mode:
+      PSM.SINGLE_CHAR,
+
+    tessedit_char_whitelist:
+      "1234",
+
+    user_defined_dpi:
+      "300"
+  });
+
+  for (
+    let cardIndex = 0;
+    cardIndex <
+    metadata.cards.length;
+    cardIndex++
+  ) {
+    const card =
+      metadata.cards[cardIndex];
+
+    /*
+     * Capture the whole xN badge. isolateCopyDigit()
+     * finds the digit inside it, so exact digit coordinates
+     * are no longer hard-coded.
+     */
+    const badgeRect = safeRect(
+      {
+        left:
+          card.x +
+          card.width * 0.005,
+
+        top:
+          card.y +
+          card.height * 0.585,
+
+        width:
+          card.width * 0.30,
+
+        height:
+          card.height * 0.385
+      },
+      imageWidth,
+      imageHeight
+    );
+
+    const isolatedReadings = [];
+
+    for (
+      const threshold
+      of [145, 165, 185, 205, 225]
+    ) {
+      const isolated =
+        await isolateCopyDigit(
+          source,
+          badgeRect,
+          threshold
         );
 
-      if (repaired) {
-        copies.splice(
-          0,
-          copies.length,
-          ...repaired.values
-        );
-
-        copyDebugBuffers.splice(
-          0,
-          copyDebugBuffers.length,
-          ...repaired.buffers
-        );
-
-        console.log(
-          "Copy OCR repaired using tight digits and the 40-card total."
-        );
+      if (!isolated) {
+        continue;
       }
 
-      await worker.setParameters({
-        tessedit_pageseg_mode:
-          PSM.SINGLE_CHAR,
+      const result =
+        await worker.recognize(
+          isolated.buffer
+        );
 
-        tessedit_char_whitelist:
-          "0123456789",
+      const value =
+        parseCopies(
+          result.data.text
+        );
 
-        user_defined_dpi:
-          "300"
+      if (value === null) {
+        continue;
+      }
+
+      /*
+       * A real 1 is narrow. If Tesseract calls a visibly
+       * wide component "1", reject that reading. This
+       * specifically protects against clear 3/4 glyphs
+       * being mistaken for 1.
+       */
+      if (
+        value === 1 &&
+        isolated.aspectRatio > 0.46
+      ) {
+        continue;
+      }
+
+      isolatedReadings.push({
+        value,
+
+        score:
+          ocrConfidence(result) + 35,
+
+        buffer:
+          isolated.buffer,
+
+        source:
+          "isolated-digit"
       });
+    }
+
+    copyCandidates[
+      cardIndex
+    ].push(
+      ...isolatedReadings
+    );
+
+    if (DEBUG_OUTPUT) {
+      const summarized =
+        collapseCandidates(
+          copyCandidates[
+            cardIndex
+          ],
+          1,
+          4
+        ).map(candidate => ({
+          value:
+            candidate.value,
+
+          score:
+            Math.round(
+              candidate.score
+            ),
+
+          votes:
+            candidate.votes,
+
+          source:
+            candidate.source
+        }));
+
+      console.log(
+        `Copy ${cardIndex + 1} candidates:`,
+        summarized
+      );
+    }
+  }
+
+  repairedCopies =
+    chooseCopiesTotalingForty(
+      copyCandidates
+    );
+}
+
+    if (repairedCopies) {
+      const changedPositions = [];
+
+      repairedCopies.values.forEach(
+        (value, index) => {
+          if (copies[index] !== value) {
+            changedPositions.push(
+              `${index + 1}: ${copies[index]} -> ${value}`
+            );
+          }
+        }
+      );
+
+      copies.splice(
+        0,
+        copies.length,
+        ...repairedCopies.values
+      );
+
+      copyDebugBuffers.splice(
+        0,
+        copyDebugBuffers.length,
+        ...repairedCopies.buffers
+      );
+
+      if (changedPositions.length > 0) {
+        console.log(
+          "Copy OCR repaired using multiple readings and the 40-card total: " +
+          changedPositions.join(", ")
+        );
+      }
     }
 
     if (DEBUG_OUTPUT) {
@@ -1104,9 +1509,7 @@ async function main() {
         cardIndex++
       ) {
         const buffer =
-          copyDebugBuffers[
-            cardIndex
-          ];
+          copyDebugBuffers[cardIndex];
 
         if (!buffer) {
           continue;
@@ -1144,7 +1547,9 @@ async function main() {
         "300"
     });
 
+    const costCandidates = [];
     const costs = [];
+    const costDebugBuffers = [];
 
     for (
       let cardIndex = 0;
@@ -1174,13 +1579,13 @@ async function main() {
         imageHeight
       );
 
-      const readings = [];
-
-      const debugImages =
-        new Map();
-
+      const candidates = [];
       let firstAttemptBuffer = null;
 
+      /*
+       * Keep all readings. Two repeated wrong readings must not
+       * permanently win before the sorted-cost rule is considered.
+       */
       for (
         const threshold
         of [70, 85, 100, 115, 130]
@@ -1197,8 +1602,7 @@ async function main() {
         }
 
         if (!firstAttemptBuffer) {
-          firstAttemptBuffer =
-            buffer;
+          firstAttemptBuffer = buffer;
         }
 
         const result =
@@ -1211,151 +1615,233 @@ async function main() {
             result.data.text
           );
 
-        if (value === null) {
+        if (value !== null) {
+          candidates.push({
+            value,
+            score: ocrConfidence(result),
+            buffer,
+            source: "component"
+          });
+        }
+      }
+
+      const initial = bestCandidate(
+        candidates,
+        0,
+        20
+      );
+
+      costCandidates.push(candidates);
+      costs.push(initial?.value ?? null);
+      costDebugBuffers.push(
+        initial?.buffer ?? firstAttemptBuffer
+      );
+    }
+
+    const initialCostsWereSorted =
+      valuesAreNonDecreasing(costs);
+
+    if (!initialCostsWereSorted) {
+      const suspiciousIndices = new Set();
+
+      for (
+        let index = 0;
+        index < costs.length;
+        index++
+      ) {
+        const value = costs[index];
+
+        if (!Number.isInteger(value)) {
+          suspiciousIndices.add(index);
           continue;
         }
 
-        readings.push(value);
+        if (
+          index > 0 &&
+          Number.isInteger(costs[index - 1]) &&
+          value < costs[index - 1]
+        ) {
+          suspiciousIndices.add(index - 1);
+          suspiciousIndices.add(index);
+        }
 
         if (
-          !debugImages.has(value)
+          index + 1 < costs.length &&
+          Number.isInteger(costs[index + 1]) &&
+          value > costs[index + 1]
         ) {
-          debugImages.set(
-            value,
-            buffer
-          );
-        }
-
-        const count =
-          readings.filter(
-            reading =>
-              reading === value
-          ).length;
-
-        if (count >= 2) {
-          break;
+          suspiciousIndices.add(index);
+          suspiciousIndices.add(index + 1);
         }
       }
-
-      let value =
-        mostCommon(readings);
 
       /*
-       * Fallback for cases where the connected-component
-       * detector rejects a clear digit because it touches
-       * part of the cost icon.
+       * Challenge any impossible/non-monotone reading with a direct,
+       * tighter crop. Try both SINGLE_CHAR and SINGLE_WORD because
+       * Tesseract occasionally calls this game's blocky 4 a 0.
        */
-      if (value === null) {
-        const tightRect = safeRect(
-          {
-            left:
-              card.x +
-              card.width * 0.745,
+      for (const pageSegMode of [
+        PSM.SINGLE_CHAR,
+        PSM.SINGLE_WORD
+      ]) {
+        await worker.setParameters({
+          tessedit_pageseg_mode:
+            pageSegMode,
 
-            top:
-              card.y +
-              card.height * 0.015,
+          tessedit_char_whitelist:
+            "0123456789",
 
-            width:
-              card.width * 0.23,
+          user_defined_dpi:
+            "300"
+        });
 
-            height:
-              card.height * 0.34
-          },
-          imageWidth,
-          imageHeight
-        );
+        for (const cardIndex of suspiciousIndices) {
+          const card =
+            metadata.cards[cardIndex];
 
-        let bestFallback = null;
+          const tightRect = safeRect(
+            {
+              left:
+                card.x +
+                card.width * 0.745,
 
-        for (
-          const threshold
-          of [110, 145, 180]
-        ) {
-          const buffer =
-            await preprocessTightDigit(
-              source,
-              tightRect,
-              threshold,
-              false
-            );
+              top:
+                card.y +
+                card.height * 0.015,
 
-          if (!firstAttemptBuffer) {
-            firstAttemptBuffer =
-              buffer;
-          }
+              width:
+                card.width * 0.23,
 
-          const result =
-            await worker.recognize(
-              buffer
-            );
+              height:
+                card.height * 0.34
+            },
+            imageWidth,
+            imageHeight
+          );
 
-          const candidate =
-            parseCost(
-              result.data.text
-            );
+          const votes = new Map();
 
-          if (candidate === null) {
-            continue;
-          }
-
-          const confidence =
-            ocrConfidence(result);
-
-          if (
-            !bestFallback ||
-            confidence >
-              bestFallback.confidence
+          for (
+            const threshold
+            of [90, 110, 130, 150, 170, 190, 210]
           ) {
-            bestFallback = {
-              value: candidate,
-              confidence,
-              buffer
-            };
+            const buffer =
+              await preprocessTightDigit(
+                source,
+                tightRect,
+                threshold,
+                false
+              );
+
+            const result =
+              await worker.recognize(
+                buffer
+              );
+
+            const value =
+              parseCost(
+                result.data.text
+              );
+
+            if (value === null) {
+              continue;
+            }
+
+            costCandidates[
+              cardIndex
+            ].push({
+              value,
+              score:
+                ocrConfidence(result) + 3,
+              buffer,
+              source:
+                pageSegMode === PSM.SINGLE_CHAR
+                  ? "tight-char"
+                  : "tight-word"
+            });
+
+            const count =
+              (votes.get(value) || 0) + 1;
+
+            votes.set(value, count);
+
+            if (count >= 2) {
+              break;
+            }
           }
-        }
-
-        if (bestFallback) {
-          value =
-            bestFallback.value;
-
-          debugImages.set(
-            value,
-            bestFallback.buffer
-          );
-
-          console.log(
-            `Cost ${cardIndex + 1} recovered by tight-digit OCR: ${value}`
-          );
         }
       }
+    }
 
-      costs.push(value);
+    const repairedCosts =
+      chooseNonDecreasingCosts(
+        costCandidates
+      );
 
-      if (DEBUG_OUTPUT) {
-        const debugImage =
-          debugImages.get(value) ||
-          firstAttemptBuffer;
+    if (repairedCosts) {
+      const changedPositions = [];
 
-        if (debugImage) {
-          const suffix =
-            value === null
-              ? "_FAILED"
-              : "";
-
-          await fs.writeFile(
-            path.join(
-              DEBUG_DIR,
-              `cost_${String(
-                cardIndex + 1
-              ).padStart(
-                2,
-                "0"
-              )}${suffix}.png`
-            ),
-            debugImage
-          );
+      repairedCosts.values.forEach(
+        (value, index) => {
+          if (costs[index] !== value) {
+            changedPositions.push(
+              `${index + 1}: ${costs[index]} -> ${value}`
+            );
+          }
         }
+      );
+
+      costs.splice(
+        0,
+        costs.length,
+        ...repairedCosts.values
+      );
+
+      costDebugBuffers.splice(
+        0,
+        costDebugBuffers.length,
+        ...repairedCosts.buffers
+      );
+
+      if (changedPositions.length > 0) {
+        console.log(
+          "Cost OCR repaired using multiple readings and sorted deck order: " +
+          changedPositions.join(", ")
+        );
+      }
+    }
+
+    if (DEBUG_OUTPUT) {
+      for (
+        let cardIndex = 0;
+        cardIndex <
+        costDebugBuffers.length;
+        cardIndex++
+      ) {
+        const buffer =
+          costDebugBuffers[cardIndex];
+
+        if (!buffer) {
+          continue;
+        }
+
+        const suffix =
+          Number.isInteger(costs[cardIndex])
+            ? ""
+            : "_FAILED";
+
+        await fs.writeFile(
+          path.join(
+            DEBUG_DIR,
+            `cost_${String(
+              cardIndex + 1
+            ).padStart(
+              2,
+              "0"
+            )}${suffix}.png`
+          ),
+          buffer
+        );
       }
     }
 
