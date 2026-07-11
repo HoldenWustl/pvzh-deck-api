@@ -71,51 +71,118 @@ function findRuns(values, predicate, minLength = 1, mergeGap = 0) {
   );
 }
 
-function findDeckDivider(data, width, height, channels) {
+function findDeckDivider(
+  data,
+  width,
+  height,
+  channels
+) {
   /*
-   * PvZ Heroes has a bright cyan horizontal separator immediately
-   * above the card area.
+   * Detect the lowest long cyan separator in the upper
+   * portion of the screenshot.
    *
-   * We search for the lowest long cyan row in the upper 70%
-   * of the screenshot.
+   * Use relative color differences rather than requiring
+   * a very low red value. This handles dimmed screenshots,
+   * compression, color grading, and slightly gray cyan lines.
    */
 
-  let bestY = -1;
-  const maxY = Math.floor(height * 0.7);
+  const maxY = Math.floor(
+    height * 0.7
+  );
 
-  for (let y = 0; y < maxY; y++) {
-    let cyanPixelCount = 0;
+  const rowScores =
+    new Float32Array(maxY);
 
-    for (let x = 0; x < width; x++) {
-      const index = (y * width + x) * channels;
+  for (
+    let y = 0;
+    y < maxY;
+    y++
+  ) {
+    let cyanPixels = 0;
+    let longestRun = 0;
+    let currentRun = 0;
+
+    for (
+      let x = 0;
+      x < width;
+      x++
+    ) {
+      const index =
+        (y * width + x) *
+        channels;
 
       const r = data[index];
       const g = data[index + 1];
       const b = data[index + 2];
 
+      /*
+       * Cyan means green and blue are both meaningfully
+       * stronger than red. Absolute brightness may vary.
+       */
       const looksCyan =
-        r < 100 &&
-        g > 140 &&
-        b > 140 &&
-        Math.abs(g - b) < 100;
+        g >= 105 &&
+        b >= 105 &&
+        g - r >= 25 &&
+        b - r >= 25 &&
+        Math.abs(g - b) <= 80;
 
       if (looksCyan) {
-        cyanPixelCount++;
+        cyanPixels++;
+        currentRun++;
+
+        if (
+          currentRun >
+          longestRun
+        ) {
+          longestRun =
+            currentRun;
+        }
+      } else {
+        currentRun = 0;
       }
     }
 
-    if (cyanPixelCount >= width * 0.35) {
-      bestY = y;
-    }
+    /*
+     * Favor a continuous horizontal line. The total-pixel
+     * fallback handles compression or small interruptions.
+     */
+    const continuousScore =
+      longestRun / width;
+
+    const totalScore =
+      cyanPixels / width;
+
+    rowScores[y] = Math.max(
+      continuousScore,
+      totalScore * 0.8
+    );
   }
 
-  if (bestY < 0) {
+  const dividerBands = findRuns(
+    rowScores,
+    score => score >= 0.32,
+    2,
+    2
+  );
+
+  if (
+    dividerBands.length === 0
+  ) {
     throw new Error(
       "Could not find the cyan divider above the card grid."
     );
   }
 
-  return bestY + 1;
+  /*
+   * There may be one cyan line above the deck name and
+   * another above the card grid. We need the lowest one.
+   */
+  const lowestBand =
+    dividerBands[
+      dividerBands.length - 1
+    ];
+
+  return lowestBand.end + 1;
 }
 
 function dominantBackground(
