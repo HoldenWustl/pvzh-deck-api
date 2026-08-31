@@ -5615,8 +5615,8 @@
         "Set": "Event",
         "Set #": null
     },
-    "Turquiose_Skull_Zombie": {
-        "Name": "Turquiose_Skull_Zombie",
+    "Turquoise_Skull_Zombie": {
+        "Name": "Turquoise_Skull_Zombie",
         "Class": "Hearty",
         "Cost": 4,
         "Strength": 2.0,
@@ -6035,4 +6035,4 @@
         "Set": "Basic",
         "Set #": 1.0
     }
-}
+    }
