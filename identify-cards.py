@@ -11,6 +11,9 @@ from pathlib import Path
 import cv2
 import numpy as np
 
+import card_vision as cv
+from card_vision import FeatureSet
+
 
 # ---------------------------------------------------------
 # Paths
@@ -82,13 +85,6 @@ ENABLE_FULL_FALLBACK = (
 
 
 @dataclass
-class FeatureSet:
-    keypoints_xy: np.ndarray
-    descriptors: np.ndarray
-    histogram: np.ndarray
-
-
-@dataclass
 class ReferenceCard:
     card_id: str
     display_name: str
@@ -96,15 +92,6 @@ class ReferenceCard:
     cost: int
     reference_filename: str
     feature_path: Path
-
-
-SIFT = cv2.SIFT_create(
-    nfeatures=1000,
-    contrastThreshold=0.02,
-    edgeThreshold=12,
-)
-
-MATCHER = cv2.BFMatcher(cv2.NORM_L2)
 
 
 # ---------------------------------------------------------
@@ -121,331 +108,66 @@ def load_image(path: Path) -> np.ndarray:
     return image
 
 
-def safe_crop(
-    image: np.ndarray,
-    left_fraction: float,
-    top_fraction: float,
-    right_fraction: float,
-    bottom_fraction: float,
-) -> np.ndarray:
-    height, width = image.shape[:2]
-
-    x1 = max(0, min(width - 1, round(width * left_fraction)))
-    y1 = max(0, min(height - 1, round(height * top_fraction)))
-    x2 = max(x1 + 1, min(width, round(width * right_fraction)))
-    y2 = max(y1 + 1, min(height, round(height * bottom_fraction)))
-
-    return image[y1:y2, x1:x2]
-
-
-def resize_for_features(
-    image: np.ndarray,
-    maximum_dimension: int = 650,
-) -> np.ndarray:
-    height, width = image.shape[:2]
-    largest = max(width, height)
-
-    if largest <= maximum_dimension:
-        return image
-
-    scale = maximum_dimension / largest
-
-    return cv2.resize(
-        image,
-        (
-            max(1, round(width * scale)),
-            max(1, round(height * scale)),
-        ),
-        interpolation=cv2.INTER_AREA,
-    )
-
-
-def create_query_views(image: np.ndarray) -> list[np.ndarray]:
-    return [
-        image,
-        safe_crop(
-            image,
-            left_fraction=0.03,
-            top_fraction=0.05,
-            right_fraction=0.82,
-            bottom_fraction=0.80,
-        ),
-        safe_crop(
-            image,
-            left_fraction=0.10,
-            top_fraction=0.12,
-            right_fraction=0.75,
-            bottom_fraction=0.72,
-        ),
-    ]
-
-
-def make_fingerprint(image: np.ndarray) -> np.ndarray:
-    small = cv2.resize(
-        image,
-        (32, 32),
-        interpolation=cv2.INTER_AREA,
-    )
-
-    lab = cv2.cvtColor(small, cv2.COLOR_BGR2LAB).astype(np.float32)
-
-    channels = []
-    for channel_index in range(3):
-        channel = lab[:, :, channel_index]
-        channel = channel - float(channel.mean())
-        std = float(channel.std())
-
-        if std > 1e-6:
-            channel = channel / std
-
-        channels.append(channel.reshape(-1))
-
-    gray = cv2.cvtColor(small, cv2.COLOR_BGR2GRAY).astype(np.float32)
-
-    sobel_x = cv2.Sobel(gray, cv2.CV_32F, 1, 0, ksize=3)
-    sobel_y = cv2.Sobel(gray, cv2.CV_32F, 0, 1, ksize=3)
-    edges = cv2.magnitude(sobel_x, sobel_y)
-
-    edge_mean = float(edges.mean())
-    edge_std = float(edges.std())
-    edges = edges - edge_mean
-
-    if edge_std > 1e-6:
-        edges = edges / edge_std
-
-    vector = np.concatenate(
-        [
-            *channels,
-            edges.reshape(-1),
-        ]
-    ).astype(np.float32)
-
-    norm = float(np.linalg.norm(vector))
-
-    if norm > 1e-8:
-        vector /= norm
-
-    return vector
-
-
-# ---------------------------------------------------------
-# Feature extraction
-# ---------------------------------------------------------
-
-def extract_features(image: np.ndarray) -> FeatureSet:
-    image = resize_for_features(image)
-
-    grayscale = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
-    clahe = cv2.createCLAHE(
-        clipLimit=2.0,
-        tileGridSize=(8, 8),
-    )
-
-    grayscale = clahe.apply(grayscale)
-
-    keypoints, descriptors = SIFT.detectAndCompute(
-        grayscale,
-        None,
-    )
-
-    if keypoints:
-        keypoints_xy = np.asarray(
-            [keypoint.pt for keypoint in keypoints],
-            dtype=np.float32,
-        )
-    else:
-        keypoints_xy = np.empty((0, 2), dtype=np.float32)
-
-    if descriptors is None:
-        descriptors = np.empty((0, 128), dtype=np.float32)
-    else:
-        descriptors = np.asarray(descriptors, dtype=np.float32)
-
-    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-
-    histogram = cv2.calcHist(
-        [hsv],
-        [0, 1],
-        None,
-        [16, 16],
-        [0, 180, 0, 256],
-    )
-
-    cv2.normalize(
-        histogram,
-        histogram,
-        alpha=0,
-        beta=1,
-        norm_type=cv2.NORM_MINMAX,
-    )
-
-    return FeatureSet(
-        keypoints_xy=keypoints_xy,
-        descriptors=descriptors,
-        histogram=histogram.astype(np.float32),
-    )
-
-
 def extract_all_query_data(
-    image: np.ndarray,
-) -> tuple[list[FeatureSet], np.ndarray]:
-    views = create_query_views(image)
+    images: list[np.ndarray],
+) -> tuple[list[list[FeatureSet]], list[np.ndarray], list[dict]]:
+    """
+    Align every uploaded card into the canonical frame, then extract the
+    same masked features the reference index was built with.
 
-    features = [
-        extract_features(view)
-        for view in views
-    ]
+    All cards in one screenshot share a scale, so any card whose scale
+    disagrees with the rest is re-aligned around the deck's median.
+    """
 
-    fingerprints = np.stack(
-        [
-            make_fingerprint(
-                resize_for_features(view)
-            )
-            for view in views
-        ],
-        axis=0,
-    ).astype(np.float32)
+    alignments = [cv.register_card(image) for image in images]
 
-    return features, fingerprints
+    good_scales = [a.scale for a in alignments if not a.fallback]
+    if good_scales:
+        median_scale = float(np.median(good_scales))
+        for index, image in enumerate(images):
+            a = alignments[index]
+            if a.fallback or abs(a.scale / median_scale - 1) > 0.06:
+                retry = cv.register_card(image, scale_hint=median_scale)
+                if not retry.fallback:
+                    alignments[index] = retry
 
+    features: list[list[FeatureSet]] = []
+    fingerprints: list[np.ndarray] = []
+    details: list[dict] = []
 
-# ---------------------------------------------------------
-# Exact image similarity
-# ---------------------------------------------------------
-
-def sift_similarity(
-    query: FeatureSet,
-    reference: FeatureSet,
-) -> float:
-    query_descriptors = query.descriptors
-    reference_descriptors = reference.descriptors
-
-    if (
-        len(query_descriptors) < 2
-        or len(reference_descriptors) < 2
-    ):
-        return 0.0
-
-    try:
-        pairs = MATCHER.knnMatch(
-            query_descriptors,
-            reference_descriptors,
-            k=2,
+    for image, alignment in zip(images, alignments):
+        canonical, coverage = cv.warp_to_canonical(image, alignment)
+        features.append([cv.extract_features(canonical, coverage)])
+        fingerprints.append(
+            cv.make_fingerprint(canonical, coverage)[np.newaxis, :]
         )
-    except cv2.error:
-        return 0.0
-
-    good_matches = []
-
-    for pair in pairs:
-        if len(pair) < 2:
-            continue
-
-        best, second_best = pair
-
-        if best.distance < SIFT_RATIO * second_best.distance:
-            good_matches.append(best)
-
-    if not good_matches:
-        return 0.0
-
-    good_score = min(len(good_matches) / 28.0, 1.0)
-
-    if len(good_matches) < 4:
-        return 0.12 * good_score
-
-    source_points = np.float32(
-        [
-            query.keypoints_xy[match.queryIdx]
-            for match in good_matches
-        ]
-    ).reshape(-1, 1, 2)
-
-    destination_points = np.float32(
-        [
-            reference.keypoints_xy[match.trainIdx]
-            for match in good_matches
-        ]
-    ).reshape(-1, 1, 2)
-
-    try:
-        _, inlier_mask = cv2.findHomography(
-            source_points,
-            destination_points,
-            cv2.RANSAC,
-            5.0,
+        details.append(
+            {
+                "alignScore": round(alignment.score, 3),
+                "alignScale": round(alignment.scale, 3),
+                "alignFallback": alignment.fallback,
+            }
         )
-    except cv2.error:
-        inlier_mask = None
 
-    if inlier_mask is None:
-        return 0.20 * good_score
-
-    inlier_count = int(inlier_mask.ravel().sum())
-    inlier_ratio = inlier_count / len(good_matches)
-    inlier_score = min(inlier_count / 18.0, 1.0)
-
-    return (
-        0.52 * inlier_score
-        + 0.30 * inlier_ratio
-        + 0.18 * good_score
-    )
-
-
-def histogram_similarity(
-    first: FeatureSet,
-    second: FeatureSet,
-) -> float:
-    correlation = cv2.compareHist(
-        first.histogram,
-        second.histogram,
-        cv2.HISTCMP_CORREL,
-    )
-
-    return max(
-        0.0,
-        min(1.0, (correlation + 1.0) / 2.0),
-    )
+    return features, fingerprints, details
 
 
 def visual_similarity(
     query_features: list[FeatureSet],
     reference_features: list[FeatureSet],
 ) -> float:
-    """
-    This is the same 3x3 exact comparison used by the original script.
-    The optimization is that it runs only after a cheap shortlist.
-    """
-
     best_score = 0.0
 
     for query in query_features:
         for reference in reference_features:
-            feature_score = sift_similarity(
-                query,
-                reference,
-            )
-
-            color_score = histogram_similarity(
-                query,
-                reference,
-            )
-
-            combined_score = (
-                0.88 * feature_score
-                + 0.12 * color_score
-            )
-
             best_score = max(
                 best_score,
-                combined_score,
+                cv.visual_similarity(query, reference),
             )
 
     return float(best_score)
 
 
-# ---------------------------------------------------------
 # Index loading
 # ---------------------------------------------------------
 
@@ -515,7 +237,9 @@ def load_reference_feature_file(
                     dtype=np.float32,
                 ),
             )
-            for view_index in range(3)
+            for view_index in range(
+                sum(1 for key in archive.files if key.startswith("desc_"))
+            )
         ]
 
 
@@ -546,8 +270,10 @@ def calculate_quick_scores(
     flattened_references = np.asarray(
         reference_fingerprints,
         dtype=np.float32,
-    ).reshape(
-        reference_count * 3,
+    )
+    reference_views = flattened_references.shape[1]
+    flattened_references = flattened_references.reshape(
+        reference_count * reference_views,
         -1,
     )
 
@@ -558,9 +284,9 @@ def calculate_quick_scores(
         )
 
         similarities = similarities.reshape(
-            3,
+            len(query_views),
             reference_count,
-            3,
+            reference_views,
         )
 
         best = similarities.max(axis=(0, 2))
@@ -1370,8 +1096,7 @@ def main() -> None:
         f"Loaded metadata for {len(references)} reference cards."
     )
 
-    query_features: list[list[FeatureSet]] = []
-    query_fingerprints: list[np.ndarray] = []
+    query_images: list[np.ndarray] = []
 
     for index, card in enumerate(deck_cards):
         filename = card.get("filename")
@@ -1381,15 +1106,15 @@ def main() -> None:
                 f"Card {index + 1} has no filename."
             )
 
-        image_path = CARDS_DIR / filename
-        image = load_image(image_path)
+        query_images.append(load_image(CARDS_DIR / filename))
 
-        features, fingerprints = (
-            extract_all_query_data(image)
-        )
+    print("Aligning uploaded cards...")
 
-        query_features.append(features)
-        query_fingerprints.append(fingerprints)
+    (
+        query_features,
+        query_fingerprints,
+        alignment_details,
+    ) = extract_all_query_data(query_images)
 
     print("Running fast reference shortlist...")
 

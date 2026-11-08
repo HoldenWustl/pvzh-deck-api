@@ -8,18 +8,14 @@ from pathlib import Path
 import cv2
 import numpy as np
 
+import card_vision as cv
+
 
 CARD_DATA_PATH = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("card_data.json")
 REFERENCE_DIR = Path(sys.argv[2]) if len(sys.argv) > 2 else Path("reference_cards")
 OUTPUT_DIR = Path(sys.argv[3]) if len(sys.argv) > 3 else Path("reference_index")
 
 SUPPORTED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".bmp"}
-
-SIFT = cv2.SIFT_create(
-    nfeatures=1000,
-    contrastThreshold=0.02,
-    edgeThreshold=12,
-)
 
 # Explicit aliases for the two filename typos shown in the deployment log.
 FILENAME_ALIASES = {
@@ -34,184 +30,6 @@ def normalize_name(value: str) -> str:
 
 def display_name(value: str) -> str:
     return str(value).replace("_", " ").strip()
-
-
-def load_image(path: Path) -> np.ndarray:
-    raw = np.frombuffer(path.read_bytes(), dtype=np.uint8)
-    image = cv2.imdecode(raw, cv2.IMREAD_COLOR)
-
-    if image is None:
-        raise ValueError(f"Could not read image: {path}")
-
-    return image
-
-
-def safe_crop(
-    image: np.ndarray,
-    left_fraction: float,
-    top_fraction: float,
-    right_fraction: float,
-    bottom_fraction: float,
-) -> np.ndarray:
-    height, width = image.shape[:2]
-
-    x1 = max(0, min(width - 1, round(width * left_fraction)))
-    y1 = max(0, min(height - 1, round(height * top_fraction)))
-    x2 = max(x1 + 1, min(width, round(width * right_fraction)))
-    y2 = max(y1 + 1, min(height, round(height * bottom_fraction)))
-
-    return image[y1:y2, x1:x2]
-
-
-def resize_for_features(
-    image: np.ndarray,
-    maximum_dimension: int = 650,
-) -> np.ndarray:
-    height, width = image.shape[:2]
-    largest = max(width, height)
-
-    if largest <= maximum_dimension:
-        return image
-
-    scale = maximum_dimension / largest
-
-    return cv2.resize(
-        image,
-        (
-            max(1, round(width * scale)),
-            max(1, round(height * scale)),
-        ),
-        interpolation=cv2.INTER_AREA,
-    )
-
-
-def create_views(image: np.ndarray) -> list[np.ndarray]:
-    return [
-        image,
-        safe_crop(
-            image,
-            left_fraction=0.03,
-            top_fraction=0.04,
-            right_fraction=0.90,
-            bottom_fraction=0.84,
-        ),
-        safe_crop(
-            image,
-            left_fraction=0.09,
-            top_fraction=0.10,
-            right_fraction=0.82,
-            bottom_fraction=0.78,
-        ),
-    ]
-
-
-def make_fingerprint(image: np.ndarray) -> np.ndarray:
-    """
-    A cheap, illumination-tolerant visual signature used only for
-    shortlisting. Final decisions still use the original SIFT score.
-    """
-
-    small = cv2.resize(
-        image,
-        (32, 32),
-        interpolation=cv2.INTER_AREA,
-    )
-
-    lab = cv2.cvtColor(small, cv2.COLOR_BGR2LAB).astype(np.float32)
-
-    channels = []
-    for channel_index in range(3):
-        channel = lab[:, :, channel_index]
-        channel = channel - float(channel.mean())
-        std = float(channel.std())
-
-        if std > 1e-6:
-            channel = channel / std
-
-        channels.append(channel.reshape(-1))
-
-    gray = cv2.cvtColor(small, cv2.COLOR_BGR2GRAY).astype(np.float32)
-
-    sobel_x = cv2.Sobel(gray, cv2.CV_32F, 1, 0, ksize=3)
-    sobel_y = cv2.Sobel(gray, cv2.CV_32F, 0, 1, ksize=3)
-    edges = cv2.magnitude(sobel_x, sobel_y)
-
-    edge_mean = float(edges.mean())
-    edge_std = float(edges.std())
-    edges = edges - edge_mean
-
-    if edge_std > 1e-6:
-        edges = edges / edge_std
-
-    vector = np.concatenate(
-        [
-            *channels,
-            edges.reshape(-1),
-        ]
-    ).astype(np.float32)
-
-    norm = float(np.linalg.norm(vector))
-
-    if norm > 1e-8:
-        vector /= norm
-
-    return vector
-
-
-def extract_reference_view(image: np.ndarray) -> dict[str, np.ndarray]:
-    image = resize_for_features(image)
-
-    grayscale = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
-    clahe = cv2.createCLAHE(
-        clipLimit=2.0,
-        tileGridSize=(8, 8),
-    )
-
-    grayscale = clahe.apply(grayscale)
-
-    keypoints, descriptors = SIFT.detectAndCompute(
-        grayscale,
-        None,
-    )
-
-    if keypoints:
-        keypoint_xy = np.asarray(
-            [keypoint.pt for keypoint in keypoints],
-            dtype=np.float32,
-        )
-    else:
-        keypoint_xy = np.empty((0, 2), dtype=np.float32)
-
-    if descriptors is None:
-        descriptors = np.empty((0, 128), dtype=np.float32)
-    else:
-        descriptors = np.asarray(descriptors, dtype=np.float32)
-
-    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-
-    histogram = cv2.calcHist(
-        [hsv],
-        [0, 1],
-        None,
-        [16, 16],
-        [0, 180, 0, 256],
-    )
-
-    cv2.normalize(
-        histogram,
-        histogram,
-        alpha=0,
-        beta=1,
-        norm_type=cv2.NORM_MINMAX,
-    )
-
-    return {
-        "keypoints": keypoint_xy,
-        "descriptors": descriptors,
-        "histogram": histogram.astype(np.float32),
-        "fingerprint": make_fingerprint(image),
-    }
 
 
 def main() -> None:
@@ -291,37 +109,24 @@ def main() -> None:
 
         print(f"[{image_number}/{total}] {card_id}")
 
-        image = load_image(image_path)
-        view_data = [
-            extract_reference_view(view)
-            for view in create_views(image)
-        ]
+        canonical, coverage, aligned = cv.load_reference(image_path)
+        features = cv.extract_features(canonical, coverage)
+
+        if not aligned:
+            print(f"    WARNING: could not align {image_path.name}")
 
         feature_filename = f"{len(entries):04d}.npz"
         feature_path = features_dir / feature_filename
 
         np.savez_compressed(
             feature_path,
-            kp_0=view_data[0]["keypoints"],
-            desc_0=view_data[0]["descriptors"],
-            hist_0=view_data[0]["histogram"],
-            kp_1=view_data[1]["keypoints"],
-            desc_1=view_data[1]["descriptors"],
-            hist_1=view_data[1]["histogram"],
-            kp_2=view_data[2]["keypoints"],
-            desc_2=view_data[2]["descriptors"],
-            hist_2=view_data[2]["histogram"],
+            kp_0=features.keypoints_xy,
+            desc_0=features.descriptors,
+            hist_0=features.histogram,
         )
 
         fingerprints.append(
-            np.stack(
-                [
-                    view_data[0]["fingerprint"],
-                    view_data[1]["fingerprint"],
-                    view_data[2]["fingerprint"],
-                ],
-                axis=0,
-            )
+            cv.make_fingerprint(canonical, coverage)[np.newaxis, :]
         )
 
         entries.append(
@@ -332,6 +137,7 @@ def main() -> None:
                 "cost": cost,
                 "referenceFilename": image_path.name,
                 "featureFile": f"features/{feature_filename}",
+                "aligned": aligned,
             }
         )
 
@@ -347,12 +153,10 @@ def main() -> None:
     )
 
     index = {
-        "version": 1,
-        "sift": {
-            "nfeatures": 1000,
-            "contrastThreshold": 0.02,
-            "edgeThreshold": 12,
-        },
+        "version": 2,
+        "views": 1,
+        "sift": cv.SIFT_PARAMS,
+        "canonicalSize": [cv.CROP_W, cv.CROP_H],
         "entries": entries,
         "ignoredFiles": ignored,
     }

@@ -1,0 +1,8583 @@
+[
+ {
+  "file": "2nd-Best_Taco_of_All_Time.jpg",
+  "name": "2nd-Best_Taco_of_All_Time",
+  "output": "2nd-Best_Taco_of_All_Time.webp",
+  "source_size": [
+   179,
+   127
+  ],
+  "align_score": 0.483,
+  "scale": 1.126,
+  "offset": [
+   28.0,
+   23.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Abracadaver.jpg",
+  "name": "Abracadaver",
+  "output": "Abracadaver.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.599,
+  "scale": 1.007,
+  "offset": [
+   34.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Admiral_Navy_Bean.jpg",
+  "name": "Admiral_Navy_Bean",
+  "output": "Admiral_Navy_Bean.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.683,
+  "scale": 0.996,
+  "offset": [
+   33.0,
+   23.0
+  ],
+  "art_coverage": 0.998,
+  "flags": []
+ },
+ {
+  "file": "Aerobics_Instructor.jpg",
+  "name": "Aerobics_Instructor",
+  "output": "Aerobics_Instructor.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.551,
+  "scale": 0.996,
+  "offset": [
+   27.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Alien_Ooze.jpg",
+  "name": "Alien_Ooze",
+  "output": "Alien_Ooze.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.487,
+  "scale": 1.007,
+  "offset": [
+   25.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "All-Star_Zombie.jpg",
+  "name": "All-Star_Zombie",
+  "output": "All-Star_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.515,
+  "scale": 1.007,
+  "offset": [
+   27.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Aloesaurus.jpg",
+  "name": "Aloesaurus",
+  "output": "Aloesaurus.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.64,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   18.0
+  ],
+  "art_coverage": 0.987,
+  "flags": []
+ },
+ {
+  "file": "Ancient_Vimpire.jpg",
+  "name": "Ancient_Vimpire",
+  "output": "Ancient_Vimpire.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.611,
+  "scale": 0.983,
+  "offset": [
+   37.0,
+   22.0
+  ],
+  "art_coverage": 0.994,
+  "flags": []
+ },
+ {
+  "file": "Apotatosaurus.jpg",
+  "name": "Apotatosaurus",
+  "output": "Apotatosaurus.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.657,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   21.0
+  ],
+  "art_coverage": 0.994,
+  "flags": []
+ },
+ {
+  "file": "Apple_Saucer.jpg",
+  "name": "Apple_Saucer",
+  "output": "Apple_Saucer.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.602,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Area_22.jpg",
+  "name": "Area_22",
+  "output": "Area_22.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.491,
+  "scale": 1.007,
+  "offset": [
+   30.0,
+   12.0
+  ],
+  "art_coverage": 0.978,
+  "flags": []
+ },
+ {
+  "file": "Arm_Wrestler.jpg",
+  "name": "Arm_Wrestler",
+  "output": "Arm_Wrestler.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.636,
+  "scale": 1.007,
+  "offset": [
+   34.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Astro_Shroom.jpg",
+  "name": "Astro_Shroom",
+  "output": "Astro_Shroom.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.579,
+  "scale": 0.996,
+  "offset": [
+   26.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Astro_Vera.jpg",
+  "name": "Astro_Vera",
+  "output": "Astro_Vera.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.637,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   15.0
+  ],
+  "art_coverage": 0.985,
+  "flags": []
+ },
+ {
+  "file": "Astrocado.jpg",
+  "name": "Astrocado",
+  "output": "Astrocado.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.576,
+  "scale": 0.996,
+  "offset": [
+   33.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Atomic_Bombegranate.jpg",
+  "name": "Atomic_Bombegranate",
+  "output": "Atomic_Bombegranate.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.643,
+  "scale": 1.007,
+  "offset": [
+   31.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "B-flat.jpg",
+  "name": "B-flat",
+  "output": "B-flat.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.476,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Backup_Dancer.webp",
+  "name": "Backup_Dancer",
+  "output": "Backup_Dancer.webp",
+  "source_size": [
+   160,
+   115
+  ],
+  "align_score": 0.537,
+  "scale": 1.291,
+  "offset": [
+   28.0,
+   20.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Backyard_Bounce.jpg",
+  "name": "Backyard_Bounce",
+  "output": "Backyard_Bounce.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.458,
+  "scale": 0.996,
+  "offset": [
+   33.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Bad_Moon_Rising.jpg",
+  "name": "Bad_Moon_Rising",
+  "output": "Bad_Moon_Rising.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.436,
+  "scale": 0.996,
+  "offset": [
+   23.0,
+   23.0
+  ],
+  "art_coverage": 0.998,
+  "flags": []
+ },
+ {
+  "file": "Bamboozle.jpg",
+  "name": "Bamboozle",
+  "output": "Bamboozle.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.697,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   20.0
+  ],
+  "art_coverage": 0.991,
+  "flags": []
+ },
+ {
+  "file": "Banana_Bomb.jpg",
+  "name": "Banana_Bomb",
+  "output": "Banana_Bomb.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.434,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   31.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Banana_Launcher.jpg",
+  "name": "Banana_Launcher",
+  "output": "Banana_Launcher.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.506,
+  "scale": 0.996,
+  "offset": [
+   31.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Banana_Peel.jpg",
+  "name": "Banana_Peel",
+  "output": "Banana_Peel.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.5,
+  "scale": 0.996,
+  "offset": [
+   31.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Banana_Split.jpg",
+  "name": "Banana_Split",
+  "output": "Banana_Split.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.646,
+  "scale": 1.007,
+  "offset": [
+   32.0,
+   16.0
+  ],
+  "art_coverage": 0.987,
+  "flags": []
+ },
+ {
+  "file": "Bananasaurus_Rex.jpg",
+  "name": "Bananasaurus_Rex",
+  "output": "Bananasaurus_Rex.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.613,
+  "scale": 0.996,
+  "offset": [
+   31.0,
+   19.0
+  ],
+  "art_coverage": 0.989,
+  "flags": []
+ },
+ {
+  "file": "Barrel_Of_Deadbeards.jpg",
+  "name": "Barrel_Of_Deadbeards",
+  "output": "Barrel_Of_Deadbeards.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.536,
+  "scale": 0.996,
+  "offset": [
+   27.0,
+   32.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Barrel_Roller_Zombie.jpg",
+  "name": "Barrel_Roller_Zombie",
+  "output": "Barrel_Roller_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.578,
+  "scale": 1.007,
+  "offset": [
+   31.0,
+   32.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Barrel_of_Barrels.jpg",
+  "name": "Barrel_of_Barrels",
+  "output": "Barrel_of_Barrels.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.567,
+  "scale": 1.007,
+  "offset": [
+   30.0,
+   18.0
+  ],
+  "art_coverage": 0.991,
+  "flags": []
+ },
+ {
+  "file": "Baseball_Zombie.jpg",
+  "name": "Baseball_Zombie",
+  "output": "Baseball_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.595,
+  "scale": 0.994,
+  "offset": [
+   39.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Beam_Me_Up.jpg",
+  "name": "Beam_Me_Up",
+  "output": "Beam_Me_Up.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.453,
+  "scale": 1.007,
+  "offset": [
+   31.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Bean_Counter.jpg",
+  "name": "Bean_Counter",
+  "output": "Bean_Counter.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.642,
+  "scale": 0.996,
+  "offset": [
+   33.0,
+   19.0
+  ],
+  "art_coverage": 0.989,
+  "flags": []
+ },
+ {
+  "file": "Bellflower.jpg",
+  "name": "Bellflower",
+  "output": "Bellflower.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.563,
+  "scale": 0.996,
+  "offset": [
+   34.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Berry_Angry.jpg",
+  "name": "Berry_Angry",
+  "output": "Berry_Angry.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.448,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   30.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Berry_Blast.jpg",
+  "name": "Berry_Blast",
+  "output": "Berry_Blast.webp",
+  "source_size": [
+   179,
+   127
+  ],
+  "align_score": 0.473,
+  "scale": 1.126,
+  "offset": [
+   28.0,
+   23.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Binary_Stars.jpg",
+  "name": "Binary_Stars",
+  "output": "Binary_Stars.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.555,
+  "scale": 0.996,
+  "offset": [
+   34.0,
+   22.0
+  ],
+  "art_coverage": 0.996,
+  "flags": []
+ },
+ {
+  "file": "Bird_of_Paradise.jpg",
+  "name": "Bird_of_Paradise",
+  "output": "Bird_of_Paradise.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.649,
+  "scale": 0.996,
+  "offset": [
+   34.0,
+   13.0
+  ],
+  "art_coverage": 0.976,
+  "flags": []
+ },
+ {
+  "file": "Black_Eyed_Pea.jpg",
+  "name": "Black_Eyed_Pea",
+  "output": "Black_Eyed_Pea.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.633,
+  "scale": 1.007,
+  "offset": [
+   28.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Black_Hole.jpg",
+  "name": "Black_Hole",
+  "output": "Black_Hole.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.401,
+  "scale": 1.019,
+  "offset": [
+   32.0,
+   23.0
+  ],
+  "art_coverage": 1.0,
+  "flags": [
+   "weak alignment (0.40)"
+  ]
+ },
+ {
+  "file": "Blockbuster.jpg",
+  "name": "Blockbuster",
+  "output": "Blockbuster.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.633,
+  "scale": 1.007,
+  "offset": [
+   23.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Bloomerang.jpg",
+  "name": "Bloomerang",
+  "output": "Bloomerang.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.606,
+  "scale": 0.996,
+  "offset": [
+   31.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Blooming_Heart.jpg",
+  "name": "Blooming_Heart",
+  "output": "Blooming_Heart.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.688,
+  "scale": 1.019,
+  "offset": [
+   31.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Blowgun_Imp.jpg",
+  "name": "Blowgun_Imp",
+  "output": "Blowgun_Imp.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.615,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Bluesberry.webp",
+  "name": "Bluesberry",
+  "output": "Bluesberry.webp",
+  "source_size": [
+   149,
+   115
+  ],
+  "align_score": 0.442,
+  "scale": 1.304,
+  "offset": [
+   33.0,
+   23.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Bobblehead.jpg",
+  "name": "Bobblehead",
+  "output": "Bobblehead.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.603,
+  "scale": 0.996,
+  "offset": [
+   37.0,
+   23.0
+  ],
+  "art_coverage": 0.998,
+  "flags": []
+ },
+ {
+  "file": "Body-Gourd.jpg",
+  "name": "Body-Gourd",
+  "output": "Body-Gourd.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.634,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Bog_of_Enlightenment.jpg",
+  "name": "Bog_of_Enlightenment",
+  "output": "Bog_of_Enlightenment.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.489,
+  "scale": 1.007,
+  "offset": [
+   28.0,
+   23.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Bonk_Choy.jpg",
+  "name": "Bonk_Choy",
+  "output": "Bonk_Choy.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.614,
+  "scale": 0.996,
+  "offset": [
+   36.0,
+   30.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Bonus_Track_Buckethead.jpg",
+  "name": "Bonus_Track_Buckethead",
+  "output": "Bonus_Track_Buckethead.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.559,
+  "scale": 0.984,
+  "offset": [
+   26.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Botanist.jpg",
+  "name": "Botanist",
+  "output": "Botanist.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.633,
+  "scale": 0.996,
+  "offset": [
+   37.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Bounty_Hunter.jpg",
+  "name": "Bounty_Hunter",
+  "output": "Bounty_Hunter.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.628,
+  "scale": 0.996,
+  "offset": [
+   26.0,
+   19.0
+  ],
+  "art_coverage": 0.989,
+  "flags": []
+ },
+ {
+  "file": "Brain_Vendor.jpg",
+  "name": "Brain_Vendor",
+  "output": "Brain_Vendor.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.654,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Brainana.jpg",
+  "name": "Brainana",
+  "output": "Brainana.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.614,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Briar_Rose.jpg",
+  "name": "Briar_Rose",
+  "output": "Briar_Rose.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.633,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Buckethead.jpg",
+  "name": "Buckethead",
+  "output": "Buckethead.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.567,
+  "scale": 0.983,
+  "offset": [
+   20.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Buff_Shroom.jpg",
+  "name": "Buff_Shroom",
+  "output": "Buff_Shroom.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.636,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Bungee_Plumber.jpg",
+  "name": "Bungee_Plumber",
+  "output": "Bungee_Plumber.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.412,
+  "scale": 0.996,
+  "offset": [
+   31.0,
+   32.0
+  ],
+  "art_coverage": 1.0,
+  "flags": [
+   "weak alignment (0.41)"
+  ]
+ },
+ {
+  "file": "Buried_Treasure.jpg",
+  "name": "Buried_Treasure",
+  "output": "Buried_Treasure.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.707,
+  "scale": 1.007,
+  "offset": [
+   31.0,
+   17.0
+  ],
+  "art_coverage": 0.989,
+  "flags": []
+ },
+ {
+  "file": "Button_Mushroom.jpg",
+  "name": "Button_Mushroom",
+  "output": "Button_Mushroom.webp",
+  "source_size": [
+   126,
+   96
+  ],
+  "align_score": 0.455,
+  "scale": 1.401,
+  "offset": [
+   42.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": [
+   "low resolution (upscaled 1.40x; source 126x96)"
+  ]
+ },
+ {
+  "file": "Cabbage_Pult.jpg",
+  "name": "Cabbage_Pult",
+  "output": "Cabbage_Pult.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.58,
+  "scale": 1.007,
+  "offset": [
+   32.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Cactus.jpg",
+  "name": "Cactus",
+  "output": "Cactus.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.599,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Cakesplosion.webp",
+  "name": "Cakesplosion",
+  "output": "Cakesplosion.webp",
+  "source_size": [
+   160,
+   114
+  ],
+  "align_score": 0.453,
+  "scale": 1.306,
+  "offset": [
+   25.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Camel_Crossing.jpg",
+  "name": "Camel_Crossing",
+  "output": "Camel_Crossing.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.446,
+  "scale": 0.996,
+  "offset": [
+   34.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Captain_Cucumber.jpg",
+  "name": "Captain_Cucumber",
+  "output": "Captain_Cucumber.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.67,
+  "scale": 0.996,
+  "offset": [
+   25.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Captain_Flameface.jpg",
+  "name": "Captain_Flameface",
+  "output": "Captain_Flameface.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.663,
+  "scale": 1.007,
+  "offset": [
+   26.0,
+   23.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Cardboard_Robot_Zombie.jpg",
+  "name": "Cardboard_Robot_Zombie",
+  "output": "Cardboard_Robot_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.583,
+  "scale": 0.996,
+  "offset": [
+   35.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Carrotillery.webp",
+  "name": "Carrotillery",
+  "output": "Carrotillery.webp",
+  "source_size": [
+   274,
+   201
+  ],
+  "align_score": 0.615,
+  "scale": 0.709,
+  "offset": [
+   35.0,
+   21.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Cat_Lady.jpg",
+  "name": "Cat_Lady",
+  "output": "Cat_Lady.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.528,
+  "scale": 0.996,
+  "offset": [
+   28.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Cattail.webp",
+  "name": "Cattail",
+  "output": "Cattail.webp",
+  "source_size": [
+   290,
+   211
+  ],
+  "align_score": 0.43,
+  "scale": 0.67,
+  "offset": [
+   34.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Celestial_Custodian.jpg",
+  "name": "Celestial_Custodian",
+  "output": "Celestial_Custodian.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.65,
+  "scale": 1.019,
+  "offset": [
+   33.0,
+   22.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Cell_Phone_Zombie.jpg",
+  "name": "Cell_Phone_Zombie",
+  "output": "Cell_Phone_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.635,
+  "scale": 0.994,
+  "offset": [
+   32.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Cheese_Cutter.jpg",
+  "name": "Cheese_Cutter",
+  "output": "Cheese_Cutter.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.663,
+  "scale": 1.007,
+  "offset": [
+   32.0,
+   19.0
+  ],
+  "art_coverage": 0.994,
+  "flags": []
+ },
+ {
+  "file": "Cherry_Bomb.jpg",
+  "name": "Cherry_Bomb",
+  "output": "Cherry_Bomb.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.447,
+  "scale": 1.007,
+  "offset": [
+   27.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Chilly_Pepper.jpg",
+  "name": "Chilly_Pepper",
+  "output": "Chilly_Pepper.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.668,
+  "scale": 1.007,
+  "offset": [
+   28.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Chimney_Sweep.jpg",
+  "name": "Chimney_Sweep",
+  "output": "Chimney_Sweep.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.59,
+  "scale": 0.996,
+  "offset": [
+   33.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Chomper.jpg",
+  "name": "Chomper",
+  "output": "Chomper.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.564,
+  "scale": 1.007,
+  "offset": [
+   30.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Chum_Champion.jpg",
+  "name": "Chum_Champion",
+  "output": "Chum_Champion.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.611,
+  "scale": 0.984,
+  "offset": [
+   38.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Clique_Peas.jpg",
+  "name": "Clique_Peas",
+  "output": "Clique_Peas.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.571,
+  "scale": 1.007,
+  "offset": [
+   28.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Cob_Cannon.jpg",
+  "name": "Cob_Cannon",
+  "output": "Cob_Cannon.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.614,
+  "scale": 0.996,
+  "offset": [
+   37.0,
+   15.0
+  ],
+  "art_coverage": 0.981,
+  "flags": []
+ },
+ {
+  "file": "Coffee_Grounds.jpg",
+  "name": "Coffee_Grounds",
+  "output": "Coffee_Grounds.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.467,
+  "scale": 1.007,
+  "offset": [
+   28.0,
+   23.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Coffee_Zombie.jpg",
+  "name": "Coffee_Zombie",
+  "output": "Coffee_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.547,
+  "scale": 1.007,
+  "offset": [
+   30.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Cone_Zone.jpg",
+  "name": "Cone_Zone",
+  "output": "Cone_Zone.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.459,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   23.0
+  ],
+  "art_coverage": 0.998,
+  "flags": []
+ },
+ {
+  "file": "Conehead.webp",
+  "name": "Conehead",
+  "output": "Conehead.webp",
+  "source_size": [
+   155,
+   116
+  ],
+  "align_score": 0.422,
+  "scale": 1.315,
+  "offset": [
+   30.0,
+   22.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Conga_Zombie.jpg",
+  "name": "Conga_Zombie",
+  "output": "Conga_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.605,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Cool_Bean.jpg",
+  "name": "Cool_Bean",
+  "output": "Cool_Bean.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.683,
+  "scale": 0.996,
+  "offset": [
+   23.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Copter_Commando.webp",
+  "name": "Copter_Commando",
+  "output": "Copter_Commando.webp",
+  "source_size": [
+   162,
+   102
+  ],
+  "align_score": 0.505,
+  "scale": 1.422,
+  "offset": [
+   10.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": [
+   "low resolution (upscaled 1.42x; source 162x102)"
+  ]
+ },
+ {
+  "file": "Corn_Dog.jpg",
+  "name": "Corn_Dog",
+  "output": "Corn_Dog.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.648,
+  "scale": 1.007,
+  "offset": [
+   34.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Cornucopia.jpg",
+  "name": "Cornucopia",
+  "output": "Cornucopia.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.592,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Cosmic_Bean.jpg",
+  "name": "Cosmic_Bean",
+  "output": "Cosmic_Bean.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.689,
+  "scale": 0.996,
+  "offset": [
+   36.0,
+   22.0
+  ],
+  "art_coverage": 0.996,
+  "flags": []
+ },
+ {
+  "file": "Cosmic_Dancer.jpg",
+  "name": "Cosmic_Dancer",
+  "output": "Cosmic_Dancer.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.595,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Cosmic_Imp.jpg",
+  "name": "Cosmic_Imp",
+  "output": "Cosmic_Imp.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.559,
+  "scale": 0.996,
+  "offset": [
+   28.0,
+   33.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Cosmic_Mushroom.jpg",
+  "name": "Cosmic_Mushroom",
+  "output": "Cosmic_Mushroom.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.716,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   19.0
+  ],
+  "art_coverage": 0.989,
+  "flags": []
+ },
+ {
+  "file": "Cosmic_Peashooter.jpg",
+  "name": "Cosmic_Peashooter",
+  "output": "Cosmic_Peashooter.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.622,
+  "scale": 1.007,
+  "offset": [
+   30.0,
+   23.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Cosmic_Scientist.jpg",
+  "name": "Cosmic_Scientist",
+  "output": "Cosmic_Scientist.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.66,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   17.0
+  ],
+  "art_coverage": 0.989,
+  "flags": []
+ },
+ {
+  "file": "Cosmic_Sports_Star.jpg",
+  "name": "Cosmic_Sports_Star",
+  "output": "Cosmic_Sports_Star.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.607,
+  "scale": 1.007,
+  "offset": [
+   28.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Cosmic_Sunflower.jpg",
+  "name": "Cosmic_Sunflower",
+  "output": "Cosmic_Sunflower.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.593,
+  "scale": 1.019,
+  "offset": [
+   28.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Cosmic_Wall-Nut.jpg",
+  "name": "Cosmic_Wall-Nut",
+  "output": "Cosmic_Wall-Nut.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.7,
+  "scale": 0.996,
+  "offset": [
+   34.0,
+   20.0
+  ],
+  "art_coverage": 0.991,
+  "flags": []
+ },
+ {
+  "file": "Cosmic_Yeti.jpg",
+  "name": "Cosmic_Yeti",
+  "output": "Cosmic_Yeti.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.61,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   22.0
+  ],
+  "art_coverage": 0.996,
+  "flags": []
+ },
+ {
+  "file": "Cosmoss.jpg",
+  "name": "Cosmoss",
+  "output": "Cosmoss.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.491,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Cro-Magnolia.jpg",
+  "name": "Cro-Magnolia",
+  "output": "Cro-Magnolia.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.684,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Cross-Pollination.jpg",
+  "name": "Cross-Pollination",
+  "output": "Cross-Pollination.webp",
+  "source_size": [
+   204,
+   146
+  ],
+  "align_score": 0.563,
+  "scale": 0.988,
+  "offset": [
+   28.0,
+   22.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Cryo-Brain.jpg",
+  "name": "Cryo-Brain",
+  "output": "Cryo-Brain.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.475,
+  "scale": 1.007,
+  "offset": [
+   31.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Cryo-Yeti.jpg",
+  "name": "Cryo-Yeti",
+  "output": "Cryo-Yeti.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.607,
+  "scale": 0.996,
+  "offset": [
+   35.0,
+   23.0
+  ],
+  "art_coverage": 0.998,
+  "flags": []
+ },
+ {
+  "file": "Cuckoo_Zombie.jpg",
+  "name": "Cuckoo_Zombie",
+  "output": "Cuckoo_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.621,
+  "scale": 0.996,
+  "offset": [
+   25.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Cursed_Gargolith.jpg",
+  "name": "Cursed_Gargolith",
+  "output": "Cursed_Gargolith.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.547,
+  "scale": 1.007,
+  "offset": [
+   33.0,
+   22.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Cyborg_Zombie.jpg",
+  "name": "Cyborg_Zombie",
+  "output": "Cyborg_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.579,
+  "scale": 1.007,
+  "offset": [
+   32.0,
+   13.0
+  ],
+  "art_coverage": 0.981,
+  "flags": []
+ },
+ {
+  "file": "Dandy_Lion_King.jpg",
+  "name": "Dandy_Lion_King",
+  "output": "Dandy_Lion_King.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.635,
+  "scale": 0.983,
+  "offset": [
+   23.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Dark_Matter_Dragonfruit.jpg",
+  "name": "Dark_Matter_Dragonfruit",
+  "output": "Dark_Matter_Dragonfruit.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.672,
+  "scale": 0.996,
+  "offset": [
+   31.0,
+   13.0
+  ],
+  "art_coverage": 0.976,
+  "flags": []
+ },
+ {
+  "file": "Deep_Sea_Gargantuar.jpg",
+  "name": "Deep_Sea_Gargantuar",
+  "output": "Deep_Sea_Gargantuar.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.613,
+  "scale": 1.007,
+  "offset": [
+   28.0,
+   17.0
+  ],
+  "art_coverage": 0.989,
+  "flags": []
+ },
+ {
+  "file": "Defensive_End.jpg",
+  "name": "Defensive_End",
+  "output": "Defensive_End.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.564,
+  "scale": 1.007,
+  "offset": [
+   31.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Disco-Naut.jpg",
+  "name": "Disco-Naut",
+  "output": "Disco-Naut.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.531,
+  "scale": 1.007,
+  "offset": [
+   32.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Disco-Tron_3000.jpg",
+  "name": "Disco-Tron_3000",
+  "output": "Disco-Tron_3000.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.653,
+  "scale": 0.994,
+  "offset": [
+   35.0,
+   21.0
+  ],
+  "art_coverage": 0.994,
+  "flags": []
+ },
+ {
+  "file": "Disco_Dance_Floor.jpg",
+  "name": "Disco_Dance_Floor",
+  "output": "Disco_Dance_Floor.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.55,
+  "scale": 1.007,
+  "offset": [
+   32.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Disco_Zombie.jpg",
+  "name": "Disco_Zombie",
+  "output": "Disco_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.616,
+  "scale": 0.996,
+  "offset": [
+   34.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Dog_Walker.jpg",
+  "name": "Dog_Walker",
+  "output": "Dog_Walker.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.62,
+  "scale": 1.007,
+  "offset": [
+   28.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Dolphin_Rider.jpg",
+  "name": "Dolphin_Rider",
+  "output": "Dolphin_Rider.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.547,
+  "scale": 1.007,
+  "offset": [
+   30.0,
+   30.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Doom_Shroom.jpg",
+  "name": "Doom_Shroom",
+  "output": "Doom_Shroom.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.494,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   21.0
+  ],
+  "art_coverage": 0.994,
+  "flags": []
+ },
+ {
+  "file": "Doubled_Mint.jpg",
+  "name": "Doubled_Mint",
+  "output": "Doubled_Mint.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.636,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Dr._Spacetime.jpg",
+  "name": "Dr._Spacetime",
+  "output": "Dr._Spacetime.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.579,
+  "scale": 0.996,
+  "offset": [
+   26.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Drum_Major.webp",
+  "name": "Drum_Major",
+  "output": "Drum_Major.webp",
+  "source_size": [
+   301,
+   208
+  ],
+  "align_score": 0.427,
+  "scale": 0.677,
+  "offset": [
+   30.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Duckstache.jpg",
+  "name": "Duckstache",
+  "output": "Duckstache.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.595,
+  "scale": 0.996,
+  "offset": [
+   31.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Ducky_Tube_Zombie.jpg",
+  "name": "Ducky_Tube_Zombie",
+  "output": "Ducky_Tube_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.578,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Elderberry.jpg",
+  "name": "Elderberry",
+  "output": "Elderberry.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.647,
+  "scale": 0.996,
+  "offset": [
+   31.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Electric_Blueberry.jpg",
+  "name": "Electric_Blueberry",
+  "output": "Electric_Blueberry.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.586,
+  "scale": 1.007,
+  "offset": [
+   27.0,
+   30.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Electrician.jpg",
+  "name": "Electrician",
+  "output": "Electrician.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.638,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Energy_Drink_Zombie.jpg",
+  "name": "Energy_Drink_Zombie",
+  "output": "Energy_Drink_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.633,
+  "scale": 1.007,
+  "offset": [
+   31.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Escape_through_Time.jpg",
+  "name": "Escape_through_Time",
+  "output": "Escape_through_Time.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.518,
+  "scale": 0.996,
+  "offset": [
+   35.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Espresso_Fiesta.jpg",
+  "name": "Espresso_Fiesta",
+  "output": "Espresso_Fiesta.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.463,
+  "scale": 1.007,
+  "offset": [
+   33.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Evolutionary_Leap.jpg",
+  "name": "Evolutionary_Leap",
+  "output": "Evolutionary_Leap.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.51,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   30.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Excavator_Zombie.jpg",
+  "name": "Excavator_Zombie",
+  "output": "Excavator_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.567,
+  "scale": 1.007,
+  "offset": [
+   27.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Exploding_Fruitcake.jpg",
+  "name": "Exploding_Fruitcake",
+  "output": "Exploding_Fruitcake.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.441,
+  "scale": 1.019,
+  "offset": [
+   30.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Exploding_Imp.jpg",
+  "name": "Exploding_Imp",
+  "output": "Exploding_Imp.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.619,
+  "scale": 0.996,
+  "offset": [
+   25.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Extinction_Event.jpg",
+  "name": "Extinction_Event",
+  "output": "Extinction_Event.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.44,
+  "scale": 0.996,
+  "offset": [
+   33.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Eyespore.jpg",
+  "name": "Eyespore",
+  "output": "Eyespore.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.606,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Fertilizer.jpg",
+  "name": "Fertilizer",
+  "output": "Fertilizer.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.473,
+  "scale": 1.007,
+  "offset": [
+   25.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Fig.jpg",
+  "name": "Fig",
+  "output": "Fig.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.687,
+  "scale": 1.007,
+  "offset": [
+   32.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Final_Mission.jpg",
+  "name": "Final_Mission",
+  "output": "Final_Mission.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.477,
+  "scale": 1.007,
+  "offset": [
+   28.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Fire_Peashooter.jpg",
+  "name": "Fire_Peashooter",
+  "output": "Fire_Peashooter.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.6,
+  "scale": 0.996,
+  "offset": [
+   27.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Fire_Rooster.jpg",
+  "name": "Fire_Rooster",
+  "output": "Fire_Rooster.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.654,
+  "scale": 1.019,
+  "offset": [
+   26.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Firefighter.jpg",
+  "name": "Firefighter",
+  "output": "Firefighter.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.549,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   31.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Fireweed.jpg",
+  "name": "Fireweed",
+  "output": "Fireweed.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.62,
+  "scale": 0.996,
+  "offset": [
+   31.0,
+   30.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Fireworks_Zombie.jpg",
+  "name": "Fireworks_Zombie",
+  "output": "Fireworks_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.466,
+  "scale": 1.007,
+  "offset": [
+   27.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Fishy_Imp.jpg",
+  "name": "Fishy_Imp",
+  "output": "Fishy_Imp.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.594,
+  "scale": 1.007,
+  "offset": [
+   27.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Flag_Zombie.jpg",
+  "name": "Flag_Zombie",
+  "output": "Flag_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.574,
+  "scale": 0.996,
+  "offset": [
+   27.0,
+   30.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Flamenco_Zombie.jpg",
+  "name": "Flamenco_Zombie",
+  "output": "Flamenco_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.614,
+  "scale": 0.996,
+  "offset": [
+   31.0,
+   23.0
+  ],
+  "art_coverage": 0.998,
+  "flags": []
+ },
+ {
+  "file": "Flourish.jpg",
+  "name": "Flourish",
+  "output": "Flourish.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.51,
+  "scale": 1.007,
+  "offset": [
+   30.0,
+   19.0
+  ],
+  "art_coverage": 0.994,
+  "flags": []
+ },
+ {
+  "file": "Foot_Soldier_Zombie.jpg",
+  "name": "Foot_Soldier_Zombie",
+  "output": "Foot_Soldier_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.639,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Force_Field.jpg",
+  "name": "Force_Field",
+  "output": "Force_Field.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.474,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   22.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Forget-Me-Nuts.jpg",
+  "name": "Forget-Me-Nuts",
+  "output": "Forget-Me-Nuts.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.649,
+  "scale": 1.007,
+  "offset": [
+   24.0,
+   30.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Fraidy_Cat.jpg",
+  "name": "Fraidy_Cat",
+  "output": "Fraidy_Cat.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.647,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Frankentuar.jpg",
+  "name": "Frankentuar",
+  "output": "Frankentuar.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.631,
+  "scale": 1.007,
+  "offset": [
+   32.0,
+   23.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Frosty_Mustache.jpg",
+  "name": "Frosty_Mustache",
+  "output": "Frosty_Mustache.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.423,
+  "scale": 0.996,
+  "offset": [
+   23.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Fume-Shroom.jpg",
+  "name": "Fume-Shroom",
+  "output": "Fume-Shroom.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.601,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Fun-Dead_Raiser.jpg",
+  "name": "Fun-Dead_Raiser",
+  "output": "Fun-Dead_Raiser.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.428,
+  "scale": 1.007,
+  "offset": [
+   26.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Gadget_Scientist.jpg",
+  "name": "Gadget_Scientist",
+  "output": "Gadget_Scientist.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.662,
+  "scale": 1.007,
+  "offset": [
+   32.0,
+   11.0
+  ],
+  "art_coverage": 0.976,
+  "flags": []
+ },
+ {
+  "file": "Galacta-Cactus.jpg",
+  "name": "Galacta-Cactus",
+  "output": "Galacta-Cactus.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.565,
+  "scale": 0.996,
+  "offset": [
+   27.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Gardening_Gloves.jpg",
+  "name": "Gardening_Gloves",
+  "output": "Gardening_Gloves.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.502,
+  "scale": 1.007,
+  "offset": [
+   27.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Garg_Throwing_Garg.jpg",
+  "name": "Garg_Throwing_Garg",
+  "output": "Garg_Throwing_Garg.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.548,
+  "scale": 0.996,
+  "offset": [
+   33.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Gargantuar-Throwing_Imp.jpg",
+  "name": "Gargantuar-Throwing_Imp",
+  "output": "Gargantuar-Throwing_Imp.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.668,
+  "scale": 0.996,
+  "offset": [
+   34.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Gargantuar_Mime.jpg",
+  "name": "Gargantuar_Mime",
+  "output": "Gargantuar_Mime.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.578,
+  "scale": 0.983,
+  "offset": [
+   29.0,
+   22.0
+  ],
+  "art_coverage": 0.994,
+  "flags": []
+ },
+ {
+  "file": "Gargantuars'_Feast.jpg",
+  "name": "Gargantuars'_Feast",
+  "output": "Gargantuars'_Feast.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.429,
+  "scale": 1.007,
+  "offset": [
+   30.0,
+   23.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Gargologist.jpg",
+  "name": "Gargologist",
+  "output": "Gargologist.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.622,
+  "scale": 0.996,
+  "offset": [
+   23.0,
+   31.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Garlic.jpg",
+  "name": "Garlic",
+  "output": "Garlic.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.628,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   31.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Gas_Giant.jpg",
+  "name": "Gas_Giant",
+  "output": "Gas_Giant.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.584,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Gatling_Pea.jpg",
+  "name": "Gatling_Pea",
+  "output": "Gatling_Pea.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.617,
+  "scale": 0.996,
+  "offset": [
+   27.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Genetic_Experiment.jpg",
+  "name": "Genetic_Experiment",
+  "output": "Genetic_Experiment.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.622,
+  "scale": 1.007,
+  "offset": [
+   27.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Gentleman_Zombie.jpg",
+  "name": "Gentleman_Zombie",
+  "output": "Gentleman_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.646,
+  "scale": 1.007,
+  "offset": [
+   31.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Gizzard_Lizard.jpg",
+  "name": "Gizzard_Lizard",
+  "output": "Gizzard_Lizard.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.666,
+  "scale": 0.996,
+  "offset": [
+   31.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Gloom-Shroom.jpg",
+  "name": "Gloom-Shroom",
+  "output": "Gloom-Shroom.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.639,
+  "scale": 1.007,
+  "offset": [
+   28.0,
+   23.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Go-Nuts.jpg",
+  "name": "Go-Nuts",
+  "output": "Go-Nuts.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.607,
+  "scale": 0.996,
+  "offset": [
+   28.0,
+   21.0
+  ],
+  "art_coverage": 0.994,
+  "flags": []
+ },
+ {
+  "file": "Goat.jpg",
+  "name": "Goat",
+  "output": "Goat.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.523,
+  "scale": 0.996,
+  "offset": [
+   37.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Going_Viral.jpg",
+  "name": "Going_Viral",
+  "output": "Going_Viral.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.466,
+  "scale": 1.007,
+  "offset": [
+   28.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Grape_Power.jpg",
+  "name": "Grape_Power",
+  "output": "Grape_Power.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.55,
+  "scale": 0.996,
+  "offset": [
+   33.0,
+   22.0
+  ],
+  "art_coverage": 0.996,
+  "flags": []
+ },
+ {
+  "file": "Grape_Responsibility.jpg",
+  "name": "Grape_Responsibility",
+  "output": "Grape_Responsibility.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.512,
+  "scale": 0.996,
+  "offset": [
+   24.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Grapes_of_Wrath.jpg",
+  "name": "Grapes_of_Wrath",
+  "output": "Grapes_of_Wrath.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.57,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   21.0
+  ],
+  "art_coverage": 0.994,
+  "flags": []
+ },
+ {
+  "file": "Grave_Buster.jpg",
+  "name": "Grave_Buster",
+  "output": "Grave_Buster.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.539,
+  "scale": 0.996,
+  "offset": [
+   40.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Grave_Mistake.jpg",
+  "name": "Grave_Mistake",
+  "output": "Grave_Mistake.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.502,
+  "scale": 1.007,
+  "offset": [
+   27.0,
+   23.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Grave_Robber.jpg",
+  "name": "Grave_Robber",
+  "output": "Grave_Robber.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.479,
+  "scale": 0.996,
+  "offset": [
+   34.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Graveyard.jpg",
+  "name": "Graveyard",
+  "output": "Graveyard.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.438,
+  "scale": 1.019,
+  "offset": [
+   31.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Gravitree.jpg",
+  "name": "Gravitree",
+  "output": "Gravitree.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.588,
+  "scale": 0.996,
+  "offset": [
+   24.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Grizzly_Pear.jpg",
+  "name": "Grizzly_Pear",
+  "output": "Grizzly_Pear.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.684,
+  "scale": 0.996,
+  "offset": [
+   23.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Grow-Shroom.jpg",
+  "name": "Grow-Shroom",
+  "output": "Grow-Shroom.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.602,
+  "scale": 1.007,
+  "offset": [
+   30.0,
+   30.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Guacodile.jpg",
+  "name": "Guacodile",
+  "output": "Guacodile.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.612,
+  "scale": 0.983,
+  "offset": [
+   31.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Hail-A-Copter.jpg",
+  "name": "Hail-A-Copter",
+  "output": "Hail-A-Copter.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.484,
+  "scale": 1.007,
+  "offset": [
+   30.0,
+   11.0
+  ],
+  "art_coverage": 0.976,
+  "flags": []
+ },
+ {
+  "file": "Half-Banana.jpg",
+  "name": "Half-Banana",
+  "output": "Half-Banana.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.662,
+  "scale": 0.996,
+  "offset": [
+   33.0,
+   19.0
+  ],
+  "art_coverage": 0.989,
+  "flags": []
+ },
+ {
+  "file": "Haunted_Pumpking.jpg",
+  "name": "Haunted_Pumpking",
+  "output": "Haunted_Pumpking.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.6,
+  "scale": 0.996,
+  "offset": [
+   25.0,
+   31.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Haunting_Ghost.jpg",
+  "name": "Haunting_Ghost",
+  "output": "Haunting_Ghost.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.611,
+  "scale": 1.007,
+  "offset": [
+   26.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Haunting_Zombie.webp",
+  "name": "Haunting_Zombie",
+  "output": "Haunting_Zombie.webp",
+  "source_size": [
+   296,
+   210
+  ],
+  "align_score": 0.414,
+  "scale": 0.673,
+  "offset": [
+   33.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": [
+   "weak alignment (0.41)"
+  ]
+ },
+ {
+  "file": "Headstone_Carver.jpg",
+  "name": "Headstone_Carver",
+  "output": "Headstone_Carver.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.638,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Health_Nut.jpg",
+  "name": "Health_Nut",
+  "output": "Health_Nut.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.557,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   22.0
+  ],
+  "art_coverage": 0.996,
+  "flags": []
+ },
+ {
+  "file": "Healthy_Treat.jpg",
+  "name": "Healthy_Treat",
+  "output": "Healthy_Treat.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.435,
+  "scale": 1.007,
+  "offset": [
+   26.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Heartichoke.jpg",
+  "name": "Heartichoke",
+  "output": "Heartichoke.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.69,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   21.0
+  ],
+  "art_coverage": 0.994,
+  "flags": []
+ },
+ {
+  "file": "Hibernating_Beary.jpg",
+  "name": "Hibernating_Beary",
+  "output": "Hibernating_Beary.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.583,
+  "scale": 0.996,
+  "offset": [
+   23.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "High-Voltage_Currant.jpg",
+  "name": "High-Voltage_Currant",
+  "output": "High-Voltage_Currant.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.608,
+  "scale": 1.019,
+  "offset": [
+   33.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Hippity_Hop_Gargantuar.jpg",
+  "name": "Hippity_Hop_Gargantuar",
+  "output": "Hippity_Hop_Gargantuar.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.613,
+  "scale": 1.007,
+  "offset": [
+   32.0,
+   22.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Hot Lava.jpg",
+  "name": "Hot Lava",
+  "output": "Hot Lava.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.445,
+  "scale": 1.007,
+  "offset": [
+   39.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Hot_Date.jpg",
+  "name": "Hot_Date",
+  "output": "Hot_Date.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.645,
+  "scale": 1.007,
+  "offset": [
+   31.0,
+   18.0
+  ],
+  "art_coverage": 0.991,
+  "flags": []
+ },
+ {
+  "file": "Hot_Dog_Imp.jpg",
+  "name": "Hot_Dog_Imp",
+  "output": "Hot_Dog_Imp.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.593,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Hover-Goat_3000.jpg",
+  "name": "Hover-Goat_3000",
+  "output": "Hover-Goat_3000.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.693,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   22.0
+  ],
+  "art_coverage": 0.996,
+  "flags": []
+ },
+ {
+  "file": "Hunting_Grounds.jpg",
+  "name": "Hunting_Grounds",
+  "output": "Hunting_Grounds.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.46,
+  "scale": 1.007,
+  "offset": [
+   31.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Ice_Pirate.jpg",
+  "name": "Ice_Pirate",
+  "output": "Ice_Pirate.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.61,
+  "scale": 1.007,
+  "offset": [
+   31.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Iceberg_Lettuce.jpg",
+  "name": "Iceberg_Lettuce",
+  "output": "Iceberg_Lettuce.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.491,
+  "scale": 1.007,
+  "offset": [
+   32.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Imitater.jpg",
+  "name": "Imitater",
+  "output": "Imitater.webp",
+  "source_size": [
+   179,
+   127
+  ],
+  "align_score": 0.612,
+  "scale": 1.113,
+  "offset": [
+   29.0,
+   22.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Imp-Throwing_Gargantuar.jpg",
+  "name": "Imp-Throwing_Gargantuar",
+  "output": "Imp-Throwing_Gargantuar.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.592,
+  "scale": 0.996,
+  "offset": [
+   33.0,
+   23.0
+  ],
+  "art_coverage": 0.998,
+  "flags": []
+ },
+ {
+  "file": "Imp.jpg",
+  "name": "Imp",
+  "output": "Imp.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.585,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   30.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Imp_Commander.jpg",
+  "name": "Imp_Commander",
+  "output": "Imp_Commander.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.694,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   16.0
+  ],
+  "art_coverage": 0.983,
+  "flags": []
+ },
+ {
+  "file": "Imp_Throwing_Imp.jpg",
+  "name": "Imp_Throwing_Imp",
+  "output": "Imp_Throwing_Imp.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.665,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   18.0
+  ],
+  "art_coverage": 0.987,
+  "flags": []
+ },
+ {
+  "file": "Imposter.jpg",
+  "name": "Imposter",
+  "output": "Imposter.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.677,
+  "scale": 1.007,
+  "offset": [
+   31.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Interdimensional_Zombie.jpg",
+  "name": "Interdimensional_Zombie",
+  "output": "Interdimensional_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.543,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Intergalactic_Warlord.jpg",
+  "name": "Intergalactic_Warlord",
+  "output": "Intergalactic_Warlord.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.552,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Invasive_Species.jpg",
+  "name": "Invasive_Species",
+  "output": "Invasive_Species.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.679,
+  "scale": 0.996,
+  "offset": [
+   31.0,
+   22.0
+  ],
+  "art_coverage": 0.996,
+  "flags": []
+ },
+ {
+  "file": "Jack_O'_Lantern.jpg",
+  "name": "Jack_O'_Lantern",
+  "output": "Jack_O'_Lantern.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.664,
+  "scale": 1.007,
+  "offset": [
+   30.0,
+   21.0
+  ],
+  "art_coverage": 0.998,
+  "flags": []
+ },
+ {
+  "file": "Jelly_Bean.jpg",
+  "name": "Jelly_Bean",
+  "output": "Jelly_Bean.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.688,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   22.0
+  ],
+  "art_coverage": 0.996,
+  "flags": []
+ },
+ {
+  "file": "Jester.jpg",
+  "name": "Jester",
+  "output": "Jester.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.651,
+  "scale": 0.983,
+  "offset": [
+   40.0,
+   22.0
+  ],
+  "art_coverage": 0.994,
+  "flags": []
+ },
+ {
+  "file": "Jolly_Holly.jpg",
+  "name": "Jolly_Holly",
+  "output": "Jolly_Holly.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.635,
+  "scale": 1.007,
+  "offset": [
+   25.0,
+   30.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Jugger-Nut.jpg",
+  "name": "Jugger-Nut",
+  "output": "Jugger-Nut.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.511,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Jumping_Bean.jpg",
+  "name": "Jumping_Bean",
+  "output": "Jumping_Bean.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.685,
+  "scale": 1.007,
+  "offset": [
+   32.0,
+   16.0
+  ],
+  "art_coverage": 0.987,
+  "flags": []
+ },
+ {
+  "file": "Jurassic_Fossilhead.jpg",
+  "name": "Jurassic_Fossilhead",
+  "output": "Jurassic_Fossilhead.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.576,
+  "scale": 1.007,
+  "offset": [
+   26.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Kangaroo_Rider.jpg",
+  "name": "Kangaroo_Rider",
+  "output": "Kangaroo_Rider.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.578,
+  "scale": 1.007,
+  "offset": [
+   28.0,
+   31.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Kernel-Pult.jpg",
+  "name": "Kernel-Pult",
+  "output": "Kernel-Pult.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.701,
+  "scale": 0.996,
+  "offset": [
+   33.0,
+   20.0
+  ],
+  "art_coverage": 0.991,
+  "flags": []
+ },
+ {
+  "file": "Kernel_Corn.jpg",
+  "name": "Kernel_Corn",
+  "output": "Kernel_Corn.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.635,
+  "scale": 0.996,
+  "offset": [
+   24.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Ketchup_Mechanic.jpg",
+  "name": "Ketchup_Mechanic",
+  "output": "Ketchup_Mechanic.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.668,
+  "scale": 1.007,
+  "offset": [
+   27.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Killer_Whale.jpg",
+  "name": "Killer_Whale",
+  "output": "Killer_Whale.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.648,
+  "scale": 0.996,
+  "offset": [
+   36.0,
+   22.0
+  ],
+  "art_coverage": 0.996,
+  "flags": []
+ },
+ {
+  "file": "King_of_the_Grill.jpg",
+  "name": "King_of_the_Grill",
+  "output": "King_of_the_Grill.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.59,
+  "scale": 0.996,
+  "offset": [
+   33.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Kitchen_Sink_Zombie.jpg",
+  "name": "Kitchen_Sink_Zombie",
+  "output": "Kitchen_Sink_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.631,
+  "scale": 0.996,
+  "offset": [
+   23.0,
+   21.0
+  ],
+  "art_coverage": 0.994,
+  "flags": []
+ },
+ {
+  "file": "Kite_Flyer.jpg",
+  "name": "Kite_Flyer",
+  "output": "Kite_Flyer.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.622,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   22.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Knight_of_the_Living_Dead.webp",
+  "name": "Knight_of_the_Living_Dead",
+  "output": "Knight_of_the_Living_Dead.webp",
+  "source_size": [
+   250,
+   175
+  ],
+  "align_score": 0.539,
+  "scale": 0.777,
+  "offset": [
+   37.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Knockout.jpg",
+  "name": "Knockout",
+  "output": "Knockout.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.462,
+  "scale": 1.007,
+  "offset": [
+   30.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Landscaper.jpg",
+  "name": "Landscaper",
+  "output": "Landscaper.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.598,
+  "scale": 0.996,
+  "offset": [
+   27.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Laser_Base_Alpha.jpg",
+  "name": "Laser_Base_Alpha",
+  "output": "Laser_Base_Alpha.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.396,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": [
+   "weak alignment (0.40)"
+  ]
+ },
+ {
+  "file": "Laser_Bean.jpg",
+  "name": "Laser_Bean",
+  "output": "Laser_Bean.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.591,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Laser_Cattail.jpg",
+  "name": "Laser_Cattail",
+  "output": "Laser_Cattail.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.652,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Lava_Guava.jpg",
+  "name": "Lava_Guava",
+  "output": "Lava_Guava.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.549,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   15.0
+  ],
+  "art_coverage": 0.985,
+  "flags": []
+ },
+ {
+  "file": "Lawnmower.jpg",
+  "name": "Lawnmower",
+  "output": "Lawnmower.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.492,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Leaf_Blower.jpg",
+  "name": "Leaf_Blower",
+  "output": "Leaf_Blower.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.687,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   22.0
+  ],
+  "art_coverage": 0.996,
+  "flags": []
+ },
+ {
+  "file": "Leftovers.jpg",
+  "name": "Leftovers",
+  "output": "Leftovers.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.409,
+  "scale": 1.007,
+  "offset": [
+   27.0,
+   32.0
+  ],
+  "art_coverage": 1.0,
+  "flags": [
+   "weak alignment (0.41)"
+  ]
+ },
+ {
+  "file": "Leprechaun_Imp.jpg",
+  "name": "Leprechaun_Imp",
+  "output": "Leprechaun_Imp.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.677,
+  "scale": 1.007,
+  "offset": [
+   32.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Li'l_Buddy.jpg",
+  "name": "Li'l_Buddy",
+  "output": "Li'l_Buddy.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.63,
+  "scale": 0.996,
+  "offset": [
+   33.0,
+   20.0
+  ],
+  "art_coverage": 0.991,
+  "flags": []
+ },
+ {
+  "file": "Lightning_Reed.jpg",
+  "name": "Lightning_Reed",
+  "output": "Lightning_Reed.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.659,
+  "scale": 0.996,
+  "offset": [
+   28.0,
+   14.0
+  ],
+  "art_coverage": 0.978,
+  "flags": []
+ },
+ {
+  "file": "Lily_Pad.jpg",
+  "name": "Lily_Pad",
+  "output": "Lily_Pad.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.664,
+  "scale": 1.007,
+  "offset": [
+   30.0,
+   19.0
+  ],
+  "art_coverage": 0.994,
+  "flags": []
+ },
+ {
+  "file": "Lily_of_the_Valley.jpg",
+  "name": "Lily_of_the_Valley",
+  "output": "Lily_of_the_Valley.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.606,
+  "scale": 0.996,
+  "offset": [
+   28.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Lima_Pleurodon.jpg",
+  "name": "Lima_Pleurodon",
+  "output": "Lima_Pleurodon.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.672,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   19.0
+  ],
+  "art_coverage": 0.989,
+  "flags": []
+ },
+ {
+  "file": "Line_Dancing_Zombie.jpg",
+  "name": "Line_Dancing_Zombie",
+  "output": "Line_Dancing_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.627,
+  "scale": 1.007,
+  "offset": [
+   30.0,
+   18.0
+  ],
+  "art_coverage": 0.991,
+  "flags": []
+ },
+ {
+  "file": "Loco_Coco.jpg",
+  "name": "Loco_Coco",
+  "output": "Loco_Coco.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.634,
+  "scale": 1.007,
+  "offset": [
+   28.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Locust_Swarm.jpg",
+  "name": "Locust_Swarm",
+  "output": "Locust_Swarm.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.493,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Loose_Cannon.jpg",
+  "name": "Loose_Cannon",
+  "output": "Loose_Cannon.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.48,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Lost_Colosseum.jpg",
+  "name": "Lost_Colosseum",
+  "output": "Lost_Colosseum.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.602,
+  "scale": 0.994,
+  "offset": [
+   19.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Loudmouth.jpg",
+  "name": "Loudmouth",
+  "output": "Loudmouth.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.652,
+  "scale": 0.983,
+  "offset": [
+   35.0,
+   23.0
+  ],
+  "art_coverage": 0.996,
+  "flags": []
+ },
+ {
+  "file": "Lurch_For_Lunch.jpg",
+  "name": "Lurch_For_Lunch",
+  "output": "Lurch_For_Lunch.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.471,
+  "scale": 0.996,
+  "offset": [
+   37.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Mad_Chemist.jpg",
+  "name": "Mad_Chemist",
+  "output": "Mad_Chemist.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.624,
+  "scale": 0.996,
+  "offset": [
+   27.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Magnifying_Grass.jpg",
+  "name": "Magnifying_Grass",
+  "output": "Magnifying_Grass.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.678,
+  "scale": 1.007,
+  "offset": [
+   32.0,
+   18.0
+  ],
+  "art_coverage": 0.991,
+  "flags": []
+ },
+ {
+  "file": "Maniacal_Laugh.jpg",
+  "name": "Maniacal_Laugh",
+  "output": "Maniacal_Laugh.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.443,
+  "scale": 1.007,
+  "offset": [
+   25.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Marine_Bean.jpg",
+  "name": "Marine_Bean",
+  "output": "Marine_Bean.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.625,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   22.0
+  ],
+  "art_coverage": 0.996,
+  "flags": []
+ },
+ {
+  "file": "Mars_Flytrap.jpg",
+  "name": "Mars_Flytrap",
+  "output": "Mars_Flytrap.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.661,
+  "scale": 0.996,
+  "offset": [
+   24.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Mayflower.jpg",
+  "name": "Mayflower",
+  "output": "Mayflower.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.686,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Mechasaur.jpg",
+  "name": "Mechasaur",
+  "output": "Mechasaur.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.591,
+  "scale": 0.996,
+  "offset": [
+   27.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Medic.jpg",
+  "name": "Medic",
+  "output": "Medic.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.531,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Medulla_Nebula.jpg",
+  "name": "Medulla_Nebula",
+  "output": "Medulla_Nebula.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.404,
+  "scale": 1.019,
+  "offset": [
+   31.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": [
+   "weak alignment (0.40)"
+  ]
+ },
+ {
+  "file": "Melon-Pult.webp",
+  "name": "Melon-Pult",
+  "output": "Melon-Pult.webp",
+  "source_size": [
+   276,
+   205
+  ],
+  "align_score": 0.636,
+  "scale": 0.712,
+  "offset": [
+   33.0,
+   20.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Metal_Petal_Sunflower.jpg",
+  "name": "Metal_Petal_Sunflower",
+  "output": "Metal_Petal_Sunflower.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.603,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Meteor_Z.jpg",
+  "name": "Meteor_Z",
+  "output": "Meteor_Z.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.474,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   22.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Middle_Manager.jpg",
+  "name": "Middle_Manager",
+  "output": "Middle_Manager.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.645,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Mini_Ninja.jpg",
+  "name": "Mini_Ninja",
+  "output": "Mini_Ninja.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.574,
+  "scale": 1.007,
+  "offset": [
+   30.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Mirror-Nut.jpg",
+  "name": "Mirror-Nut",
+  "output": "Mirror-Nut.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.557,
+  "scale": 0.996,
+  "offset": [
+   40.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Mixed-Up_Gravedigger.jpg",
+  "name": "Mixed-Up_Gravedigger",
+  "output": "Mixed-Up_Gravedigger.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.617,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   23.0
+  ],
+  "art_coverage": 0.998,
+  "flags": []
+ },
+ {
+  "file": "Mixed_Nuts.jpg",
+  "name": "Mixed_Nuts",
+  "output": "Mixed_Nuts.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.585,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Molekale.jpg",
+  "name": "Molekale",
+  "output": "Molekale.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.641,
+  "scale": 1.007,
+  "offset": [
+   33.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Mondo_Bronto.jpg",
+  "name": "Mondo_Bronto",
+  "output": "Mondo_Bronto.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.613,
+  "scale": 0.996,
+  "offset": [
+   34.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Monkey_Smuggler.jpg",
+  "name": "Monkey_Smuggler",
+  "output": "Monkey_Smuggler.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.569,
+  "scale": 1.007,
+  "offset": [
+   31.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Monster_Mash.jpg",
+  "name": "Monster_Mash",
+  "output": "Monster_Mash.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.482,
+  "scale": 0.996,
+  "offset": [
+   28.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Moon_Base_Z.jpg",
+  "name": "Moon_Base_Z",
+  "output": "Moon_Base_Z.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.449,
+  "scale": 1.019,
+  "offset": [
+   28.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Moonbean.jpg",
+  "name": "Moonbean",
+  "output": "Moonbean.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.645,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   21.0
+  ],
+  "art_coverage": 0.994,
+  "flags": []
+ },
+ {
+  "file": "Moonwalker.jpg",
+  "name": "Moonwalker",
+  "output": "Moonwalker.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.604,
+  "scale": 0.996,
+  "offset": [
+   28.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Morning_Glory.jpg",
+  "name": "Morning_Glory",
+  "output": "Morning_Glory.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.582,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Mountain_Climber.jpg",
+  "name": "Mountain_Climber",
+  "output": "Mountain_Climber.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.538,
+  "scale": 1.007,
+  "offset": [
+   34.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Muscle_Sprout.jpg",
+  "name": "Muscle_Sprout",
+  "output": "Muscle_Sprout.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.662,
+  "scale": 1.007,
+  "offset": [
+   28.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Mushroom_Grotto.jpg",
+  "name": "Mushroom_Grotto",
+  "output": "Mushroom_Grotto.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.455,
+  "scale": 1.007,
+  "offset": [
+   33.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Mushroom_Ringleader.jpg",
+  "name": "Mushroom_Ringleader",
+  "output": "Mushroom_Ringleader.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.509,
+  "scale": 1.007,
+  "offset": [
+   30.0,
+   31.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Mustache_Monument.jpg",
+  "name": "Mustache_Monument",
+  "output": "Mustache_Monument.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.647,
+  "scale": 0.996,
+  "offset": [
+   27.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Mustache_Waxer.jpg",
+  "name": "Mustache_Waxer",
+  "output": "Mustache_Waxer.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.608,
+  "scale": 0.996,
+  "offset": [
+   31.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Mystery_Egg.jpg",
+  "name": "Mystery_Egg",
+  "output": "Mystery_Egg.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.572,
+  "scale": 0.996,
+  "offset": [
+   34.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Navy_Bean.jpg",
+  "name": "Navy_Bean",
+  "output": "Navy_Bean.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.699,
+  "scale": 0.996,
+  "offset": [
+   26.0,
+   22.0
+  ],
+  "art_coverage": 0.996,
+  "flags": []
+ },
+ {
+  "file": "Neutron_Imp.jpg",
+  "name": "Neutron_Imp",
+  "output": "Neutron_Imp.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.611,
+  "scale": 1.007,
+  "offset": [
+   31.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Newspaper_Zombie.jpg",
+  "name": "Newspaper_Zombie",
+  "output": "Newspaper_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.636,
+  "scale": 0.996,
+  "offset": [
+   37.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Nibble.jpg",
+  "name": "Nibble",
+  "output": "Nibble.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.427,
+  "scale": 0.996,
+  "offset": [
+   34.0,
+   32.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Nurse_Garg.jpg",
+  "name": "Nurse_Garg",
+  "output": "Nurse_Garg.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.562,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Octozombie.jpg",
+  "name": "Octozombie",
+  "output": "Octozombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.567,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Onion_Rings.jpg",
+  "name": "Onion_Rings",
+  "output": "Onion_Rings.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.52,
+  "scale": 0.996,
+  "offset": [
+   31.0,
+   17.0
+  ],
+  "art_coverage": 0.985,
+  "flags": []
+ },
+ {
+  "file": "Orchestra_Conductor.jpg",
+  "name": "Orchestra_Conductor",
+  "output": "Orchestra_Conductor.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.614,
+  "scale": 0.996,
+  "offset": [
+   33.0,
+   22.0
+  ],
+  "art_coverage": 0.996,
+  "flags": []
+ },
+ {
+  "file": "Overstuffed_Zombie.jpg",
+  "name": "Overstuffed_Zombie",
+  "output": "Overstuffed_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.634,
+  "scale": 0.996,
+  "offset": [
+   26.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Pair_of_Pears.jpg",
+  "name": "Pair_of_Pears",
+  "output": "Pair_of_Pears.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.526,
+  "scale": 0.983,
+  "offset": [
+   9.0,
+   31.0
+  ],
+  "art_coverage": 0.985,
+  "flags": []
+ },
+ {
+  "file": "Paparazzi_Zombie.jpg",
+  "name": "Paparazzi_Zombie",
+  "output": "Paparazzi_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.551,
+  "scale": 0.996,
+  "offset": [
+   25.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Parasol_Zombie.jpg",
+  "name": "Parasol_Zombie",
+  "output": "Parasol_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.573,
+  "scale": 0.996,
+  "offset": [
+   27.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Party_Thyme.jpg",
+  "name": "Party_Thyme",
+  "output": "Party_Thyme.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.652,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Pea-Nut.webp",
+  "name": "Pea-Nut",
+  "output": "Pea-Nut.webp",
+  "source_size": [
+   121,
+   85
+  ],
+  "align_score": 0.59,
+  "scale": 1.665,
+  "offset": [
+   35.0,
+   23.0
+  ],
+  "art_coverage": 1.0,
+  "flags": [
+   "low resolution (upscaled 1.67x; source 121x85)"
+  ]
+ },
+ {
+  "file": "Pea_Patch.jpg",
+  "name": "Pea_Patch",
+  "output": "Pea_Patch.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.687,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Pea_Pod.jpg",
+  "name": "Pea_Pod",
+  "output": "Pea_Pod.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.621,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   30.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Pear's_Paradise.jpg",
+  "name": "Pear's_Paradise",
+  "output": "Pear's_Paradise.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.427,
+  "scale": 1.019,
+  "offset": [
+   31.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Pear_Cub.jpg",
+  "name": "Pear_Cub",
+  "output": "Pear_Cub.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.692,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   22.0
+  ],
+  "art_coverage": 0.996,
+  "flags": []
+ },
+ {
+  "file": "Pear_Pal.webp",
+  "name": "Pear_Pal",
+  "output": "Pear_Pal.webp",
+  "source_size": [
+   96,
+   71
+  ],
+  "align_score": 0.389,
+  "scale": 1.882,
+  "offset": [
+   43.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": [
+   "weak alignment (0.39)",
+   "low resolution (upscaled 1.88x; source 96x71)"
+  ]
+ },
+ {
+  "file": "Peashooter.jpg",
+  "name": "Peashooter",
+  "output": "Peashooter.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.567,
+  "scale": 1.007,
+  "offset": [
+   27.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Pecanolith.jpg",
+  "name": "Pecanolith",
+  "output": "Pecanolith.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.577,
+  "scale": 0.996,
+  "offset": [
+   27.0,
+   21.0
+  ],
+  "art_coverage": 0.994,
+  "flags": []
+ },
+ {
+  "file": "Pepper_M.D..jpg",
+  "name": "Pepper_M.D.",
+  "output": "Pepper_M.D..webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.683,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   20.0
+  ],
+  "art_coverage": 0.991,
+  "flags": []
+ },
+ {
+  "file": "Petal-Morphosis.jpg",
+  "name": "Petal-Morphosis",
+  "output": "Petal-Morphosis.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.501,
+  "scale": 1.007,
+  "offset": [
+   26.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Photosynthesizer.jpg",
+  "name": "Photosynthesizer",
+  "output": "Photosynthesizer.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.446,
+  "scale": 1.007,
+  "offset": [
+   30.0,
+   30.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Pied_Piper.jpg",
+  "name": "Pied_Piper",
+  "output": "Pied_Piper.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.603,
+  "scale": 1.007,
+  "offset": [
+   26.0,
+   19.0
+  ],
+  "art_coverage": 0.994,
+  "flags": []
+ },
+ {
+  "file": "Pineclone.jpg",
+  "name": "Pineclone",
+  "output": "Pineclone.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.649,
+  "scale": 0.996,
+  "offset": [
+   33.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Pismashio.jpg",
+  "name": "Pismashio",
+  "output": "Pismashio.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.506,
+  "scale": 1.007,
+  "offset": [
+   26.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Planet_of_the_Grapes.jpg",
+  "name": "Planet_of_the_Grapes",
+  "output": "Planet_of_the_Grapes.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.516,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   20.0
+  ],
+  "art_coverage": 0.991,
+  "flags": []
+ },
+ {
+  "file": "Planetary_Gladiator.jpg",
+  "name": "Planetary_Gladiator",
+  "output": "Planetary_Gladiator.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.564,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Plant_Food.jpg",
+  "name": "Plant_Food",
+  "output": "Plant_Food.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.483,
+  "scale": 0.996,
+  "offset": [
+   25.0,
+   22.0
+  ],
+  "art_coverage": 0.996,
+  "flags": []
+ },
+ {
+  "file": "Plantern.jpg",
+  "name": "Plantern",
+  "output": "Plantern.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.559,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Plucky_Clover.jpg",
+  "name": "Plucky_Clover",
+  "output": "Plucky_Clover.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.716,
+  "scale": 1.007,
+  "offset": [
+   31.0,
+   16.0
+  ],
+  "art_coverage": 0.987,
+  "flags": []
+ },
+ {
+  "file": "Pod_Fighter.jpg",
+  "name": "Pod_Fighter",
+  "output": "Pod_Fighter.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.631,
+  "scale": 0.996,
+  "offset": [
+   33.0,
+   23.0
+  ],
+  "art_coverage": 0.998,
+  "flags": []
+ },
+ {
+  "file": "Podfather.jpg",
+  "name": "Podfather",
+  "output": "Podfather.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.678,
+  "scale": 1.007,
+  "offset": [
+   30.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Pogo_Zombie.jpg",
+  "name": "Pogo_Zombie",
+  "output": "Pogo_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.609,
+  "scale": 0.996,
+  "offset": [
+   23.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Poison_Ivy.jpg",
+  "name": "Poison_Ivy",
+  "output": "Poison_Ivy.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.596,
+  "scale": 0.996,
+  "offset": [
+   31.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Poison_Mushroom.jpg",
+  "name": "Poison_Mushroom",
+  "output": "Poison_Mushroom.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.536,
+  "scale": 0.971,
+  "offset": [
+   23.0,
+   46.0
+  ],
+  "art_coverage": 0.875,
+  "flags": [
+   "art clipped (87% of art visible)"
+  ]
+ },
+ {
+  "file": "Poison_Oak.jpg",
+  "name": "Poison_Oak",
+  "output": "Poison_Oak.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.725,
+  "scale": 0.996,
+  "offset": [
+   26.0,
+   18.0
+  ],
+  "art_coverage": 0.987,
+  "flags": []
+ },
+ {
+  "file": "Pool_Shark.webp",
+  "name": "Pool_Shark",
+  "output": "Pool_Shark.webp",
+  "source_size": [
+   152,
+   117
+  ],
+  "align_score": 0.439,
+  "scale": 1.31,
+  "offset": [
+   29.0,
+   21.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Poppin'_Poppies.jpg",
+  "name": "Poppin'_Poppies",
+  "output": "Poppin'_Poppies.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.655,
+  "scale": 0.994,
+  "offset": [
+   31.0,
+   22.0
+  ],
+  "art_coverage": 0.996,
+  "flags": []
+ },
+ {
+  "file": "Portal_Technician.jpg",
+  "name": "Portal_Technician",
+  "output": "Portal_Technician.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.62,
+  "scale": 1.007,
+  "offset": [
+   30.0,
+   15.0
+  ],
+  "art_coverage": 0.985,
+  "flags": []
+ },
+ {
+  "file": "Potato_Mine.jpg",
+  "name": "Potato_Mine",
+  "output": "Potato_Mine.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.534,
+  "scale": 0.996,
+  "offset": [
+   25.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Potted_Powerhouse.jpg",
+  "name": "Potted_Powerhouse",
+  "output": "Potted_Powerhouse.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.646,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Power_Flower.jpg",
+  "name": "Power_Flower",
+  "output": "Power_Flower.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.641,
+  "scale": 0.996,
+  "offset": [
+   26.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Prickly_Pear.jpg",
+  "name": "Prickly_Pear",
+  "output": "Prickly_Pear.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.528,
+  "scale": 0.996,
+  "offset": [
+   31.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Primal_Peashooter.jpg",
+  "name": "Primal_Peashooter",
+  "output": "Primal_Peashooter.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.667,
+  "scale": 0.996,
+  "offset": [
+   31.0,
+   20.0
+  ],
+  "art_coverage": 0.991,
+  "flags": []
+ },
+ {
+  "file": "Primal_Potato_Mine.jpg",
+  "name": "Primal_Potato_Mine",
+  "output": "Primal_Potato_Mine.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.525,
+  "scale": 0.983,
+  "offset": [
+   31.0,
+   33.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Primal_Sunflower.jpg",
+  "name": "Primal_Sunflower",
+  "output": "Primal_Sunflower.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.552,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   30.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Primal_Wall-Nut.jpg",
+  "name": "Primal_Wall-Nut",
+  "output": "Primal_Wall-Nut.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.56,
+  "scale": 1.007,
+  "offset": [
+   28.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Primeval_Yeti.jpg",
+  "name": "Primeval_Yeti",
+  "output": "Primeval_Yeti.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.637,
+  "scale": 0.996,
+  "offset": [
+   26.0,
+   22.0
+  ],
+  "art_coverage": 0.996,
+  "flags": []
+ },
+ {
+  "file": "Primordial_Cheese_Shover.jpg",
+  "name": "Primordial_Cheese_Shover",
+  "output": "Primordial_Cheese_Shover.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.678,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Puff_Shroom.jpg",
+  "name": "Puff_Shroom",
+  "output": "Puff_Shroom.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.64,
+  "scale": 0.996,
+  "offset": [
+   34.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Pumpkin_Shell.jpg",
+  "name": "Pumpkin_Shell",
+  "output": "Pumpkin_Shell.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.625,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Punish-Shroom.jpg",
+  "name": "Punish-Shroom",
+  "output": "Punish-Shroom.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.624,
+  "scale": 1.007,
+  "offset": [
+   27.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Quarterly_Bonus.jpg",
+  "name": "Quarterly_Bonus",
+  "output": "Quarterly_Bonus.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.463,
+  "scale": 1.007,
+  "offset": [
+   32.0,
+   23.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Quazard.jpg",
+  "name": "Quazard",
+  "output": "Quazard.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.579,
+  "scale": 0.996,
+  "offset": [
+   28.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Quickdraw_Con_Man.jpg",
+  "name": "Quickdraw_Con_Man",
+  "output": "Quickdraw_Con_Man.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.528,
+  "scale": 0.996,
+  "offset": [
+   25.0,
+   32.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Ra_Zombie.jpg",
+  "name": "Ra_Zombie",
+  "output": "Ra_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.629,
+  "scale": 1.007,
+  "offset": [
+   31.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Raiding_Raptor.jpg",
+  "name": "Raiding_Raptor",
+  "output": "Raiding_Raptor.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.508,
+  "scale": 0.996,
+  "offset": [
+   34.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Red_Stinger.jpg",
+  "name": "Red_Stinger",
+  "output": "Red_Stinger.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.603,
+  "scale": 1.007,
+  "offset": [
+   26.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Regifting_Zombie.jpg",
+  "name": "Regifting_Zombie",
+  "output": "Regifting_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.654,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Reincarnation.jpg",
+  "name": "Reincarnation",
+  "output": "Reincarnation.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.625,
+  "scale": 1.007,
+  "offset": [
+   32.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Repeat_Moss.jpg",
+  "name": "Repeat_Moss",
+  "output": "Repeat_Moss.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.708,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   17.0
+  ],
+  "art_coverage": 0.985,
+  "flags": []
+ },
+ {
+  "file": "Repeater.jpg",
+  "name": "Repeater",
+  "output": "Repeater.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.528,
+  "scale": 0.996,
+  "offset": [
+   27.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Rescue_Radish.jpg",
+  "name": "Rescue_Radish",
+  "output": "Rescue_Radish.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.698,
+  "scale": 0.996,
+  "offset": [
+   33.0,
+   18.0
+  ],
+  "art_coverage": 0.987,
+  "flags": []
+ },
+ {
+  "file": "Rocket_Science.jpg",
+  "name": "Rocket_Science",
+  "output": "Rocket_Science.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.467,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Rodeo_Gargantuar.jpg",
+  "name": "Rodeo_Gargantuar",
+  "output": "Rodeo_Gargantuar.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.611,
+  "scale": 1.031,
+  "offset": [
+   35.0,
+   22.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Rolling_Stone.jpg",
+  "name": "Rolling_Stone",
+  "output": "Rolling_Stone.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.423,
+  "scale": 1.007,
+  "offset": [
+   32.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Rotobaga.jpg",
+  "name": "Rotobaga",
+  "output": "Rotobaga.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.6,
+  "scale": 0.996,
+  "offset": [
+   34.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Sage_Sage.jpg",
+  "name": "Sage_Sage",
+  "output": "Sage_Sage.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.607,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   23.0
+  ],
+  "art_coverage": 0.998,
+  "flags": []
+ },
+ {
+  "file": "Sap-Fling.jpg",
+  "name": "Sap-Fling",
+  "output": "Sap-Fling.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.558,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   30.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Savage_Spinach.jpg",
+  "name": "Savage_Spinach",
+  "output": "Savage_Spinach.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.612,
+  "scale": 1.007,
+  "offset": [
+   34.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Screen_Door_Zombie.webp",
+  "name": "Screen_Door_Zombie",
+  "output": "Screen_Door_Zombie.webp",
+  "source_size": [
+   257,
+   190
+  ],
+  "align_score": 0.585,
+  "scale": 0.765,
+  "offset": [
+   31.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Sea-Shroom.jpg",
+  "name": "Sea-Shroom",
+  "output": "Sea-Shroom.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.624,
+  "scale": 1.007,
+  "offset": [
+   34.0,
+   18.0
+  ],
+  "art_coverage": 0.991,
+  "flags": []
+ },
+ {
+  "file": "Secret_Agent.jpg",
+  "name": "Secret_Agent",
+  "output": "Secret_Agent.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.489,
+  "scale": 0.996,
+  "offset": [
+   27.0,
+   32.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Seedling.jpg",
+  "name": "Seedling",
+  "output": "Seedling.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.554,
+  "scale": 0.996,
+  "offset": [
+   36.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Sergeant_Strongberry.jpg",
+  "name": "Sergeant_Strongberry",
+  "output": "Sergeant_Strongberry.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.647,
+  "scale": 0.996,
+  "offset": [
+   25.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Shamrocket.jpg",
+  "name": "Shamrocket",
+  "output": "Shamrocket.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.484,
+  "scale": 1.007,
+  "offset": [
+   26.0,
+   22.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Shelf_Mushroom.jpg",
+  "name": "Shelf_Mushroom",
+  "output": "Shelf_Mushroom.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.703,
+  "scale": 1.007,
+  "offset": [
+   31.0,
+   15.0
+  ],
+  "art_coverage": 0.985,
+  "flags": []
+ },
+ {
+  "file": "Shellery.jpg",
+  "name": "Shellery",
+  "output": "Shellery.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.687,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   18.0
+  ],
+  "art_coverage": 0.987,
+  "flags": []
+ },
+ {
+  "file": "Shooting_Starfruit.jpg",
+  "name": "Shooting_Starfruit",
+  "output": "Shooting_Starfruit.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.624,
+  "scale": 0.996,
+  "offset": [
+   26.0,
+   20.0
+  ],
+  "art_coverage": 0.991,
+  "flags": []
+ },
+ {
+  "file": "Shrinking_Violet.jpg",
+  "name": "Shrinking_Violet",
+  "output": "Shrinking_Violet.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.451,
+  "scale": 0.996,
+  "offset": [
+   27.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Shroom_For_Two.jpg",
+  "name": "Shroom_For_Two",
+  "output": "Shroom_For_Two.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.619,
+  "scale": 1.007,
+  "offset": [
+   33.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Sizzle.jpg",
+  "name": "Sizzle",
+  "output": "Sizzle.webp",
+  "source_size": [
+   292,
+   209
+  ],
+  "align_score": 0.489,
+  "scale": 0.69,
+  "offset": [
+   28.0,
+   22.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Skunk_Punk.jpg",
+  "name": "Skunk_Punk",
+  "output": "Skunk_Punk.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.599,
+  "scale": 1.007,
+  "offset": [
+   28.0,
+   30.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Skyshooter.webp",
+  "name": "Skyshooter",
+  "output": "Skyshooter.webp",
+  "source_size": [
+   273,
+   201
+  ],
+  "align_score": 0.601,
+  "scale": 0.712,
+  "offset": [
+   35.0,
+   21.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Smackadamia.jpg",
+  "name": "Smackadamia",
+  "output": "Smackadamia.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.685,
+  "scale": 0.996,
+  "offset": [
+   28.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Small_Nut.webp",
+  "name": "Small_Nut",
+  "output": "Small_Nut.webp",
+  "source_size": [
+   150,
+   114
+  ],
+  "align_score": 0.444,
+  "scale": 1.295,
+  "offset": [
+   33.0,
+   20.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Smashing_Gargantuar.jpg",
+  "name": "Smashing_Gargantuar",
+  "output": "Smashing_Gargantuar.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.63,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   23.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Smashing_Pumpkin.jpg",
+  "name": "Smashing_Pumpkin",
+  "output": "Smashing_Pumpkin.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.63,
+  "scale": 0.996,
+  "offset": [
+   26.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Smelly_Zombie.jpg",
+  "name": "Smelly_Zombie",
+  "output": "Smelly_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.536,
+  "scale": 1.007,
+  "offset": [
+   32.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Smoke_Bomb.jpg",
+  "name": "Smoke_Bomb",
+  "output": "Smoke_Bomb.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.485,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Smoosh-Shroom.webp",
+  "name": "Smoosh-Shroom",
+  "output": "Smoosh-Shroom.webp",
+  "source_size": [
+   291,
+   211
+  ],
+  "align_score": 0.439,
+  "scale": 0.668,
+  "offset": [
+   33.0,
+   23.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Snake_Grass.jpg",
+  "name": "Snake_Grass",
+  "output": "Snake_Grass.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.714,
+  "scale": 0.996,
+  "offset": [
+   37.0,
+   20.0
+  ],
+  "art_coverage": 0.991,
+  "flags": []
+ },
+ {
+  "file": "Snapdragon.jpg",
+  "name": "Snapdragon",
+  "output": "Snapdragon.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.564,
+  "scale": 0.996,
+  "offset": [
+   33.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Sneezing_Zombie.jpg",
+  "name": "Sneezing_Zombie",
+  "output": "Sneezing_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.651,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Snorkel_Zombie.webp",
+  "name": "Snorkel_Zombie",
+  "output": "Snorkel_Zombie.webp",
+  "source_size": [
+   303,
+   215
+  ],
+  "align_score": 0.467,
+  "scale": 0.665,
+  "offset": [
+   29.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Snow_Pea.jpg",
+  "name": "Snow_Pea",
+  "output": "Snow_Pea.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.646,
+  "scale": 0.996,
+  "offset": [
+   34.0,
+   17.0
+  ],
+  "art_coverage": 0.985,
+  "flags": []
+ },
+ {
+  "file": "Snowdrop.jpg",
+  "name": "Snowdrop",
+  "output": "Snowdrop.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.67,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   20.0
+  ],
+  "art_coverage": 0.991,
+  "flags": []
+ },
+ {
+  "file": "Solar_Winds.jpg",
+  "name": "Solar_Winds",
+  "output": "Solar_Winds.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.49,
+  "scale": 1.007,
+  "offset": [
+   34.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Sonic_Bloom.jpg",
+  "name": "Sonic_Bloom",
+  "output": "Sonic_Bloom.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.674,
+  "scale": 1.007,
+  "offset": [
+   33.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Soul_Patch.jpg",
+  "name": "Soul_Patch",
+  "output": "Soul_Patch.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.59,
+  "scale": 0.996,
+  "offset": [
+   25.0,
+   22.0
+  ],
+  "art_coverage": 0.996,
+  "flags": []
+ },
+ {
+  "file": "Sour_Grapes.jpg",
+  "name": "Sour_Grapes",
+  "output": "Sour_Grapes.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.673,
+  "scale": 0.996,
+  "offset": [
+   34.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Sow_Magic_Beans.jpg",
+  "name": "Sow_Magic_Beans",
+  "output": "Sow_Magic_Beans.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.419,
+  "scale": 0.996,
+  "offset": [
+   28.0,
+   20.0
+  ],
+  "art_coverage": 0.991,
+  "flags": [
+   "weak alignment (0.42)"
+  ]
+ },
+ {
+  "file": "Space_Cowboy.jpg",
+  "name": "Space_Cowboy",
+  "output": "Space_Cowboy.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.606,
+  "scale": 1.007,
+  "offset": [
+   31.0,
+   23.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Space_Ninja.jpg",
+  "name": "Space_Ninja",
+  "output": "Space_Ninja.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.622,
+  "scale": 0.994,
+  "offset": [
+   28.0,
+   23.0
+  ],
+  "art_coverage": 0.998,
+  "flags": []
+ },
+ {
+  "file": "Space_Pirate.jpg",
+  "name": "Space_Pirate",
+  "output": "Space_Pirate.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.63,
+  "scale": 0.996,
+  "offset": [
+   34.0,
+   21.0
+  ],
+  "art_coverage": 0.994,
+  "flags": []
+ },
+ {
+  "file": "Spikeweed_Sector.jpg",
+  "name": "Spikeweed_Sector",
+  "output": "Spikeweed_Sector.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.457,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   23.0
+  ],
+  "art_coverage": 0.998,
+  "flags": []
+ },
+ {
+  "file": "Spineapple.jpg",
+  "name": "Spineapple",
+  "output": "Spineapple.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.495,
+  "scale": 0.971,
+  "offset": [
+   17.0,
+   29.0
+  ],
+  "art_coverage": 0.992,
+  "flags": []
+ },
+ {
+  "file": "Split_Pea.jpg",
+  "name": "Split_Pea",
+  "output": "Split_Pea.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.623,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   21.0
+  ],
+  "art_coverage": 0.994,
+  "flags": []
+ },
+ {
+  "file": "Sportacus.jpg",
+  "name": "Sportacus",
+  "output": "Sportacus.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.679,
+  "scale": 1.007,
+  "offset": [
+   25.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Spring_Bean.jpg",
+  "name": "Spring_Bean",
+  "output": "Spring_Bean.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.498,
+  "scale": 0.996,
+  "offset": [
+   25.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Spyris.jpg",
+  "name": "Spyris",
+  "output": "Spyris.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.649,
+  "scale": 0.996,
+  "offset": [
+   28.0,
+   31.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Squash.jpg",
+  "name": "Squash",
+  "output": "Squash.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.496,
+  "scale": 1.007,
+  "offset": [
+   32.0,
+   15.0
+  ],
+  "art_coverage": 0.985,
+  "flags": []
+ },
+ {
+  "file": "Squirrel_Herder.jpg",
+  "name": "Squirrel_Herder",
+  "output": "Squirrel_Herder.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.696,
+  "scale": 1.007,
+  "offset": [
+   30.0,
+   23.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Starch_Lord.jpg",
+  "name": "Starch_Lord",
+  "output": "Starch_Lord.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.665,
+  "scale": 0.996,
+  "offset": [
+   23.0,
+   22.0
+  ],
+  "art_coverage": 0.996,
+  "flags": []
+ },
+ {
+  "file": "Stealthy_Imp.jpg",
+  "name": "Stealthy_Imp",
+  "output": "Stealthy_Imp.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.615,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Steel_Magnolia.jpg",
+  "name": "Steel_Magnolia",
+  "output": "Steel_Magnolia.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.661,
+  "scale": 1.007,
+  "offset": [
+   24.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Sting_Bean.jpg",
+  "name": "Sting_Bean",
+  "output": "Sting_Bean.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.555,
+  "scale": 0.994,
+  "offset": [
+   24.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Stompadon.jpg",
+  "name": "Stompadon",
+  "output": "Stompadon.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.59,
+  "scale": 0.996,
+  "offset": [
+   36.0,
+   23.0
+  ],
+  "art_coverage": 0.998,
+  "flags": []
+ },
+ {
+  "file": "Strawberrian.jpg",
+  "name": "Strawberrian",
+  "output": "Strawberrian.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.636,
+  "scale": 0.996,
+  "offset": [
+   28.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Stupid_Cupid.jpg",
+  "name": "Stupid_Cupid",
+  "output": "Stupid_Cupid.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.662,
+  "scale": 1.007,
+  "offset": [
+   26.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Sugary_Treat.jpg",
+  "name": "Sugary_Treat",
+  "output": "Sugary_Treat.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.455,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   23.0
+  ],
+  "art_coverage": 0.998,
+  "flags": []
+ },
+ {
+  "file": "Sumo_Wrestler.jpg",
+  "name": "Sumo_Wrestler",
+  "output": "Sumo_Wrestler.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.614,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Sun_Shroom.jpg",
+  "name": "Sun_Shroom",
+  "output": "Sun_Shroom.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.591,
+  "scale": 0.996,
+  "offset": [
+   28.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Sunflower.jpg",
+  "name": "Sunflower",
+  "output": "Sunflower.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.526,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Sunflower_Seed.jpg",
+  "name": "Sunflower_Seed",
+  "output": "Sunflower_Seed.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.587,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Sunnier_Shroom.jpg",
+  "name": "Sunnier_Shroom",
+  "output": "Sunnier_Shroom.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.594,
+  "scale": 0.996,
+  "offset": [
+   26.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Super-Phat_Beets.jpg",
+  "name": "Super-Phat_Beets",
+  "output": "Super-Phat_Beets.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.631,
+  "scale": 1.007,
+  "offset": [
+   24.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Supernova_Garg.jpg",
+  "name": "Supernova_Garg",
+  "output": "Supernova_Garg.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.501,
+  "scale": 0.996,
+  "offset": [
+   23.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Surfer_Zombie.webp",
+  "name": "Surfer_Zombie",
+  "output": "Surfer_Zombie.webp",
+  "source_size": [
+   255,
+   185
+  ],
+  "align_score": 0.534,
+  "scale": 0.771,
+  "offset": [
+   34.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Surprise_Gargantuar.jpg",
+  "name": "Surprise_Gargantuar",
+  "output": "Surprise_Gargantuar.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.608,
+  "scale": 1.007,
+  "offset": [
+   33.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Swabbie.jpg",
+  "name": "Swabbie",
+  "output": "Swabbie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.648,
+  "scale": 1.007,
+  "offset": [
+   27.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Swashbuckler_Zombie.jpg",
+  "name": "Swashbuckler_Zombie",
+  "output": "Swashbuckler_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.633,
+  "scale": 0.996,
+  "offset": [
+   31.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Sweet_Pea.jpg",
+  "name": "Sweet_Pea",
+  "output": "Sweet_Pea.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.56,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Sweet_Potato.webp",
+  "name": "Sweet_Potato",
+  "output": "Sweet_Potato.webp",
+  "source_size": [
+   175,
+   125
+  ],
+  "align_score": 0.531,
+  "scale": 1.165,
+  "offset": [
+   26.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Synchronized_Swimmer.jpg",
+  "name": "Synchronized_Swimmer",
+  "output": "Synchronized_Swimmer.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.627,
+  "scale": 1.007,
+  "offset": [
+   30.0,
+   21.0
+  ],
+  "art_coverage": 0.998,
+  "flags": []
+ },
+ {
+  "file": "Tactical_Cuke.jpg",
+  "name": "Tactical_Cuke",
+  "output": "Tactical_Cuke.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.522,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   19.0
+  ],
+  "art_coverage": 0.989,
+  "flags": []
+ },
+ {
+  "file": "Tankylosaurus.jpg",
+  "name": "Tankylosaurus",
+  "output": "Tankylosaurus.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.595,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Teacher.jpg",
+  "name": "Teacher",
+  "output": "Teacher.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.665,
+  "scale": 1.007,
+  "offset": [
+   27.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Team_Mascot.jpg",
+  "name": "Team_Mascot",
+  "output": "Team_Mascot.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.631,
+  "scale": 1.007,
+  "offset": [
+   31.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Teleport.jpg",
+  "name": "Teleport",
+  "output": "Teleport.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.506,
+  "scale": 1.007,
+  "offset": [
+   32.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Teleportation_Zombie.jpg",
+  "name": "Teleportation_Zombie",
+  "output": "Teleportation_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.619,
+  "scale": 1.007,
+  "offset": [
+   31.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Tennis_Champ.jpg",
+  "name": "Tennis_Champ",
+  "output": "Tennis_Champ.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.607,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Terrify.jpg",
+  "name": "Terrify",
+  "output": "Terrify.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.52,
+  "scale": 1.019,
+  "offset": [
+   37.0,
+   19.0
+  ],
+  "art_coverage": 0.998,
+  "flags": []
+ },
+ {
+  "file": "The_Chickening.jpg",
+  "name": "The_Chickening",
+  "output": "The_Chickening.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.453,
+  "scale": 0.996,
+  "offset": [
+   25.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "The_Great_Zucchini.jpg",
+  "name": "The_Great_Zucchini",
+  "output": "The_Great_Zucchini.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.65,
+  "scale": 0.996,
+  "offset": [
+   28.0,
+   22.0
+  ],
+  "art_coverage": 0.996,
+  "flags": []
+ },
+ {
+  "file": "The_Red_Plant-It.jpg",
+  "name": "The_Red_Plant-It",
+  "output": "The_Red_Plant-It.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.463,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   19.0
+  ],
+  "art_coverage": 0.994,
+  "flags": []
+ },
+ {
+  "file": "Thinking_Cap.jpg",
+  "name": "Thinking_Cap",
+  "output": "Thinking_Cap.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.502,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   23.0
+  ],
+  "art_coverage": 0.998,
+  "flags": []
+ },
+ {
+  "file": "Three-Nut.jpg",
+  "name": "Three-Nut",
+  "output": "Three-Nut.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.616,
+  "scale": 1.007,
+  "offset": [
+   31.0,
+   16.0
+  ],
+  "art_coverage": 0.987,
+  "flags": []
+ },
+ {
+  "file": "Three_Headed_Chomper.jpg",
+  "name": "Three_Headed_Chomper",
+  "output": "Three_Headed_Chomper.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.611,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   21.0
+  ],
+  "art_coverage": 0.994,
+  "flags": []
+ },
+ {
+  "file": "Threepeater.jpg",
+  "name": "Threepeater",
+  "output": "Threepeater.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.64,
+  "scale": 0.996,
+  "offset": [
+   25.0,
+   22.0
+  ],
+  "art_coverage": 0.996,
+  "flags": []
+ },
+ {
+  "file": "Toadstool.jpg",
+  "name": "Toadstool",
+  "output": "Toadstool.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.667,
+  "scale": 1.007,
+  "offset": [
+   33.0,
+   22.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Tomb_Raiser.jpg",
+  "name": "Tomb_Raiser",
+  "output": "Tomb_Raiser.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.604,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Torchwood.jpg",
+  "name": "Torchwood",
+  "output": "Torchwood.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.548,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Total_Eclipse.jpg",
+  "name": "Total_Eclipse",
+  "output": "Total_Eclipse.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.502,
+  "scale": 1.007,
+  "offset": [
+   28.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Tough_Beets.jpg",
+  "name": "Tough_Beets",
+  "output": "Tough_Beets.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.631,
+  "scale": 1.007,
+  "offset": [
+   25.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Toxic_Waste_Imp.jpg",
+  "name": "Toxic_Waste_Imp",
+  "output": "Toxic_Waste_Imp.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.587,
+  "scale": 1.007,
+  "offset": [
+   30.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Transformation_Station.jpg",
+  "name": "Transformation_Station",
+  "output": "Transformation_Station.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.459,
+  "scale": 1.019,
+  "offset": [
+   31.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Trapper_Territory.jpg",
+  "name": "Trapper_Territory",
+  "output": "Trapper_Territory.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.448,
+  "scale": 1.019,
+  "offset": [
+   31.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Trapper_Zombie.jpg",
+  "name": "Trapper_Zombie",
+  "output": "Trapper_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.69,
+  "scale": 1.007,
+  "offset": [
+   33.0,
+   20.0
+  ],
+  "art_coverage": 0.996,
+  "flags": []
+ },
+ {
+  "file": "Trash_Can_Zombie.jpg",
+  "name": "Trash_Can_Zombie",
+  "output": "Trash_Can_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.597,
+  "scale": 0.996,
+  "offset": [
+   24.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Tricarrotops.jpg",
+  "name": "Tricarrotops",
+  "output": "Tricarrotops.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.598,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Trick-or-Treater.jpg",
+  "name": "Trick-or-Treater",
+  "output": "Trick-or-Treater.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.658,
+  "scale": 0.996,
+  "offset": [
+   22.0,
+   23.0
+  ],
+  "art_coverage": 0.998,
+  "flags": []
+ },
+ {
+  "file": "Trickster.jpg",
+  "name": "Trickster",
+  "output": "Trickster.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.598,
+  "scale": 0.996,
+  "offset": [
+   31.0,
+   23.0
+  ],
+  "art_coverage": 0.998,
+  "flags": []
+ },
+ {
+  "file": "Tricorn.jpg",
+  "name": "Tricorn",
+  "output": "Tricorn.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.672,
+  "scale": 1.007,
+  "offset": [
+   32.0,
+   13.0
+  ],
+  "art_coverage": 0.981,
+  "flags": []
+ },
+ {
+  "file": "Triplication.jpg",
+  "name": "Triplication",
+  "output": "Triplication.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.515,
+  "scale": 0.996,
+  "offset": [
+   27.0,
+   23.0
+  ],
+  "art_coverage": 0.998,
+  "flags": []
+ },
+ {
+  "file": "Turkey_Rider.jpg",
+  "name": "Turkey_Rider",
+  "output": "Turkey_Rider.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.43,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Turquoise_Skull_Zombie.jpg",
+  "name": "Turquoise_Skull_Zombie",
+  "output": "Turquoise_Skull_Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.61,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   20.0
+  ],
+  "art_coverage": 0.991,
+  "flags": []
+ },
+ {
+  "file": "Twin_Sunflower.jpg",
+  "name": "Twin_Sunflower",
+  "output": "Twin_Sunflower.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.537,
+  "scale": 0.996,
+  "offset": [
+   37.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Typical_Beanstalk.jpg",
+  "name": "Typical_Beanstalk",
+  "output": "Typical_Beanstalk.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.66,
+  "scale": 0.996,
+  "offset": [
+   36.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Umbrella_Leaf.jpg",
+  "name": "Umbrella_Leaf",
+  "output": "Umbrella_Leaf.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.578,
+  "scale": 0.996,
+  "offset": [
+   24.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Undying_Pharaoh.jpg",
+  "name": "Undying_Pharaoh",
+  "output": "Undying_Pharaoh.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.593,
+  "scale": 1.019,
+  "offset": [
+   31.0,
+   23.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Unexpected_Gifts.jpg",
+  "name": "Unexpected_Gifts",
+  "output": "Unexpected_Gifts.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.459,
+  "scale": 0.996,
+  "offset": [
+   31.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Unlife_of_the_Party.jpg",
+  "name": "Unlife_of_the_Party",
+  "output": "Unlife_of_the_Party.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.592,
+  "scale": 0.996,
+  "offset": [
+   29.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Unthawed_Viking.jpg",
+  "name": "Unthawed_Viking",
+  "output": "Unthawed_Viking.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.591,
+  "scale": 0.996,
+  "offset": [
+   33.0,
+   22.0
+  ],
+  "art_coverage": 0.996,
+  "flags": []
+ },
+ {
+  "file": "Valkyrie.jpg",
+  "name": "Valkyrie",
+  "output": "Valkyrie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.611,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   15.0
+  ],
+  "art_coverage": 0.981,
+  "flags": []
+ },
+ {
+  "file": "Vanilla.webp",
+  "name": "Vanilla",
+  "output": "Vanilla.webp",
+  "source_size": [
+   97,
+   71
+  ],
+  "align_score": 0.369,
+  "scale": 1.884,
+  "offset": [
+   41.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": [
+   "weak alignment (0.37)",
+   "low resolution (upscaled 1.88x; source 97x71)"
+  ]
+ },
+ {
+  "file": "Vegetation_Mutation.jpg",
+  "name": "Vegetation_Mutation",
+  "output": "Vegetation_Mutation.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.496,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Veloci-Radish_Hatchling.jpg",
+  "name": "Veloci-Radish_Hatchling",
+  "output": "Veloci-Radish_Hatchling.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.635,
+  "scale": 0.994,
+  "offset": [
+   24.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Veloci-Radish_Packmate.jpg",
+  "name": "Veloci-Radish_Packmate",
+  "output": "Veloci-Radish_Packmate.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.625,
+  "scale": 1.007,
+  "offset": [
+   34.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Vengeful_Cyborg.webp",
+  "name": "Vengeful_Cyborg",
+  "output": "Vengeful_Cyborg.webp",
+  "source_size": [
+   279,
+   195
+  ],
+  "align_score": 0.572,
+  "scale": 0.714,
+  "offset": [
+   34.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Venus_Flytrap.webp",
+  "name": "Venus_Flytrap",
+  "output": "Venus_Flytrap.webp",
+  "source_size": [
+   272,
+   201
+  ],
+  "align_score": 0.604,
+  "scale": 0.714,
+  "offset": [
+   34.0,
+   21.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Venus_Flytraplanet.jpg",
+  "name": "Venus_Flytraplanet",
+  "output": "Venus_Flytraplanet.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.508,
+  "scale": 0.996,
+  "offset": [
+   27.0,
+   21.0
+  ],
+  "art_coverage": 0.994,
+  "flags": []
+ },
+ {
+  "file": "Viking.jpg",
+  "name": "Viking",
+  "output": "Viking.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.607,
+  "scale": 1.007,
+  "offset": [
+   30.0,
+   23.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Vimpire.jpg",
+  "name": "Vimpire",
+  "output": "Vimpire.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.588,
+  "scale": 1.007,
+  "offset": [
+   27.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Vitamin_Z.jpg",
+  "name": "Vitamin_Z",
+  "output": "Vitamin_Z.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.534,
+  "scale": 1.007,
+  "offset": [
+   32.0,
+   22.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Wall-Nut.jpg",
+  "name": "Wall-Nut",
+  "output": "Wall-Nut.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.539,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   29.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Wall-Nut_Bowling.jpg",
+  "name": "Wall-Nut_Bowling",
+  "output": "Wall-Nut_Bowling.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.52,
+  "scale": 0.996,
+  "offset": [
+   25.0,
+   20.0
+  ],
+  "art_coverage": 0.991,
+  "flags": []
+ },
+ {
+  "file": "Walrus_Rider.webp",
+  "name": "Walrus_Rider",
+  "output": "Walrus_Rider.webp",
+  "source_size": [
+   298,
+   214
+  ],
+  "align_score": 0.462,
+  "scale": 0.676,
+  "offset": [
+   32.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Wannabe_Hero.jpg",
+  "name": "Wannabe_Hero",
+  "output": "Wannabe_Hero.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.542,
+  "scale": 0.996,
+  "offset": [
+   26.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Water_Balloons.jpg",
+  "name": "Water_Balloons",
+  "output": "Water_Balloons.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.45,
+  "scale": 0.996,
+  "offset": [
+   31.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Water_Chestnut.jpg",
+  "name": "Water_Chestnut",
+  "output": "Water_Chestnut.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.574,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Weed_Spray.jpg",
+  "name": "Weed_Spray",
+  "output": "Weed_Spray.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.525,
+  "scale": 0.996,
+  "offset": [
+   24.0,
+   23.0
+  ],
+  "art_coverage": 0.998,
+  "flags": []
+ },
+ {
+  "file": "Weenie_Beanie.webp",
+  "name": "Weenie_Beanie",
+  "output": "Weenie_Beanie.webp",
+  "source_size": [
+   287,
+   207
+  ],
+  "align_score": 0.408,
+  "scale": 0.669,
+  "offset": [
+   37.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": [
+   "weak alignment (0.41)"
+  ]
+ },
+ {
+  "file": "Whack-a-Zombie.jpg",
+  "name": "Whack-a-Zombie",
+  "output": "Whack-a-Zombie.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.589,
+  "scale": 1.007,
+  "offset": [
+   31.0,
+   18.0
+  ],
+  "art_coverage": 0.991,
+  "flags": []
+ },
+ {
+  "file": "Whipvine.jpg",
+  "name": "Whipvine",
+  "output": "Whipvine.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.583,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Wild_Berry.jpg",
+  "name": "Wild_Berry",
+  "output": "Wild_Berry.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.634,
+  "scale": 0.996,
+  "offset": [
+   33.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Wingnut.jpg",
+  "name": "Wingnut",
+  "output": "Wingnut.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.605,
+  "scale": 0.996,
+  "offset": [
+   27.0,
+   23.0
+  ],
+  "art_coverage": 0.998,
+  "flags": []
+ },
+ {
+  "file": "Winter_Melon.jpg",
+  "name": "Winter_Melon",
+  "output": "Winter_Melon.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.671,
+  "scale": 0.996,
+  "offset": [
+   32.0,
+   20.0
+  ],
+  "art_coverage": 0.991,
+  "flags": []
+ },
+ {
+  "file": "Winter_Squash.jpg",
+  "name": "Winter_Squash",
+  "output": "Winter_Squash.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.606,
+  "scale": 1.007,
+  "offset": [
+   29.0,
+   30.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Witch_Hazel.jpg",
+  "name": "Witch_Hazel",
+  "output": "Witch_Hazel.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.468,
+  "scale": 1.007,
+  "offset": [
+   25.0,
+   30.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Wizard_Gargantuar.jpg",
+  "name": "Wizard_Gargantuar",
+  "output": "Wizard_Gargantuar.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.658,
+  "scale": 1.007,
+  "offset": [
+   27.0,
+   23.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Wormhole_Gatekeeper.jpg",
+  "name": "Wormhole_Gatekeeper",
+  "output": "Wormhole_Gatekeeper.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.635,
+  "scale": 0.996,
+  "offset": [
+   26.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Yeti_Lunchbox.jpg",
+  "name": "Yeti_Lunchbox",
+  "output": "Yeti_Lunchbox.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.423,
+  "scale": 1.007,
+  "offset": [
+   22.0,
+   28.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Zapricot.jpg",
+  "name": "Zapricot",
+  "output": "Zapricot.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.51,
+  "scale": 0.983,
+  "offset": [
+   20.0,
+   33.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Zom-Blob.jpg",
+  "name": "Zom-Blob",
+  "output": "Zom-Blob.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.714,
+  "scale": 1.007,
+  "offset": [
+   33.0,
+   14.0
+  ],
+  "art_coverage": 0.983,
+  "flags": []
+ },
+ {
+  "file": "Zombie's_Best_Friend.jpg",
+  "name": "Zombie's_Best_Friend",
+  "output": "Zombie's_Best_Friend.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.648,
+  "scale": 0.994,
+  "offset": [
+   37.0,
+   23.0
+  ],
+  "art_coverage": 0.998,
+  "flags": []
+ },
+ {
+  "file": "Zombie_Chicken.jpg",
+  "name": "Zombie_Chicken",
+  "output": "Zombie_Chicken.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.645,
+  "scale": 0.996,
+  "offset": [
+   33.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Zombie_Coach.jpg",
+  "name": "Zombie_Coach",
+  "output": "Zombie_Coach.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.654,
+  "scale": 0.996,
+  "offset": [
+   33.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Zombie_High_Diver.jpg",
+  "name": "Zombie_High_Diver",
+  "output": "Zombie_High_Diver.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.634,
+  "scale": 1.007,
+  "offset": [
+   24.0,
+   23.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Zombie_King.jpg",
+  "name": "Zombie_King",
+  "output": "Zombie_King.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.579,
+  "scale": 1.007,
+  "offset": [
+   32.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Zombie_Yeti.jpg",
+  "name": "Zombie_Yeti",
+  "output": "Zombie_Yeti.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.562,
+  "scale": 0.996,
+  "offset": [
+   23.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Zombot's_Wrath.jpg",
+  "name": "Zombot's_Wrath",
+  "output": "Zombot's_Wrath.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.478,
+  "scale": 1.007,
+  "offset": [
+   27.0,
+   24.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Zombot_1000.jpg",
+  "name": "Zombot_1000",
+  "output": "Zombot_1000.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.621,
+  "scale": 0.996,
+  "offset": [
+   30.0,
+   21.0
+  ],
+  "art_coverage": 0.994,
+  "flags": []
+ },
+ {
+  "file": "Zombot_Aerostatic_Gondola.jpg",
+  "name": "Zombot_Aerostatic_Gondola",
+  "output": "Zombot_Aerostatic_Gondola.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.603,
+  "scale": 0.996,
+  "offset": [
+   31.0,
+   22.0
+  ],
+  "art_coverage": 0.996,
+  "flags": []
+ },
+ {
+  "file": "Zombot_Battlecruiser_5000.jpg",
+  "name": "Zombot_Battlecruiser_5000",
+  "output": "Zombot_Battlecruiser_5000.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.63,
+  "scale": 0.996,
+  "offset": [
+   31.0,
+   22.0
+  ],
+  "art_coverage": 0.996,
+  "flags": []
+ },
+ {
+  "file": "Zombot_Drone_Engineer.jpg",
+  "name": "Zombot_Drone_Engineer",
+  "output": "Zombot_Drone_Engineer.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.573,
+  "scale": 1.007,
+  "offset": [
+   31.0,
+   27.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Zombot_Plank_Walker.jpg",
+  "name": "Zombot_Plank_Walker",
+  "output": "Zombot_Plank_Walker.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.633,
+  "scale": 0.996,
+  "offset": [
+   31.0,
+   22.0
+  ],
+  "art_coverage": 0.996,
+  "flags": []
+ },
+ {
+  "file": "Zombot_Sharktronic_Sub.jpg",
+  "name": "Zombot_Sharktronic_Sub",
+  "output": "Zombot_Sharktronic_Sub.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.588,
+  "scale": 1.007,
+  "offset": [
+   27.0,
+   26.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ },
+ {
+  "file": "Zombot_Stomp.jpg",
+  "name": "Zombot_Stomp",
+  "output": "Zombot_Stomp.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.494,
+  "scale": 0.996,
+  "offset": [
+   26.0,
+   23.0
+  ],
+  "art_coverage": 0.998,
+  "flags": []
+ },
+ {
+  "file": "Zookeeper.jpg",
+  "name": "Zookeeper",
+  "output": "Zookeeper.webp",
+  "source_size": [
+   200,
+   130
+  ],
+  "align_score": 0.611,
+  "scale": 0.996,
+  "offset": [
+   26.0,
+   25.0
+  ],
+  "art_coverage": 1.0,
+  "flags": []
+ }
+]

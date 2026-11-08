@@ -24,7 +24,7 @@ FROM python-base AS feature-builder
 
 WORKDIR /build
 
-COPY build-reference-index.py card_data.json ./
+COPY build-reference-index.py card_vision.py card_template.npy card_data.json ./
 COPY reference_cards ./reference_cards
 
 RUN python build-reference-index.py \
@@ -42,7 +42,7 @@ COPY package.json package-lock.json ./
 RUN npm ci --omit=dev \
     && npm cache clean --force
 
-COPY server.js split-deck.js read-deck.js identify-cards.py card_data.json ./
+COPY server.js split-deck.js read-deck.js identify-cards.py card_vision.py card_template.npy card_data.json ./
 
 COPY --from=feature-builder \
     /build/reference_index \
@@ -68,8 +68,9 @@ ENV MALLOC_ARENA_MAX="2"
 ENV PVZH_DEBUG="0"
 
 # If a shortlist is uncertain, preserve quality by scanning all
-# cost-compatible cards exactly.
-ENV PVZH_FULL_FALLBACK="0"
+# cost-compatible cards exactly. Matching is single-view now, so this
+# is cheap enough to leave on.
+ENV PVZH_FULL_FALLBACK="1"
 
 USER node
 

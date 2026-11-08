@@ -7,3 +7,5 @@ reference_index
 .gitignore
 __pycache__
 .DS_Store
+reference_cards_original
+reference_review
