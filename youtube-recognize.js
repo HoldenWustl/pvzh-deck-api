@@ -68,6 +68,56 @@ function inferMissingCosts(costs) {
     return options.length <= MAX_COST_OPTIONS ? options : [];
 }
 
+/*
+ * In video frames a cost digit often touches the badge's dark outline,
+ * so OCR isolates the digit with a trail of outline attached. A
+ * morphological closing (max filter, then min filter) erases dark lines
+ * thinner than the kernel, removing the outline but keeping the much
+ * thicker digit strokes. Applied only to each card's cost area, using
+ * the same area read-deck.js reads.
+ */
+async function cleanCostBadges(imagePath, cards, radius) {
+    const { data, info } = await sharp(imagePath)
+        .removeAlpha()
+        .raw()
+        .toBuffer({ resolveWithObject: true });
+    const { width, height, channels } = info;
+    const out = Buffer.from(data);
+
+    const filter = (source, target, x0, y0, x1, y1, pick) => {
+        for (let y = y0; y < y1; y++) {
+            for (let x = x0; x < x1; x++) {
+                for (let c = 0; c < 3; c++) {
+                    let value = pick === "max" ? 0 : 255;
+                    for (let dy = -radius; dy <= radius; dy++) {
+                        const yy = Math.min(height - 1, Math.max(0, y + dy));
+                        for (let dx = -radius; dx <= radius; dx++) {
+                            const xx = Math.min(width - 1, Math.max(0, x + dx));
+                            const v = source[(yy * width + xx) * channels + c];
+                            value = pick === "max" ? Math.max(value, v) : Math.min(value, v);
+                        }
+                    }
+                    target[(y * width + x) * channels + c] = value;
+                }
+            }
+        }
+    };
+
+    for (const card of cards) {
+        const x0 = Math.max(0, Math.floor(card.x + card.width * 0.66));
+        const y0 = Math.max(0, Math.floor(card.y));
+        const x1 = Math.min(width, Math.ceil(card.x + card.width));
+        const y1 = Math.min(height, Math.ceil(card.y + card.height * 0.42));
+        if (x1 <= x0 || y1 <= y0) continue;
+
+        const dilated = Buffer.from(out);
+        filter(out, dilated, x0, y0, x1, y1, "max");
+        filter(dilated, out, x0, y0, x1, y1, "min");
+    }
+
+    return sharp(out, { raw: { width, height, channels } }).png({ compressionLevel: 1 }).toBuffer();
+}
+
 function fillSingleMissingCopy(copies) {
     const missing = copies.filter(copy => !Number.isInteger(copy)).length;
     if (missing !== 1) return copies;
@@ -107,7 +157,14 @@ function createYouTubeRecognizer({
                 timeoutMs: 2 * 60 * 1000,
             });
 
-            await runProcess(process.execPath, [readScript, imagePath, cardsDirectory], {
+            // OCR reads a copy whose cost badges have their outlines removed;
+            // identification still uses the untouched card crops from split.
+            const meta = JSON.parse(await fs.readFile(path.join(cardsDirectory, "cards.json"), "utf8"));
+            const ocrImagePath = path.join(jobDirectory, "deck-ocr.png");
+            const radius = Math.max(1, Math.round((meta.image?.width || 1000) / 1000 * 2));
+            await fs.writeFile(ocrImagePath, await cleanCostBadges(imagePath, meta.cards, radius));
+
+            await runProcess(process.execPath, [readScript, ocrImagePath, cardsDirectory], {
                 jobId,
                 timeoutMs: 5 * 60 * 1000,
             });
@@ -123,7 +180,7 @@ function createYouTubeRecognizer({
                 const altImagePath = path.join(jobDirectory, "deck-alt.png");
                 await fs.mkdir(altDirectory, { recursive: true });
                 await fs.copyFile(path.join(cardsDirectory, "cards.json"), path.join(altDirectory, "cards.json"));
-                await sharp(imageBuffer).median(5).png({ compressionLevel: 1 }).toFile(altImagePath);
+                await sharp(imagePath).median(5).png({ compressionLevel: 1 }).toFile(altImagePath);
 
                 try {
                     await runProcess(process.execPath, [readScript, altImagePath, altDirectory], {
