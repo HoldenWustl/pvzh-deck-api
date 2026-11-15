@@ -13,6 +13,8 @@ const crypto = require("crypto");
 const { spawn } = require("child_process");
 const { performance } = require("perf_hooks");
 
+const youtubeFrames = require("./youtube-frames");
+
 const app = express();
 
 const PORT = Number(process.env.PORT) || 7860;
@@ -594,6 +596,154 @@ app.post(
                 }
             }
         );
+    }
+);
+
+
+/*
+ * YouTube links
+ *
+ * Reads a deck from one of the three still frames YouTube keeps for
+ * every video (about 25% / 50% / 75% through). The deck panel is
+ * cropped out of the frame first, so the normal pipeline sees what
+ * looks like an ordinary deck screenshot. Uploads are never cropped.
+ */
+const YOUTUBE_MAX_RECOGNITION_ATTEMPTS = 3;
+
+function countCopies(result) {
+    return (result?.cards || []).reduce(
+        (total, card) => total + (Number(card.copies) || 0),
+        0
+    );
+}
+
+async function recognizeYouTubeDeck(videoId) {
+    let attempts = 0;
+    let panelsFound = 0;
+    let fetchedHd = false;
+
+    for (const frameName of youtubeFrames.FRAME_NAMES) {
+        if (attempts >= YOUTUBE_MAX_RECOGNITION_ATTEMPTS) {
+            break;
+        }
+
+        // sd frames are the same moments at lower resolution: only
+        // fall back to them when the video has no HD frames at all.
+        if (fetchedHd && frameName.startsWith("sd")) {
+            break;
+        }
+
+        const frame = await youtubeFrames.fetchFrame(
+            videoId,
+            frameName
+        );
+
+        if (!frame) {
+            continue;
+        }
+
+        if (frameName.startsWith("maxres")) {
+            fetchedHd = true;
+        }
+
+        const crop = await youtubeFrames.cropDeckPanel(
+            frame.buffer
+        );
+
+        if (!crop) {
+            console.log(
+                `[youtube ${videoId}] No deck panel in ${frameName}`
+            );
+            continue;
+        }
+
+        panelsFound++;
+        attempts++;
+
+        try {
+            const result = await enqueueRecognition(
+                () =>
+                    recognizeDeck(
+                        crop.buffer,
+                        `youtube-${videoId}-${frameName}.png`
+                    )
+            );
+
+            const total = countCopies(result);
+
+            if (total === 40) {
+                result.source = {
+                    type: "youtube",
+                    videoId,
+                    frame: frameName,
+                };
+
+                return result;
+            }
+
+            console.log(
+                `[youtube ${videoId}] ${frameName} read ${total} cards, trying the next frame`
+            );
+        } catch (error) {
+            console.log(
+                `[youtube ${videoId}] ${frameName} failed: ${error.message}`
+            );
+        }
+    }
+
+    const error = new Error(
+        panelsFound
+            ? "Found a deck list in that video, but couldn't read all 40 cards."
+            : "Couldn't find a deck list in that video's preview frames."
+    );
+
+    error.statusCode = 422;
+    error.code = panelsFound
+        ? "DECK_UNREADABLE"
+        : "NO_DECK_PANEL";
+
+    throw error;
+}
+
+app.get(
+    "/api/recognize-youtube",
+    recognitionLimiter,
+    async (request, response) => {
+        const videoId = String(
+            request.query.v || ""
+        );
+
+        if (
+            !youtubeFrames.isValidVideoId(videoId)
+        ) {
+            response.status(400).json({
+                error:
+                    "That isn't a valid YouTube video ID.",
+            });
+
+            return;
+        }
+
+        try {
+            const result =
+                await recognizeYouTubeDeck(videoId);
+
+            response.json(result);
+        } catch (error) {
+            console.error(
+                `YouTube recognition failed for ${videoId}:`,
+                error.message
+            );
+
+            response
+                .status(error.statusCode || 500)
+                .json({
+                    error:
+                        error?.message ||
+                        "Deck recognition failed.",
+                    code: error.code || null,
+                });
+        }
     }
 );
 
