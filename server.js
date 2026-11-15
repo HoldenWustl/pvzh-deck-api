@@ -617,10 +617,27 @@ function countCopies(result) {
     );
 }
 
+function summarizeAttempt(result) {
+    const cards = (result?.cards || []).map(card => ({
+        name: card.name || null,
+        copies: card.copies ?? null,
+        cost: card.cost ?? null,
+        needsReview: Boolean(card.needsReview),
+    }));
+
+    return {
+        deckName: result?.deckName ?? null,
+        cardsFound: cards.length,
+        totalCopies: countCopies(result),
+        cards,
+    };
+}
+
 async function recognizeYouTubeDeck(videoId) {
     let attempts = 0;
     let panelsFound = 0;
     let fetchedHd = false;
+    const diagnostics = [];
 
     for (const frameName of youtubeFrames.FRAME_NAMES) {
         if (attempts >= YOUTUBE_MAX_RECOGNITION_ATTEMPTS) {
@@ -639,6 +656,7 @@ async function recognizeYouTubeDeck(videoId) {
         );
 
         if (!frame) {
+            diagnostics.push({ frame: frameName, available: false });
             continue;
         }
 
@@ -649,6 +667,14 @@ async function recognizeYouTubeDeck(videoId) {
         const crop = await youtubeFrames.cropDeckPanel(
             frame.buffer
         );
+
+        const entry = {
+            frame: frameName,
+            available: true,
+            frameSize: `${frame.width}x${frame.height}`,
+            panel: crop ? crop.panel : null,
+        };
+        diagnostics.push(entry);
 
         if (!crop) {
             console.log(
@@ -670,12 +696,14 @@ async function recognizeYouTubeDeck(videoId) {
             );
 
             const total = countCopies(result);
+            Object.assign(entry, summarizeAttempt(result));
 
             if (total === 40) {
                 result.source = {
                     type: "youtube",
                     videoId,
                     frame: frameName,
+                    diagnostics,
                 };
 
                 return result;
@@ -685,6 +713,7 @@ async function recognizeYouTubeDeck(videoId) {
                 `[youtube ${videoId}] ${frameName} read ${total} cards, trying the next frame`
             );
         } catch (error) {
+            entry.error = String(error?.message || error).slice(0, 600);
             console.log(
                 `[youtube ${videoId}] ${frameName} failed: ${error.message}`
             );
@@ -701,6 +730,7 @@ async function recognizeYouTubeDeck(videoId) {
     error.code = panelsFound
         ? "DECK_UNREADABLE"
         : "NO_DECK_PANEL";
+    error.diagnostics = diagnostics;
 
     throw error;
 }
@@ -742,7 +772,67 @@ app.get(
                         error?.message ||
                         "Deck recognition failed.",
                     code: error.code || null,
+                    diagnostics: error.diagnostics || null,
                 });
+        }
+    }
+);
+
+
+/*
+ * Debug: shows the exact image the YouTube path feeds the reader.
+ *   /api/youtube-frame?v=VIDEO_ID&frame=maxres2          cropped panel
+ *   /api/youtube-frame?v=VIDEO_ID&frame=maxres2&crop=0   whole frame
+ */
+const debugFrameLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    limit: 60,
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
+app.get(
+    "/api/youtube-frame",
+    debugFrameLimiter,
+    async (request, response) => {
+        const videoId = String(request.query.v || "");
+        const frameName = String(request.query.frame || "maxres2");
+        const wantCrop = request.query.crop !== "0";
+
+        if (
+            !youtubeFrames.isValidVideoId(videoId) ||
+            !youtubeFrames.FRAME_NAMES.includes(frameName)
+        ) {
+            response.status(400).json({
+                error: `Use ?v=VIDEO_ID&frame=${youtubeFrames.FRAME_NAMES.join("|")}`,
+            });
+            return;
+        }
+
+        try {
+            const frame = await youtubeFrames.fetchFrame(videoId, frameName);
+
+            if (!frame) {
+                response.status(404).json({ error: `YouTube has no ${frameName} frame for this video.` });
+                return;
+            }
+
+            if (!wantCrop) {
+                response.type("jpeg").send(frame.buffer);
+                return;
+            }
+
+            const crop = await youtubeFrames.cropDeckPanel(frame.buffer);
+
+            if (!crop) {
+                response.status(404).json({ error: `No deck panel found in ${frameName}.` });
+                return;
+            }
+
+            response.set("X-Deck-Panel", JSON.stringify(crop.panel));
+            response.type("png").send(crop.buffer);
+        } catch (error) {
+            response.status(500).json({ error: error?.message || "Could not build the frame." });
         }
     }
 );
