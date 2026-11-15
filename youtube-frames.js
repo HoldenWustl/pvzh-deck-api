@@ -147,8 +147,27 @@ async function findDeckPanel(frameBuffer) {
 
     if (current) bands.push(current);
 
-    const dividers = bands.filter(band => {
-        const thickness = band.bottom - band.top + 1;
+    /*
+     * A divider can come out as several stacked bands: its anti-aliased
+     * edge rows are only partly cyan, so they look narrower. Group bands
+     * that touch (within 3 rows) and use the widest row for the edges.
+     */
+    const clusters = [];
+    for (const band of bands) {
+        const last = clusters[clusters.length - 1];
+        if (last && band.top - last.bottom <= 3) {
+            last.bottom = Math.max(last.bottom, band.bottom);
+            if (band.end - band.start > last.end - last.start) {
+                last.start = band.start;
+                last.end = band.end;
+            }
+        } else {
+            clusters.push({ ...band });
+        }
+    }
+
+    const dividers = clusters.filter(cluster => {
+        const thickness = cluster.bottom - cluster.top + 1;
         return thickness >= 1 && thickness <= Math.max(14, height * 0.03);
     });
 
