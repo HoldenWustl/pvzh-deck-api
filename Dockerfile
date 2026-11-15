@@ -42,7 +42,7 @@ COPY package.json package-lock.json ./
 RUN npm ci --omit=dev \
     && npm cache clean --force
 
-COPY server.js split-deck.js read-deck.js identify-cards.py card_vision.py card_template.npy card_data.json ./
+COPY server.js youtube-frames.js split-deck.js read-deck.js identify-cards.py card_vision.py card_template.npy card_data.json ./
 
 COPY --from=feature-builder \
     /build/reference_index \
