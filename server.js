@@ -14,6 +14,7 @@ const { spawn } = require("child_process");
 const { performance } = require("perf_hooks");
 
 const youtubeFrames = require("./youtube-frames");
+const { createYouTubeRecognizer } = require("./youtube-recognize");
 
 const app = express();
 
@@ -610,6 +611,19 @@ app.post(
  */
 const YOUTUBE_MAX_RECOGNITION_ATTEMPTS = 3;
 
+// Same scripts as recognizeDeck(), plus cost/copy safety nets for video
+// frames. recognizeDeck() itself (the upload path) is not used or changed.
+const recognizeYouTubeCrop = createYouTubeRecognizer({
+    runProcess,
+    splitScript: SPLIT_SCRIPT,
+    readScript: READ_SCRIPT,
+    identifyScript: IDENTIFY_SCRIPT,
+    cardDataPath: CARD_DATA_PATH,
+    referenceIndexPath: REFERENCE_INDEX_PATH,
+    pythonBin: PYTHON_BIN,
+    tempRoot: TEMP_ROOT,
+});
+
 function countCopies(result) {
     return (result?.cards || []).reduce(
         (total, card) => total + (Number(card.copies) || 0),
@@ -689,7 +703,7 @@ async function recognizeYouTubeDeck(videoId) {
         try {
             const result = await enqueueRecognition(
                 () =>
-                    recognizeDeck(
+                    recognizeYouTubeCrop(
                         crop.buffer,
                         `youtube-${videoId}-${frameName}.png`
                     )
