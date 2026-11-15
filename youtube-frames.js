@@ -190,6 +190,181 @@ async function findDeckPanel(frameBuffer) {
     };
 }
 
+
+/*
+ * Streamers' deck panels pack the cards tighter than the game's own
+ * deck screen, so each cost badge pokes past its card's cell and gets
+ * clipped. Space the grid out with background-coloured gaps so every
+ * badge sits inside its own cell, like a normal deck screenshot.
+ * Same detection rules as split-deck.js. Returns null if no grid.
+ */
+function quantizedDominant(data, width, channels, yFrom, yTo) {
+    const counts = new Map();
+    for (let y = yFrom; y < yTo; y += 2) {
+        for (let x = 0; x < width; x += 2) {
+            const i = (y * width + x) * channels;
+            const key = ((data[i] >> 2) << 12) | ((data[i + 1] >> 2) << 6) | (data[i + 2] >> 2);
+            counts.set(key, (counts.get(key) || 0) + 1);
+        }
+    }
+    let bestKey = 0;
+    let bestCount = -1;
+    for (const [key, count] of counts) {
+        if (count > bestCount) {
+            bestKey = key;
+            bestCount = count;
+        }
+    }
+    return {
+        r: (((bestKey >> 12) & 63) << 2) + 2,
+        g: (((bestKey >> 6) & 63) << 2) + 2,
+        b: ((bestKey & 63) << 2) + 2,
+    };
+}
+
+function runsOf(values, predicate, minLength, mergeGap) {
+    const runs = [];
+    let start = -1;
+    for (let i = 0; i <= values.length; i++) {
+        const on = i < values.length && predicate(values[i]);
+        if (on && start < 0) start = i;
+        if (!on && start >= 0) {
+            const run = { start, end: i - 1 };
+            const previous = runs[runs.length - 1];
+            if (previous && run.start - previous.end - 1 <= mergeGap) previous.end = run.end;
+            else runs.push(run);
+            start = -1;
+        }
+    }
+    return runs.filter(run => run.end - run.start + 1 >= minLength);
+}
+
+async function spreadDeckGrid(pngBuffer, { gapX = 0.02, gapY = 0 } = {}) {
+    const { data, info } = await sharp(pngBuffer)
+        .removeAlpha()
+        .raw()
+        .toBuffer({ resolveWithObject: true });
+    const { width, height, channels } = info;
+
+    // 1. Divider under the header (lowest cyan band in the top 70%)
+    const maxY = Math.floor(height * 0.7);
+    const cyanScores = new Float32Array(maxY);
+    for (let y = 0; y < maxY; y++) {
+        let total = 0;
+        let run = 0;
+        let longest = 0;
+        for (let x = 0; x < width; x++) {
+            const i = (y * width + x) * channels;
+            if (isCyan(data[i], data[i + 1], data[i + 2])) {
+                total++;
+                run++;
+                if (run > longest) longest = run;
+            } else {
+                run = 0;
+            }
+        }
+        cyanScores[y] = Math.max(longest / width, (total / width) * 0.8);
+    }
+    const dividerBands = runsOf(cyanScores, v => v >= 0.32, 2, 2);
+    if (!dividerBands.length) return null;
+    const deckTop = dividerBands[dividerBands.length - 1].end + 1;
+
+    // 2. Background colour and foreground rows/columns of the grid
+    const background = quantizedDominant(data, width, channels, deckTop, height);
+    const isForeground = (x, y) => {
+        const i = (y * width + x) * channels;
+        const dr = data[i] - background.r;
+        const dg = data[i + 1] - background.g;
+        const db = data[i + 2] - background.b;
+        return dr * dr + dg * dg + db * db > 28 * 28;
+    };
+
+    const deckHeight = height - deckTop;
+    const rowFractions = new Float32Array(deckHeight);
+    for (let y = 0; y < deckHeight; y++) {
+        let count = 0;
+        for (let x = 0; x < width; x++) count += isForeground(x, deckTop + y) ? 1 : 0;
+        rowFractions[y] = count / width;
+    }
+    const rowBands = runsOf(rowFractions, v => v > 0.5, Math.max(12, Math.floor(deckHeight * 0.03)), 2);
+    if (!rowBands.length) return null;
+
+    const first = rowBands[0];
+    const bandHeight = first.end - first.start + 1;
+    const innerTop = deckTop + first.start + Math.floor(bandHeight * 0.15);
+    const innerBottom = deckTop + first.end - Math.floor(bandHeight * 0.15);
+    const columnFractions = new Float32Array(width);
+    for (let x = 0; x < width; x++) {
+        let count = 0;
+        for (let y = innerTop; y <= innerBottom; y++) count += isForeground(x, y) ? 1 : 0;
+        columnFractions[x] = count / (innerBottom - innerTop + 1);
+    }
+    const columns = runsOf(columnFractions, v => v > 0.5, Math.max(20, Math.floor(width * 0.08)), 3);
+    if (columns.length < 2) return null;
+
+    // 3. Cut just before every card's left edge (the first column too, so
+    //    the outer margin matches the gaps) and just below each row
+    const gapW = Math.round(width * gapX);
+    const gapH = Math.round(width * gapY);
+    const xCuts = columns.map(column => column.start);
+    const yCuts = [deckTop, ...rowBands.slice(1).map((band, index) => deckTop + rowBands[index].end + 1)];
+
+    // Outer margins match the gap between cards, so the first and last
+    // cells come out the same size as the others
+    const cardGaps = columns.slice(1).map((column, index) => column.start - columns[index].end - 1);
+    const typicalGap = cardGaps.sort((a, b) => a - b)[Math.floor(cardGaps.length / 2)] || 0;
+    const leftPad = gapW + Math.max(0, typicalGap - columns[0].start);
+    const rightPad = gapW + Math.max(0, typicalGap - (width - 1 - columns[columns.length - 1].end));
+
+    const xEdges = [0, ...xCuts, width];
+    const yEdges = [...yCuts, height];
+    const xShift = index => (index === 0 ? 0 : leftPad + gapW * (index - 1));
+    const newWidth = width + leftPad + gapW * (xCuts.length - 1) + rightPad;
+    const newHeight = height + gapH * yCuts.length;
+
+    const composites = [];
+
+    // Header: stretched to the new width so the deck name and the 40/40
+    // counter keep the same relative positions the OCR expects
+    const header = await sharp(pngBuffer)
+        .extract({ left: 0, top: 0, width, height: deckTop })
+        .resize({ width: newWidth, height: deckTop, fit: "fill", kernel: "lanczos3" })
+        .png()
+        .toBuffer();
+    composites.push({ input: header, left: 0, top: 0 });
+
+    for (let row = 0; row < yEdges.length - 1; row++) {
+        for (let column = 0; column < xEdges.length - 1; column++) {
+            const tileWidth = xEdges[column + 1] - xEdges[column];
+            const tileHeight = yEdges[row + 1] - yEdges[row];
+            if (tileWidth <= 0 || tileHeight <= 0) continue;
+
+            const tile = await sharp(pngBuffer)
+                .extract({ left: xEdges[column], top: yEdges[row], width: tileWidth, height: tileHeight })
+                .png()
+                .toBuffer();
+
+            composites.push({
+                input: tile,
+                left: xEdges[column] + xShift(column), // column 0 is the strip left of card 1
+                top: yEdges[row] + gapH * (row + 1),
+            });
+        }
+    }
+
+    return sharp({
+        create: {
+            width: newWidth,
+            height: newHeight,
+            channels: 3,
+            background,
+        },
+    })
+        .composite(composites)
+        .png({ compressionLevel: 1 })
+        .toBuffer();
+}
+
 async function cropDeckPanel(frameBuffer) {
     const panel = await findDeckPanel(frameBuffer);
     if (!panel) return null;
@@ -210,7 +385,10 @@ async function cropDeckPanel(frameBuffer) {
         .png({ compressionLevel: 1 })
         .toBuffer();
 
-    return { buffer, panel, scale };
+    // Give each cost badge room inside its own card cell
+    const spread = await spreadDeckGrid(buffer).catch(() => null);
+
+    return { buffer: spread || buffer, panel, scale, spread: Boolean(spread) };
 }
 
 module.exports = {
@@ -219,4 +397,5 @@ module.exports = {
     fetchFrame,
     findDeckPanel,
     cropDeckPanel,
+    spreadDeckGrid,
 };
